@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inclusive Facilitation and Capacity Building — Accessible Learning Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #303e44;
+      --paper: #ffffff;
+      --mid: #f0f3f4;
+      --rule: rgba(48,62,68,0.12);
+      --accent: #475f6a;
+      --accent-light: #d6e2e6;
+      --muted: #617880;
+      --serif: 'Asap', sans-serif;
+      --sans: 'Asap', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; font-size: 17px; }
+    body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); }
+    a:hover { text-decoration: underline; }
+
+    .skip-link {
+      position: absolute; top: -100%; left: 0;
+      background: var(--ink); color: var(--paper);
+      padding: 0.5rem 1rem; font-size: 0.9rem;
+      z-index: 9999; text-decoration: none;
+    }
+    .skip-link:focus { top: 0; }
+
+    .site-header {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.875rem; color: var(--muted);
+    }
+    .site-header a { color: var(--muted); text-decoration: none; }
+    .site-header a:hover { color: var(--ink); }
+
+    .page-header {
+      max-width: 780px; margin: 0 auto;
+      padding: 3.5rem 2rem 2rem;
+    }
+    .page-label {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: normal; line-height: 1.2; margin-bottom: 1rem;
+    }
+    .page-header .lede {
+      font-size: 1.05rem; color: var(--muted); max-width: 60ch;
+      line-height: 1.7; margin-bottom: 1.25rem;
+    }
+    .page-header .notice {
+      font-size: 0.875rem; background: var(--mid);
+      border-radius: 3px; padding: 0.75rem 1rem;
+      color: var(--muted); line-height: 1.6;
+    }
+
+    .tab-nav-wrap {
+      border-bottom: 1px solid var(--rule);
+      background: var(--paper);
+      position: sticky; top: 0; z-index: 50;
+    }
+    .tab-nav {
+      max-width: 780px; margin: 0 auto; padding: 0 2rem;
+      display: flex; overflow-x: auto;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .tab-nav::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: none; border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.875rem; font-family: var(--sans);
+      color: var(--muted); cursor: pointer; white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+      margin-bottom: -1px;
+    }
+    .tab-btn:hover { color: var(--ink); }
+    .tab-btn[aria-selected="true"] {
+      color: var(--ink); border-bottom-color: var(--accent); font-weight: 500;
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .content {
+      max-width: 780px; margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+    }
+    .content h2 {
+      font-family: var(--serif); font-size: 1.5rem;
+      font-weight: normal; line-height: 1.25;
+      margin: 2.5rem 0 0.75rem;
+    }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 1rem; font-weight: 600; margin: 1.75rem 0 0.5rem; }
+    .content p { margin-bottom: 1rem; }
+    .content p:last-child { margin-bottom: 0; }
+    .content ul, .content ol { margin: 0.75rem 0 1rem 1.5rem; }
+    .content li { margin-bottom: 0.4rem; }
+
+    .pull {
+      font-family: var(--serif); font-size: 1.2rem; font-style: italic;
+      line-height: 1.45; color: var(--accent);
+      border-left: 3px solid var(--accent);
+      padding: 0.5rem 0 0.5rem 1.25rem; margin: 2rem 0;
+    }
+
+    .callout {
+      background: var(--mid); border-radius: 3px;
+      padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+      font-size: 0.95rem; line-height: 1.65;
+    }
+    .callout strong { display: block; margin-bottom: 0.35rem; }
+
+    hr.section-rule {
+      border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0;
+    }
+
+    .accordion { margin: 1.25rem 0; }
+    .accordion-item { border-top: 1px solid var(--rule); }
+    .accordion-item:last-child { border-bottom: 1px solid var(--rule); }
+    .accordion-btn {
+      width: 100%; background: none; border: none;
+      padding: 1rem 0; text-align: left;
+      font-family: var(--sans); font-size: 0.95rem; font-weight: 500;
+      color: var(--ink); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 1rem; line-height: 1.4;
+    }
+    .accordion-btn:hover { color: var(--accent); }
+    .accordion-btn .sub {
+      font-size: 0.8rem; font-weight: 400; color: var(--muted); flex-shrink: 0;
+    }
+    .accordion-icon {
+      font-size: 1.1rem; color: var(--muted); flex-shrink: 0;
+      transition: transform 0.2s; display: inline-block;
+    }
+    .accordion-btn[aria-expanded="true"] .accordion-icon { transform: rotate(45deg); }
+    .accordion-body {
+      display: none; padding-bottom: 1.5rem;
+      font-size: 0.95rem; line-height: 1.7;
+    }
+    .accordion-body p { margin-bottom: 0.85rem; }
+    .accordion-body p:last-child { margin-bottom: 0; }
+    .accordion-body ul { margin: 0.5rem 0 0.85rem 1.4rem; }
+    .accordion-body li { margin-bottom: 0.3rem; }
+    .accordion-produces {
+      margin-top: 1rem; background: var(--mid);
+      padding: 1rem 1.25rem; border-radius: 3px;
+    }
+    .accordion-produces strong {
+      display: block; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.5rem;
+    }
+    .accordion-produces ul { margin: 0 0 0 1.2rem; font-size: 0.9rem; }
+
+    .domain-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule); margin: 1.5rem 0;
+    }
+    .domain-card { background: var(--paper); padding: 1.5rem; }
+    .domain-num {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem;
+    }
+    .domain-card h3 {
+      font-family: var(--serif); font-size: 1.05rem;
+      font-weight: normal; margin: 0 0 0.3rem;
+    }
+    .domain-sub {
+      font-size: 0.8rem; color: var(--muted);
+      font-style: italic; margin-bottom: 0.75rem;
+    }
+    .domain-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin: 0; }
+
+    .integration-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.875rem; margin: 1.5rem 0;
+    }
+    .integration-table th {
+      text-align: left; padding: 0.6rem 0.75rem;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); border-bottom: 2px solid var(--ink);
+    }
+    .integration-table td {
+      padding: 0.85rem 0.75rem; border-bottom: 1px solid var(--rule);
+      vertical-align: top; line-height: 1.55;
+    }
+    .integration-table td:first-child { font-weight: 500; }
+    .integration-table tr:last-child td { border-bottom: none; }
+
+    .reflection-q-group { margin-bottom: 2rem; }
+    .reflection-q-group h3 {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 1rem; padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--accent-light);
+    }
+    .reflection-q {
+      font-family: var(--serif); font-size: 1.05rem; font-style: italic;
+      line-height: 1.55; color: var(--ink); margin-bottom: 1rem;
+      padding-left: 1rem; border-left: 2px solid var(--mid);
+    }
+
+    .source-list { list-style: none; margin: 1.5rem 0; padding: 0; }
+    .source-item { border-top: 1px solid var(--rule); padding: 1.25rem 0; }
+    .source-item:last-child { border-bottom: 1px solid var(--rule); }
+    .source-tier {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem;
+    }
+    .source-item h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .source-item p { font-size: 0.875rem; color: var(--muted); margin: 0; line-height: 1.6; }
+
+    .rule-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--rule);
+      border: 1px solid var(--rule); margin: 1.5rem 0;
+    }
+    .rule-cell { background: var(--paper); padding: 1.25rem; }
+    .rule-for {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem;
+    }
+    .rule-what { font-family: var(--serif); font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .rule-why { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    .page-footer {
+      max-width: 780px; margin: 0 auto;
+      padding: 1.5rem 2rem 3rem;
+      font-size: 0.85rem; color: var(--muted);
+      border-top: 1px solid var(--rule); line-height: 1.65;
+    }
+    .page-footer strong { color: var(--ink); }
+
+    .references { margin-top: 2rem; font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+    .references h3 {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem;
+    }
+    .references ul { list-style: none; padding: 0; }
+    .references li { margin-bottom: 0.6rem; padding-left: 1.25rem; text-indent: -1.25rem; }
+
+    @media (max-width: 600px) {
+      .domain-grid { grid-template-columns: 1fr; }
+      .rule-row { grid-template-columns: 1fr; }
+      .site-header { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="site-header">
+  <a href="https://www.accessiblelearninglabs.com/">Accessible Learning Labs</a>
+  <span style="color:var(--rule)">—</span>
+  <span>Knowledge Resource</span>
+</header>
+
+<div class="page-header">
+  <p class="page-label">Knowledge Resource</p>
+  <h1>Inclusive Facilitation and Capacity Building</h1>
+  <p class="lede">A guide to what facilitation that is genuinely inclusive involves — its knowledge foundations, what it demands of the facilitator, how it unfolds in practice, and what it builds over time in organizations. Designed for facilitators, learning designers, leaders, and organizational development teams in higher education, the public sector, and research institutions.</p>
+  <p class="notice">ℹ Use the tabs to explore at whatever depth is useful to you. A <a href="inclusive-facilitation-linear.html">screen reader and keyboard-optimised version</a> of this resource is also available.</p>
+</div>
+
+<nav class="tab-nav-wrap" aria-label="Resource sections">
+  <div class="tab-nav" role="tablist">
+    <button class="tab-btn" role="tab" aria-selected="true"  aria-controls="panel-foundation" id="tab-foundation">What This Work Is</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-domains"    id="tab-domains">The Four Domains</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-practice"   id="tab-practice">In Practice</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-capacity"   id="tab-capacity">Building Capacity</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-reflection" id="tab-reflection">Reflection</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-sources"    id="tab-sources">Scholarly Foundations</button>
+  </div>
+</nav>
+
+<main id="main-content">
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 1: WHAT THIS WORK IS          -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-panel active" id="panel-foundation" role="tabpanel" aria-labelledby="tab-foundation">
+<div class="content">
+
+  <h2>Facilitation is a design act</h2>
+
+  <p>Inclusive facilitation is not a set of techniques applied to a session. It is a stance — a way of showing up that is shaped by how the facilitator understands power, identity, and whose knowledge counts in a room. The techniques matter, but they are downstream of something more foundational: the facilitator's own reflective practice and their ability to read and reshape the dynamics that determine whether people can genuinely participate.</p>
+
+  <p>This is what distinguishes facilitation from instruction. A skilled instructor can transfer knowledge into a well-designed structure. A skilled facilitator can hold a space where knowledge emerges — where people with different positions, perspectives, and relationships to power can think together in ways that none of them could have managed alone. Inclusive facilitation adds another layer: it requires active attention to who is being excluded from that process, and the willingness to name and address exclusion as it unfolds.</p>
+
+  <div class="pull">"The ability to critically reflect on one's own biases, power, and identity is not a supplementary competency. It is the foundation that every other facilitation skill rests on."</div>
+
+  <h2>What this work is — and what it is not</h2>
+
+  <p>Inclusive facilitation is sometimes described as a communication style — warmer, more patient, more attentive to who is speaking. That framing is too thin. It reduces a structural practice to an interpersonal one, and it locates the work in the facilitator's manner rather than in the design of the learning environment and the systems it sits within.</p>
+
+  <p>What inclusive facilitation actually involves is closer to this: designing and holding learning environments where the full range of participants can contribute, where power dynamics are made visible rather than ignored, and where the organization's capacity to do this work grows rather than remaining dependent on any individual facilitator. It is simultaneously a technical competency, a relational practice, a structural intervention, and an ongoing reflective discipline.</p>
+
+  <div class="callout">
+    <strong>The central distinction</strong>
+    Facilitation that is <em>accommodating</em> responds to difference when it becomes a problem — adjusting for the person who raises their hand to say they can't access something. Facilitation that is <em>inclusive by design</em> anticipates variability, builds in multiple ways to participate, and makes belonging the starting point rather than a problem to be managed. The difference is not just pedagogical. It determines whether marginalized participants experience genuine access or a gesture toward it.
+  </div>
+
+  <h2>Who this work is for</h2>
+
+  <p>Inclusive Facilitation and Capacity Building at Accessible Learning Labs is designed for higher education institutions, public sector organizations, and research bodies — typically those navigating one of these situations:</p>
+
+  <ul>
+    <li>A team or department that runs learning events, workshops, or professional development sessions and wants those to be genuinely accessible and equitable — not just technically compliant</li>
+    <li>An organization trying to build internal capacity for inclusive practice and needing facilitation support to move that work from individual awareness to shared skill</li>
+    <li>A faculty, program, or unit that recognizes its current facilitation practices are producing uneven participation across groups — and wants to understand why, and what to do about it</li>
+    <li>An institution that has made commitments to equity, diversity, and inclusion and needs help translating those commitments into the actual design of learning environments</li>
+  </ul>
+
+  <p>In all of these contexts, the work is the same at its core: building the knowledge, skills, and organizational structures that allow facilitation to be inclusive by default, not just by exception.</p>
+
+  <hr class="section-rule">
+
+  <h2>The arc this resource follows</h2>
+
+  <p>This knowledge resource is structured as a progression — not a checklist. It moves from the technical and conceptual foundations of inclusive facilitation, through the four competency domains and how they work together, into what this practice looks like when it is actually in a room with people. The <a href="#" onclick="switchTab('panel-practice'); return false;">In Practice</a> tab follows a composite scenario through its full arc — showing not just what happened but why the facilitation was designed that way, and what it surfaced that a different approach would have missed.</p>
+
+  <p>The <a href="#" onclick="switchTab('panel-reflection'); return false;">Reflection</a> tab is designed to be worked through with colleagues. The questions there are not evaluation questions. They are the kind of questions a skilled facilitator would put to a team at the beginning of a genuine conversation about its own practice — the kind of questions that don't resolve quickly, and aren't meant to.</p>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 2: THE FOUR DOMAINS           -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-panel" id="panel-domains" role="tabpanel" aria-labelledby="tab-domains">
+<div class="content">
+
+  <h2>A multi-dimensional competency set</h2>
+
+  <p>Effective inclusive facilitation draws on four interconnected domains. They are not a hierarchy in the sense that one is more important than another — but they do build on each other. The technical and pedagogical foundations provide the tools. The relational domain puts those tools in service of genuine participation. The structural domain ensures the work outlasts any individual session or facilitator. And the reflective domain is what keeps all the others honest.</p>
+
+  <p>None of these domains is sufficient on its own. A technically skilled facilitator who hasn't examined their own positionality will reproduce the power dynamics they're trying to address. An organizationally sophisticated capacity builder who lacks relational skill will produce systems that look inclusive on paper and feel alienating in practice. The integration of all four is what distinguishes a practitioner from one who is also doing this work well.</p>
+
+  <div class="domain-grid" aria-label="The four competency domains">
+    <div class="domain-card">
+      <p class="domain-num">Domain 01 — Technical</p>
+      <h3>Framework Proficiency</h3>
+      <p class="domain-sub">UDL · DEIJ · WCAG</p>
+      <p>Mastery of the frameworks that make inclusive design legible — and the ability to translate them into the actual design of sessions, materials, and environments.</p>
+    </div>
+    <div class="domain-card">
+      <p class="domain-num">Domain 02 — Relational</p>
+      <h3>Collaborative &amp; Participatory Design</h3>
+      <p class="domain-sub">Co-creation · Students as partners</p>
+      <p>The ability to move beyond expert-led design and facilitate processes where the people most affected by decisions are genuinely shaping them.</p>
+    </div>
+    <div class="domain-card">
+      <p class="domain-num">Domain 03 — Structural</p>
+      <h3>Systemic Capacity Building</h3>
+      <p class="domain-sub">Organizational change · Institutional climate</p>
+      <p>Understanding how organizations change — and how to build the structures, relationships, and shared knowledge that make inclusive practice durable.</p>
+    </div>
+    <div class="domain-card">
+      <p class="domain-num">Domain 04 — Reflective</p>
+      <h3>Reflective Practice &amp; Positionality</h3>
+      <p class="domain-sub">Bias · Power · Identity</p>
+      <p>The ongoing work of examining one's own position in relation to the dynamics of the room — and adjusting facilitation in light of what that examination surfaces.</p>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <h2>What each domain involves</h2>
+
+  <div class="accordion">
+
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Domain 01 — Framework Proficiency <span class="sub">Technical</span></span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>Mastery of Universal Design for Learning (UDL) and Diversity, Equity, Inclusion, and Justice (DEIJ) frameworks is not an end in itself. It is the precondition for designing environments that are inherently adaptable — where flexibility is built in from the start rather than added afterward as an accommodation.</p>
+        <p>In practice, this means being fluent in translating frameworks into tangible design decisions: the structure of a workshop, the format of materials, the pacing of a session, the way feedback is collected. It also means understanding technical standards like WCAG — not as a compliance checklist, but as a design language that shapes what it means for digital content to be genuinely accessible to participants with a range of sensory and cognitive profiles.</p>
+        <p>Practitioners who are proficient in these frameworks can articulate not just what they are doing but why — and can help the organizations they work with understand what the frameworks demand, not just what they permit.</p>
+        <div class="accordion-produces">
+          <strong>What this enables</strong>
+          <ul>
+            <li>Sessions and materials designed for variability from the outset, not retrofitted</li>
+            <li>Digital content that meets accessibility standards across all formats — slides, documents, recorded materials</li>
+            <li>The ability to explain framework decisions to institutional stakeholders in terms they can act on</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Domain 02 — Collaborative &amp; Participatory Design <span class="sub">Relational</span></span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>Moving beyond expert-led design requires a genuine reorientation of how facilitation is understood. The expert-led model positions the facilitator as the holder of knowledge and the participants as its recipients. Collaborative and participatory design inverts this: the facilitator's role is to create the conditions in which participants' knowledge — including their knowledge of the barriers they face — can surface and shape the work.</p>
+        <p>In higher education contexts, this is often described as a "students as partners" model. In organizational development, it shows up as co-design: bringing the people who will be affected by a decision into the process of making it, not as consultees but as contributors. The distinction matters. Consultation asks people to react to decisions already made. Co-design involves them in making the decisions — and produces fundamentally different outcomes as a result.</p>
+        <p>This requires facilitation skill that goes beyond process management. It requires the ability to hold space for voices that have historically been excluded, to surface and navigate disagreement productively, and to resist the pull toward false consensus that often produces inclusion in name only.</p>
+        <div class="accordion-produces">
+          <strong>What this enables</strong>
+          <ul>
+            <li>Learning environments where participation is genuinely distributed, not performed</li>
+            <li>Design processes that surface barriers that expert-led processes systematically miss</li>
+            <li>A different relationship between facilitators and participants — one that builds trust and shared ownership over time</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Domain 03 — Systemic Capacity Building <span class="sub">Structural</span></span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>Individual facilitation skill, however excellent, doesn't change organizations. What changes organizations is the gradual accumulation of shared knowledge, structural supports, and leadership that makes inclusive practice possible beyond any single facilitator or session. This is capacity building — and it is the domain that transforms facilitation from a service delivered to an organization into something an organization develops the ability to do for itself.</p>
+        <p>Practitioners working in this domain understand organizational change models well enough to know where interventions are likely to take hold and where they will be absorbed and neutralized. They can assess institutional climate — identifying where the readiness for inclusive practice is real and where it is rhetorical. They know how to mobilize knowledge across departments, how to build coalitions for change, and how to help institutions develop the leadership structures that sustain inclusive practice when external support is no longer present.</p>
+        <p>This competency is particularly important in large institutions, where accessibility and equity efforts often succeed in pockets and fail to scale — not because the facilitation was poor, but because the organizational conditions for diffusion were never built.</p>
+        <div class="accordion-produces">
+          <strong>What this enables</strong>
+          <ul>
+            <li>A move from individual session improvements to systemic transformation</li>
+            <li>Shared language, frameworks, and tools that persist after an engagement ends</li>
+            <li>Leadership capacity to sustain inclusive practice through institutional change</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Domain 04 — Reflective Practice &amp; Positionality <span class="sub">Reflective</span></span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>Reflective practice is what keeps the other three domains honest. Without it, framework proficiency becomes dogma; collaborative design becomes a performance of inclusion that replicates existing power dynamics; and capacity building becomes an imposition of one organization's values on another. With it, a facilitator can notice when something they are doing is working against the inclusion they intend — and adjust in real time.</p>
+        <p>The ability to critically reflect on one's own biases, power, and identity is foundational. Not because facilitators need to have resolved all of their own positioning before they can work — they can't, and no one does — but because unexamined positioning tends to show up in the design of sessions in ways that exclude particular participants without the facilitator's awareness. The experience of power in a room is not symmetrical: what feels like a neutral, welcoming space to the facilitator may feel very different to participants who are used to being the ones whose presence is accommodated rather than assumed.</p>
+        <p>This domain is also where the facilitator's capacity to navigate resistance to change lives. In large institutions, inclusive practice is almost always contested — not because people are opposed to equity in the abstract, but because equity in practice means changing things that benefit people who currently hold institutional advantage. A reflective facilitator can work with that resistance productively rather than either avoiding it or being flattened by it.</p>
+        <div class="accordion-produces">
+          <strong>What this enables</strong>
+          <ul>
+            <li>The ability to notice and adjust when facilitation is inadvertently excluding or marginalizing</li>
+            <li>A grounded approach to navigating resistance to change in institutional contexts</li>
+            <li>Facilitation that models the reflective practice it is trying to build in others</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="section-rule">
+
+  <h2>How the domains work together</h2>
+
+  <p>The four domains form a holistic toolkit. In any given session or engagement, all four are present simultaneously — but in different proportions depending on what the work requires. Understanding which domains are being drawn on most heavily in a given context helps facilitators and organizations be clearer about what they are developing, and what gaps they are working toward closing.</p>
+
+  <table class="integration-table" aria-label="Competency integration: domain, essential skill, and application">
+    <thead>
+      <tr>
+        <th>Domain</th>
+        <th>Essential skill</th>
+        <th>Application for inclusive facilitation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Technical</td>
+        <td>Accessibility standards and UDL</td>
+        <td>Ensuring sessions and materials are perceivable, operable, and navigable for all participants — built in, not bolted on.</td>
+      </tr>
+      <tr>
+        <td>Relational</td>
+        <td>Participatory facilitation</td>
+        <td>Co-creating the learning experience with participants, centering lived experience as expertise and redistributing authority over the design.</td>
+      </tr>
+      <tr>
+        <td>Structural</td>
+        <td>Systemic change management</td>
+        <td>Navigating and transforming organizational culture — tracing where inclusive practice fails at handoffs, governance, and institutional memory.</td>
+      </tr>
+      <tr>
+        <td>Reflective</td>
+        <td>Positionality and bias awareness</td>
+        <td>Examining the facilitator's own position in relation to the dynamics of the room — and modeling the reflective practice the work is trying to build in others.</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 3: IN PRACTICE                -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-panel" id="panel-practice" role="tabpanel" aria-labelledby="tab-practice">
+<div class="content">
+
+  <p>The following is a composite, illustrative scenario. It is not a description of a real institution or specific engagement, but it is constructed from real patterns — the kinds of dynamics, decisions, and turning points that appear consistently in facilitation work with higher education institutions, public sector organizations, and research bodies.</p>
+
+  <h2>A faculty development series on inclusive assessment</h2>
+  <p style="font-size:0.875rem; color:var(--muted); margin-top:-0.5rem; margin-bottom:1.5rem;">Illustrative scenario — composite</p>
+
+  <h3>The brief, and what was actually being asked</h3>
+
+  <p>A mid-sized university faculty had committed to developing a professional learning series for academic staff on inclusive assessment. The brief was clear on the surface: six workshops, ninety minutes each, designed to help faculty understand the principles of Universal Design for Learning and apply them to their assessment practices. The timeline was set. The participants were identified — a mix of tenured faculty, contract instructors, and professional staff in learning design roles.</p>
+
+  <p>The first thing the facilitation team did was sit with the brief rather than design to it. Not because the brief was wrong, but because briefs of this kind — professional development on inclusive practice, delivered to faculty, in an institution — carry a great deal of unstated content. Who had decided that assessment was the entry point? What had happened that made this a priority now? Which faculty were in the room, and whose presence — or absence — would shape what could be said?</p>
+
+  <p>These questions matter not as procedural due diligence but as facilitation practice. The design of any learning environment begins before the first session. It begins with the questions you ask before you agree to what you've been asked to do.</p>
+
+  <h3>What the intake conversations revealed</h3>
+
+  <p>Conversations with the faculty's equity and inclusion office, with several department chairs, and with two disability services coordinators surfaced a different picture than the brief implied. The immediate trigger for the series was a formal complaint from a student cohort — primarily students with disabilities and students whose first language was not English — about assessment practices in a cluster of required courses. The complaint had been resolved through individual accommodation processes, but those processes had been slow, inconsistently applied, and experienced by several students as requiring them to repeatedly justify needs that were already documented.</p>
+
+  <p>The faculty leadership had responded by commissioning the professional development series. This was a genuine attempt to address a systemic problem. It was also, without careful facilitation design, likely to fail in a specific way: academic staff arriving to a workshop on "inclusive assessment" in the wake of a formal complaint would arrive with their defenses activated — whatever the facilitators intended, some participants would experience it as being told they had done something wrong.</p>
+
+  <p>This is a facilitation problem, not a content problem. The content of inclusive assessment practice is well-established. The challenge is designing a learning environment in which people who feel implicated can genuinely engage rather than become defensive — and in which the emotional and relational dimensions of that engagement are held, not managed away.</p>
+
+  <div class="pull">The design of any learning environment begins before the first session. It begins with the questions you ask before you agree to what you've been asked to do.</div>
+
+  <h3>Designing the arc</h3>
+
+  <p>The series was redesigned from a content-delivery model to a facilitated inquiry model. The six workshops were restructured to follow a deliberate arc — one that moved from shared recognition, through honest examination, to collaborative design and commitment.</p>
+
+  <p>The first workshop did not begin with UDL. It began with a question: <em>When have you been in a learning environment where the conditions made it hard for you to do your best thinking?</em> Faculty were asked to write for three minutes, in silence, before any discussion. This was not an icebreaker. It was a designed intervention: by starting with the experience of being a learner in a difficult environment, the workshop located the facilitator and the faculty in the same position — people who know what it is to be constrained by design — before anyone was asked to examine their own design decisions.</p>
+
+  <p>This is what it means for the form of facilitation to enact its content. The workshop was about how learning environments can exclude. It began by creating an experience that everyone in the room shared — the experience of having been a learner for whom something in the design wasn't working. Not to deflect from the accountability question, but to create the conditions in which that question could be approached from curiosity rather than defensiveness.</p>
+
+  <h3>The moment the facilitation became genuinely uncomfortable</h3>
+
+  <p>In the third workshop, the series reached its most difficult moment — which had been designed into it. Participants were asked to take one of their existing assessments and work through a structured analysis: what does this assessment actually measure? Is it measuring the stated learning outcome, or is it measuring something else — facility with a particular format, performance under time pressure, academic writing in a second language?</p>
+
+  <p>For most participants, this exercise produced useful insight with moderate discomfort. For two participants — both senior faculty with long-established courses — it produced genuine distress. One faculty member pushed back directly: "I've been designing this course for fifteen years. Are you telling me it's been excluding students the whole time?"</p>
+
+  <p>The facilitator did not reassure. Reassurance at that moment — "of course not, we're just asking questions" — would have been a form of dishonesty that undermined both the faculty member and the purpose of the workshop. Instead, the facilitator named what was happening: "That's a real question, and it's worth sitting with rather than resolving too quickly. The discomfort you're feeling right now is part of what this work asks of us. Can we stay with it for a moment?"</p>
+
+  <p>The room was quiet for longer than most professional development facilitators would allow. That silence was facilitated — held, rather than filled. Several participants spoke into it, including one who said: "I had the same feeling, and I think the honest answer is: probably yes, and probably not intentionally, and that's actually the most important thing to understand."</p>
+
+  <p>This is what inclusive facilitation looks like in practice: not the smooth delivery of content, but the skilled holding of difficulty — the ability to keep a group in productive contact with something hard rather than helping them around it.</p>
+
+  <h3>What the co-design session produced that the facilitators had not anticipated</h3>
+
+  <p>The fifth workshop was structured as a co-design session: faculty working in small groups to redesign one assessment from their own courses, using the frameworks introduced over the preceding four sessions. The facilitators had planned for this to be the practical consolidation of the series — the point where conceptual understanding became applied skill.</p>
+
+  <p>What it produced was something more interesting. In one group, a conversation surfaced about the institution's assessment governance: faculty members who wanted to redesign their assessments were discovering that many of the formats they were proposing would require approval processes they hadn't anticipated — and in some cases, approval from committees that had historically been resistant to assessment innovation. The frustration was real, and it was directed not at inclusive design principles but at the structural barriers to implementing them.</p>
+
+  <p>The facilitators had two choices: redirect the conversation back to the planned task, or stay with what the room had surfaced. They stayed — because what had emerged was exactly the kind of information that the systemic capacity building domain requires. The barrier was not knowledge or will. The barrier was governance. And governance is fixable.</p>
+
+  <p>The conversation produced, organically, a set of recommendations that the faculty group agreed to bring to the next curriculum committee meeting — including a proposal to create a streamlined approval pathway for assessment redesigns explicitly grounded in UDL principles. None of this had been in the brief. All of it was within scope — because the scope of inclusive facilitation is not the session, but what the session makes possible.</p>
+
+  <div class="callout">
+    <strong>What this illustrates</strong>
+    The most significant outcomes of this series were not the ones that were planned. They emerged from a design that was responsive enough to follow what the room surfaced — and from facilitation that was skilled enough to hold the difficulty those surfaces brought with them. The planned content was delivered. The unplanned content was where the real capacity building happened.
+  </div>
+
+  <h3>What didn't change</h3>
+
+  <p>Not everything shifted. Several faculty members who had been resistant at the outset remained skeptical at the close. The governance barriers that surfaced in the co-design session were real, and the proposal to the curriculum committee faced a longer road than participants had hoped. One department sent representatives who were present in body and largely absent in participation — a pattern the facilitation team documented carefully and flagged as a signal about where future capacity building work would need to focus.</p>
+
+  <p>Inclusive facilitation does not resolve institutional resistance. It creates the conditions in which resistance can be seen clearly — and in which the people who are ready to move can do so with shared language and commitment, in ways that build the conditions for others to follow. That is a slower and more honest account of what facilitation can do than most institutional briefs allow for. It is also a more accurate one.</p>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 4: BUILDING CAPACITY          -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-panel" id="panel-capacity" role="tabpanel" aria-labelledby="tab-capacity">
+<div class="content">
+
+  <h2>What changes — and when</h2>
+
+  <p>Inclusive facilitation creates change at two different horizons. The shorter-term outcomes are tangible and often visible within a series or engagement: a room that feels different, a conversation that goes somewhere it hasn't gone before, a group that has a shared language for something they could previously only feel. The longer-term shift is structural — and that shift is what determines whether the work endures or whether the institution reverts to its prior equilibrium once the external facilitator is no longer present.</p>
+
+  <h3>Shorter term — within the engagement</h3>
+
+  <div class="accordion">
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Power dynamics become visible and workable</span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>In most professional learning environments, power dynamics are present but unnamed — shaping who speaks, whose contributions are built on, and whose presence is assumed rather than earned. Inclusive facilitation does not eliminate these dynamics. It makes them visible enough to be worked with. Participants who have historically been silenced in a particular context can begin to contribute when the facilitation design actively creates conditions for them to do so. Dominant voices can begin to understand their own dominance when that dynamic is named honestly and without blame.</p>
+        <p>This shift — from unnamed to visible — is often the most significant thing that happens in a well-facilitated session. It creates the conditions for everything else.</p>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Shared language develops</span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>Organizations that can't talk about a problem can't fix it. One of the most durable outputs of a well-designed facilitation series is shared vocabulary — terms and frames that allow colleagues to talk with each other about inclusion and equity in ways that are specific enough to be actionable. Shared language is the infrastructure of shared practice. It is also, often, what makes it possible to name a problem in a governance meeting that previously could only be raised in informal conversation.</p>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Genuine participation is redistributed</span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>When facilitation is designed well, participation doesn't just increase — it changes in quality and distribution. Participants who were previously peripheral begin to contribute substantively. The contributions of participants from underrepresented groups are heard and built on rather than acknowledged and moved past. This redistribution is not always comfortable. It often surfaces disagreement that was previously suppressed. That is part of the point: real participation includes real dissent, and a facilitated environment that can hold dissent is more durable than one that maintains consensus by excluding the voices most likely to challenge it.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem;">Longer term — across cycles and sustained commitment</h3>
+
+  <div class="accordion">
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Inclusion becomes a design question, not a compliance question</span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>Organizations that have invested in genuine facilitation capacity building tend to ask different questions about new learning events: not "are we compliant?" but "who is this designed for, and who isn't?" That shift — from reactive to proactive, from compliance to design — is the deepest form of institutional change. It is also the most durable, because it is embedded in how people think rather than in a policy that can be deprioritized when other pressures arrive.</p>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Internal facilitators develop and become visible</span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>Organizations that rely entirely on external facilitation support for their inclusion work are in a permanent state of dependency. Capacity building means something specific here: identifying and developing internal practitioners who can facilitate inclusive learning environments, support their colleagues, and sustain the work across time. This requires intentional attention to who is being developed and supported — and to whether the people closest to the work of inclusion are being recognized and resourced appropriately for the labor they are already doing, often invisibly.</p>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Structural supports outlast individual facilitators</span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <p>The most important indicator of successful capacity building is whether inclusive practice continues when the people who built it leave. Structural supports — accessible templates, facilitation guides, governance pathways for design innovation, ongoing communities of practice — are what create that continuity. They are also the things most often under-resourced in institutional inclusion efforts, because they are less visible than workshops and more expensive than commitments. Naming and advocating for these structures is part of what an external facilitator can do that internal advocates sometimes cannot.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <h2>What shapes a facilitation and capacity building engagement</h2>
+
+  <p>No two engagements look the same. The decisions an organization makes about scope, entry point, and who is at the table determine what kind of work is possible and what it can realistically produce.</p>
+
+  <div class="accordion">
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Scope <span class="sub">What is being built</span></span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <ul>
+          <li><strong>Session or series</strong> — facilitation of one or more learning events, with attention to inclusive design throughout</li>
+          <li><strong>Facilitation development</strong> — building the facilitation capacity of internal practitioners through modelling, mentoring, and structured practice</li>
+          <li><strong>Organizational capacity building</strong> — developing the structures, shared language, and leadership that sustain inclusive practice institutionally</li>
+          <li><strong>Facilitation audit</strong> — reviewing existing facilitation practices and learning environments for accessibility and equity, with recommendations for change</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Entry point <span class="sub">Where the engagement begins</span></span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <ul>
+          <li><strong>Proactive design</strong> — building inclusive facilitation practice into new programs, events, or series before they launch. The most effective entry point: inclusion built in from the start</li>
+          <li><strong>Responsive redesign</strong> — reworking existing facilitation approaches in light of identified gaps or feedback</li>
+          <li><strong>Crisis response</strong> — supporting organizations navigating a specific incident or complaint. More complex: requires addressing both the immediate situation and the underlying design problems that produced it</li>
+          <li><strong>Audit-first</strong> — reviewing what currently exists before recommending what to change. Often the most responsible starting point when the design history is unclear</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn" aria-expanded="false">
+        <span>Who is at the table <span class="sub">Whose knowledge shapes the work</span></span>
+        <span class="accordion-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="accordion-body">
+        <ul>
+          <li><strong>Facilitators and learning designers</strong> — people who will be directly developing and delivering facilitated experiences</li>
+          <li><strong>Participants and learners</strong> — people who have been in the learning environments being examined; the most reliable source of information about where the design creates friction</li>
+          <li><strong>Institutional leaders</strong> — people with authority over the structural and governance decisions that determine whether inclusive practice can scale</li>
+          <li><strong>Equity and inclusion specialists</strong> — people with expertise in the specific equity dimensions most relevant to the institutional context</li>
+        </ul>
+        <p style="margin-top:0.75rem;">The people closest to the barrier are the most useful guides to finding it. Capacity building work designed without input from the communities most affected by existing facilitation practices tends to produce changes that are visible on paper and marginal in experience.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 5: REFLECTION                 -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-panel" id="panel-reflection" role="tabpanel" aria-labelledby="tab-reflection">
+<div class="content">
+
+  <h2>A facilitated reflection</h2>
+
+  <p>The questions below are not an evaluation instrument. They are not designed to produce a score, a category, or a gap analysis. They are designed to do what good facilitation does: bring a group into honest contact with something that is easy to talk about in the abstract and harder to examine in relation to your own practice.</p>
+
+  <p>They work best when worked through with colleagues who hold different roles and perspectives — because the most useful answers to these questions are rarely held by one person alone. The conversations they generate are often more valuable than any answer they produce.</p>
+
+  <p>Take your time. The questions that feel most uncomfortable are usually the ones worth staying with longest.</p>
+
+  <div class="callout" style="margin-bottom:2rem;">
+    <strong>Before you begin</strong>
+    Consider who is in the room for this conversation — and who isn't. The answers you reach will reflect the perspectives present. That is worth noticing explicitly rather than leaving implicit.
+  </div>
+
+  <div class="reflection-q-group">
+    <h3>On whose presence the design assumes</h3>
+    <p class="reflection-q">Who is the implied participant in your facilitation — the person your design assumes, whether explicitly or not? What language background, professional context, access needs, and relationship to institutional power does that person have?</p>
+    <p class="reflection-q">In what ways do your facilitation environments currently require participants to adapt to them — rather than having been designed to work for the range of people who actually show up?</p>
+    <p class="reflection-q">If your most marginalized participant navigated one of your sessions from start to finish, where would they encounter friction — in the materials, the pacing, the way participation is structured, or the dynamics of the group?</p>
+  </div>
+
+  <div class="reflection-q-group">
+    <h3>On power in the room</h3>
+    <p class="reflection-q">In a typical facilitated session in your context, whose contributions are built on and extended — and whose are acknowledged and moved past? Is that pattern connected to anything other than the quality of the contribution itself?</p>
+    <p class="reflection-q">What does disagreement look like in your facilitated environments? Is it possible for participants to genuinely disagree with the framing of the session itself — and what happens when they try?</p>
+    <p class="reflection-q">How does your own position — your role, your identity, your relationship to the institution — shape what you can and cannot name in the rooms you facilitate?</p>
+  </div>
+
+  <div class="reflection-q-group">
+    <h3>On what you have and haven't examined</h3>
+    <p class="reflection-q">What assumptions about "good facilitation" do you hold that you have not recently examined? Where did those assumptions come from, and whose facilitation practice do they reflect?</p>
+    <p class="reflection-q">When facilitation in your context hasn't worked well for particular participants, what explanation has been reached for why? Has that explanation located the problem in the participant, or in the design?</p>
+    <p class="reflection-q">What feedback from participants have you received — formally or informally — that you found difficult to act on? What made it difficult?</p>
+  </div>
+
+  <div class="reflection-q-group">
+    <h3>On what your organization is actually building</h3>
+    <p class="reflection-q">When a facilitator in your organization leaves, what of their inclusive practice leaves with them? What structures, relationships, and shared knowledge remain?</p>
+    <p class="reflection-q">Who in your organization is already doing the labor of inclusive facilitation, often without recognition or resourcing? What would it mean to make that labor visible and support it appropriately?</p>
+    <p class="reflection-q">What is the most honest description of where your organization currently sits in relation to genuinely inclusive facilitation — and what is one realistic next step, given your actual resources, relationships, and constraints?</p>
+  </div>
+
+  <div class="callout">
+    These questions don't have quick answers, and that is by design. The organizations that make the most meaningful progress on inclusive facilitation tend to be those that create genuine space for honest conversations about where the gaps actually are — not where they would like them to be.
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════════ -->
+<!-- TAB 6: SCHOLARLY FOUNDATIONS      -->
+<!-- ══════════════════════════════════ -->
+<div class="tab-panel" id="panel-sources" role="tabpanel" aria-labelledby="tab-sources">
+<div class="content">
+
+  <h2>Where this work is grounded</h2>
+
+  <p>The strongest scholarly foundations for inclusive facilitation cluster around four pillars: Universal Design for Learning, inclusive and participatory design, organizational change and capacity building, and the disability studies and critical equity scholarship that grounds the whole. None of these pillars is sufficient on its own. Together, they provide the knowledge base from which principled facilitation practice is built.</p>
+
+  <p>A practical rule, drawn from this literature: use WCAG for the artifact, UDL for the learning experience, and inclusive design for the system.</p>
+
+  <div class="rule-row" aria-label="Practical rule: three tools for three scopes">
+    <div class="rule-cell">
+      <p class="rule-for">For the artifact</p>
+      <p class="rule-what">WCAG</p>
+      <p class="rule-why">Audit digital content for perceivability, operability, and robustness. The technical floor — necessary, but not sufficient.</p>
+    </div>
+    <div class="rule-cell">
+      <p class="rule-for">For the experience</p>
+      <p class="rule-what">UDL</p>
+      <p class="rule-why">Evaluate whether the learning experience offers multiple means of engagement, representation, and expression — designed for variability, not the average.</p>
+    </div>
+    <div class="rule-cell">
+      <p class="rule-for">For the system</p>
+      <p class="rule-what">Inclusive Design</p>
+      <p class="rule-why">Ask whether the organization's processes, policies, and culture reduce barriers across the whole participant journey — not just in individual sessions.</p>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <h2>Core scholarly foundations</h2>
+
+  <ul class="source-list">
+    <li class="source-item">
+      <p class="source-tier">Pillar 01 — Universal Design for Learning</p>
+      <h3>CAST: UDL Guidelines</h3>
+      <p>The most widely used framework for proactively designing learning that supports variability in engagement, representation, and action and expression. The key scholarly-practice bridge for inclusive facilitation design — providing the structural question: what does this learning environment assume about who can participate, and how?</p>
+    </li>
+    <li class="source-item">
+      <p class="source-tier">Pillar 01 — Universal Design for Learning</p>
+      <h3>Bracken &amp; Novak — Universal Design in Postsecondary Education</h3>
+      <p>A strong higher-education anchor for understanding how universal design moves from theory into teaching, facilitation, and institutional culture. Particularly useful for connecting facilitation practice to the governance and policy frameworks that shape what is possible in postsecondary contexts.</p>
+    </li>
+    <li class="source-item">
+      <p class="source-tier">Pillar 01 — Universal Design for Learning</p>
+      <h3>Burgstahler — Inclusive Higher Education Scholarship</h3>
+      <p>Especially useful for practical institutional applications — accessible materials, facilitation design, and barrier-free environments. Bridges the framework and the practitioner in ways directly applicable to professional development facilitation contexts.</p>
+    </li>
+    <li class="source-item">
+      <p class="source-tier">Pillar 02 — Inclusive and Participatory Design</p>
+      <h3>Inclusive Design Research Centre (OCAD University)</h3>
+      <p>A major scholarly and applied research hub for inclusive design, accessibility innovation, and standards-oriented work across sectors. The IDRC's approach to design as a relational practice — not just a technical one — directly informs the collaborative and participatory domain of facilitation competency.</p>
+    </li>
+    <li class="source-item">
+      <p class="source-tier">Pillar 02 — Inclusive and Participatory Design</p>
+      <h3>UNESCO IESALC — Inclusion in Higher Education</h3>
+      <p>Provides a systems-level perspective on inclusion in higher education essential for capacity building work. Particularly useful for understanding how institutional culture, governance, and leadership intersect with facilitation practice — and for building the case for systemic change with senior institutional leaders.</p>
+    </li>
+    <li class="source-item">
+      <p class="source-tier">Pillar 03 — Organizational Change and Capacity Building</p>
+      <h3>CIRTL Network — Inclusive Teaching Scholarship</h3>
+      <p>The Center for the Integration of Research, Teaching, and Learning produces scholarship on inclusive teaching in graduate and research contexts directly relevant to capacity building in research institutions. Particularly useful for understanding how reflective practice and positionality are developed in practitioners over time.</p>
+    </li>
+    <li class="source-item">
+      <p class="source-tier">Pillar 03 — Organizational Change and Capacity Building</p>
+      <h3>Recent Systematic Reviews of UDL Effectiveness</h3>
+      <p>Helpful when you need evidence that UDL improves outcomes — not just compliance — and when briefing leaders or governance bodies. Demonstrates that accessible, inclusive facilitation supports retention, participation, and equity rather than being only a legal or ethical requirement.</p>
+    </li>
+    <li class="source-item">
+      <p class="source-tier">Pillar 04 — Disability Studies and Critical Equity Scholarship</p>
+      <h3>IAAP CPACC Body of Knowledge</h3>
+      <p>The clearest cross-disciplinary foundation for accessibility competency — integrating disability knowledge, universal design, and management systems. For facilitation contexts, the sections on disability models and the lived experience of barriers are foundational for the reflective practice domain. Pair with WAS Body of Knowledge and WCAG for full coverage.</p>
+    </li>
+  </ul>
+
+  <hr class="section-rule">
+
+  <h2>How to use this scholarship in practice</h2>
+
+  <p>For facilitation design, use UDL to judge whether a learning environment offers multiple ways to engage, access, and demonstrate learning — and use WCAG to audit the digital content within it. Use inclusive design scholarship to move beyond minimum compliance and ask whether the organization's processes, policies, and facilitation practices reduce barriers across the whole participant journey.</p>
+
+  <p>For reporting to institutional leaders, pair standards-based findings with higher-education evidence showing that accessible, inclusive facilitation supports retention, participation, and equity — rather than being only a legal or ethical obligation. The strongest institutional case for investment is not the compliance argument, though that argument is real. It is the evidence that better-designed facilitation produces better outcomes for more participants.</p>
+
+  <p>For capacity building work, the organizational change and critical equity scholarship provides the analytical frame — helping practitioners and institutions understand not just what to change, but why current conditions persist and what it actually takes to shift them.</p>
+
+  <div class="references">
+    <h3>Key references</h3>
+    <ul>
+      <li>CAST. (Ongoing). UDL Guidelines. CAST.org. Core framework for designing flexible learning environments that support variability through multiple means of engagement, representation, and expression.</li>
+      <li>Burgstahler, S. E. (Ed.). (2015). Universal Design in Higher Education: From Principles to Practice. Harvard Education Press. Foundational text for institutional application of universal design in postsecondary contexts.</li>
+      <li>Bracken, S., &amp; Novak, K. (Eds.). (2019). Transforming Higher Education Through Universal Design for Learning. Routledge. Connects universal design theory to teaching, facilitation, and institutional culture.</li>
+      <li>Inclusive Design Research Centre. (Ongoing). Inclusive Design for Learning. OCAD University. Hub for inclusive design scholarship, accessibility innovation, and adaptable learning materials.</li>
+      <li>Ok, M. W., et al. (2024). The effectiveness of universal design for learning: A systematic review of the literature and meta-analysis. Cogent Education. Evidence-based analysis of UDL's positive impact on inclusive learning outcomes.</li>
+      <li>IAAP. (Ongoing). CPACC Body of Knowledge. International Association of Accessibility Professionals. Cross-disciplinary foundation integrating disability knowledge, universal design, and management systems.</li>
+    </ul>
+  </div>
+
+</div>
+</div>
+
+</main>
+
+<footer class="page-footer">
+  <p>Developed by <strong>Accessible Learning Labs</strong> to support organizations and learning designers working toward more inclusive facilitation and capacity building practice. It does not constitute legal advice.</p>
+  <p style="margin-top:0.75rem;">A <a href="inclusive-facilitation-linear.html">screen reader and keyboard-optimised version</a> of this resource is also available.</p>
+</footer>
+
+<script>
+  function switchTab(panelId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.setAttribute('aria-selected', btn.getAttribute('aria-controls') === panelId ? 'true' : 'false');
+    });
+    document.querySelectorAll('.tab-panel').forEach(panel => {
+      panel.classList.toggle('active', panel.id === panelId);
+    });
+    document.querySelector('#main-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.getAttribute('aria-controls')));
+    btn.addEventListener('keydown', e => {
+      const tabs = [...document.querySelectorAll('.tab-btn')];
+      const idx = tabs.indexOf(btn);
+      if (e.key === 'ArrowRight') tabs[(idx + 1) % tabs.length].focus();
+      if (e.key === 'ArrowLeft')  tabs[(idx - 1 + tabs.length) % tabs.length].focus();
+    });
+  });
+
+  document.querySelectorAll('.accordion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      btn.nextElementSibling.style.display = expanded ? 'none' : 'block';
+    });
+  });
+</script>
+
+</body>
+</html>
