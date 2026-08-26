@@ -1,959 +1,1194 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+  ═══════════════════════════════════════════════════════════════════════════
+  KNOWLEDGE RESOURCE TEMPLATE — INTERACTIVE
+  Template version 1.0.0 — Accessible Learning Labs — Course and Curriculum Design
+
+  Pair file: linear.html (same content, no tabs, no JS)
+  Set the branch by changing data-branch on <html> below.
+  Every block you edit is marked EDIT. Everything else is chrome.
+  ═══════════════════════════════════════════════════════════════════════════
+-->
+<html lang="en" data-branch="access">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inclusive Course and Curriculum Design — Accessible Learning Labs</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 
-    :root {
-      --bg:          #ffffff;
-      --surface:     #f4f6f7;
-      --border:      #d0d8db;
-      --text:        #303e44;
-      --text-2:      #566870;
-      --accent:      #475f6a;
-      --accent-lt:   #eaeeef;
-      --accent-md:   #7a9299;
-      --note-bg:     #f0f3f4;
-      --note-border: #b8c5c9;
-      --r:  6px;
-      --rl: 10px;
-      --f:  "Asap", system-ui, sans-serif;
-    }
+<!-- EDIT — title is "<Resource title> — <Branch> — Knowledge Resource" -->
+<title>Course and Curriculum Design — Accessible Learning Labs — Knowledge Resource</title>
+<!-- EDIT — 1–2 plain sentences. Shows in search results and link previews. -->
+<meta name="description" content="How inclusive course and curriculum design is carried out: the bodies of knowledge it draws on, the stages of the work, the decisions that shape it, and the outcomes the evidence does and does not support.">
 
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--f); line-height: 1.7; }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap">
 
-    /* skip link */
-    .skip { position: absolute; top: -100%; left: 1rem; background: var(--accent); color: #fff;
-            padding: .5rem 1rem; border-radius: var(--r); font-size: .875rem; text-decoration: none; z-index: 999; }
-    .skip:focus { top: 1rem; }
+<script>document.documentElement.classList.add('js');</script>
 
-    /* header */
-    .site-header { background: var(--bg); border-bottom: 1px solid var(--border);
-                   padding: .75rem 2rem; font-size: .8125rem; color: var(--text-2); }
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   1. TOKENS — shared block, identical in both templates. Do not edit per page.
+   Contrast ratios below are measured against the surface each token is used
+   on. Every text token clears WCAG 1.4.3 (4.5:1); every control boundary
+   clears 1.4.11 (3:1).
+   ══════════════════════════════════════════════════════════════════════════ */
+:root{
+  /* surfaces */
+  --paper:#ffffff;
+  --surface:#f5f6f7;
+  --sunk:#eaecee;
 
-    /* page wrapper */
-    .wrap { max-width: 860px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+  /* ink — ratios on --paper / --sunk */
+  --ink:#303e44;        /* 11.06 / 9.34 — headings, emphasis */
+  --ink-mid:#4f6068;    /*  6.55 / 5.53 — body copy */
+  --ink-muted:#576a73;  /*  5.65 / 4.77 — labels, captions, metadata */
+  --on-branch:#ffffff;
 
-    /* title block */
-    .title-block { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
-    h1 { font-size: clamp(1.6rem, 4vw, 2.1rem); font-weight: 400; line-height: 1.25;
-         color: var(--text); margin-bottom: .75rem; }
-    .subtitle { font-size: .9375rem; color: var(--text-2); line-height: 1.5; }
+  /* rules */
+  --rule:#d5dde1;       /* 1.38 — decorative hairlines ONLY, never a control edge */
+  --rule-strong:#7b8990;/* 3.61 — edges of buttons, inputs, focusable cards */
 
-    /* info banner */
-    .banner { display: flex; gap: .75rem; align-items: flex-start;
-              background: var(--accent-lt); border: 1px solid #c0cdd1; border-radius: var(--r);
-              padding: .875rem 1.1rem; margin-bottom: 2rem; font-size: .875rem;
-              color: #2e3f45; line-height: 1.5; }
-    .banner a { color: var(--accent); }
+  /* branch identity — see §2. --branch is non-text (bars, dots, edges);
+     --branch-text is the text-safe variant. Never swap them. */
+  --branch:#8a6a60;
+  --branch-text:#88685f;
+  --wash:color-mix(in srgb, var(--branch) 8%, var(--paper));
 
-    /* tabs */
-    nav .tab-row { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 2.5rem;
-                   overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .tab { font-size: .875rem; font-weight: 500; color: var(--text-2); background: none;
-           border: none; border-bottom: 2px solid transparent; margin-bottom: -2px;
-           padding: .75rem 1.1rem; cursor: pointer; white-space: nowrap;
-           border-radius: var(--r) var(--r) 0 0;
-           transition: color .15s, border-color .15s, background .15s; }
-    .tab:hover { color: var(--accent); background: var(--accent-lt); }
-    .tab[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); background: var(--accent-lt); }
-    .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* focus */
+  --focus:#303e44;
+  --focus-halo:#ffffff;
 
-    /* panels */
-    .panel { display: none; animation: fade .2s ease; }
-    .panel.active { display: block; }
-    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  /* scale */
+  --measure:66ch;
+  --shell:min(100% - 2.5rem, 54rem);
+  --r:8px;
+  --r-sm:5px;
+  --ease:cubic-bezier(.22,.61,.36,1);
 
-    /* typography */
-    h2 { font-size: 1.5rem; font-weight: 400; color: var(--text); margin-bottom: .5rem; line-height: 1.3; }
-    .lead { font-size: 1rem; color: var(--text-2); margin-bottom: 2rem; max-width: 65ch; }
-    h3 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 .4rem; }
-    h4 { font-size: .875rem; font-weight: 600; color: var(--text-2);
-         text-transform: uppercase; letter-spacing: .06em; margin: 1rem 0 .5rem; }
-    p { margin-bottom: 1em; }
-    p:last-child { margin-bottom: 0; }
-    ul, ol { padding-left: 1.4em; margin-bottom: 1em; }
-    li { margin-bottom: .3em; }
-    strong { font-weight: 600; }
-    a { color: var(--accent); }
+  --sans:"Asap",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
 
-    /* callout */
-    .callout { background: var(--note-bg); border-left: 3px solid var(--note-border);
-               border-radius: 0 var(--r) var(--r) 0; padding: .9rem 1.1rem; margin: 1.5rem 0;
-               font-size: .875rem; color: var(--text-2); line-height: 1.55; }
-    .callout strong { color: var(--text); }
+/* ── 2. BRANCH THEMES ──────────────────────────────────────────────────────
+   Colours are the landscape map's own. Where the map colour fell below 4.5:1
+   as text, a darkened text variant is supplied; the map colour is kept for
+   non-text use so the two surfaces still read as the same branch. */
+[data-branch="trunk"] {--branch:#55666e;--branch-text:#55666e;}
+[data-branch="access"]{--branch:#8a6a60;--branch-text:#88685f;}
+[data-branch="epist"] {--branch:#7a5c6b;--branch-text:#7a5c6b;}
+[data-branch="eval"]  {--branch:#41697a;--branch-text:#41697a;}
+[data-branch="hr"]    {--branch:#3f5570;--branch-text:#3f5570;}
+[data-branch="hwe"]   {--branch:#2e5f8a;--branch-text:#2e5f8a;}
+[data-branch="kmb"]   {--branch:#47607a;--branch-text:#47607a;}
+[data-branch="lxd"]   {--branch:#4c6b66;--branch-text:#4c6b66;}
+[data-branch="lsd"]   {--branch:#6d6550;--branch-text:#6d6550;}
+[data-branch="public"]{--branch:#5b7d8c;--branch-text:#557482;}
+[data-branch="udl"]   {--branch:#635f7a;--branch-text:#635f7a;}
 
-    /* highlight box */
-    .hl { background: var(--accent-lt); border: 1px solid #c0cdd1; border-radius: var(--rl);
-          padding: 1.1rem 1.35rem; margin: 1.75rem 0; font-size: .9rem;
-          line-height: 1.6; color: #2b3c42; }
-    .hl strong { color: var(--text); }
+/* ── 3. RESET & BASE ─────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:1.0625rem;      /* 17px — no text below 0.8125rem anywhere */
+  line-height:1.65;
+  color:var(--ink-mid);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+}
+/* 1.4.12 Text Spacing: nothing that holds text gets a fixed height. */
+h1,h2,h3,h4,p,ul,ol,dl,figure,blockquote{margin:0;}
+/* Form controls take a UA font unless told otherwise, so route them through
+   the same stack as everything else. Without this, radios, buttons, legends
+   and any field added later render in Arial. */
+button,input,select,textarea,optgroup,legend{font:inherit;}
+img,svg{max-width:100%;height:auto;}
+:target{scroll-margin-top:6rem;}
 
-    /* 2-col card grid */
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
-    @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
-    .card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--rl);
-            padding: 1.25rem 1.35rem; }
-    .card-icon { font-size: 1.5rem; margin-bottom: .6rem; display: block; }
-    .card-sub { font-size: .8125rem; color: var(--text-2); margin-bottom: .75rem; }
-    .card-body { font-size: .875rem; line-height: 1.65; }
-    .card-body p { margin-bottom: .35em; color: var(--text-2); }
-    .card-body strong { color: var(--text); }
+/* 2.4.7 / 2.4.11 — one focus treatment, everywhere, thick enough to survive
+   any background it lands on. */
+:focus{outline:none;}
+:focus-visible{
+  outline:3px solid var(--focus);
+  outline-offset:2px;
+  border-radius:2px;
+  box-shadow:0 0 0 6px var(--focus-halo);
+}
 
-    /* accordions */
-    .stages { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.5rem; }
-    .stage { border: 1px solid var(--border); border-radius: var(--rl); overflow: hidden; background: var(--bg); }
-    .stage-btn { width: 100%; display: grid; grid-template-columns: 2rem 1fr auto auto;
-                 align-items: center; gap: 1rem; padding: 1rem 1.25rem;
-                 background: none; border: none; cursor: pointer; text-align: left; transition: background .15s; }
-    .stage-btn:hover { background: var(--accent-lt); }
-    .stage-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-    .stage-btn[aria-expanded="true"] { background: var(--accent-lt); }
-    .stage-num { font-size: 1.1rem; font-weight: 700; color: var(--accent-md); }
-    .stage-titles { display: flex; flex-direction: column; gap: .15rem; }
-    .stage-eyebrow { font-size: .68rem; font-weight: 600; text-transform: uppercase;
-                     letter-spacing: .08em; color: var(--accent-md); }
-    .stage-name { font-size: 1.05rem; color: var(--text); }
-    .stage-desc { font-size: .8rem; color: var(--text-2); }
-    .tags { display: flex; gap: .4rem; flex-wrap: wrap; }
-    .tag { font-size: .7rem; font-weight: 500; color: var(--accent); background: var(--accent-lt);
-           border: 1px solid #c0cdd1; border-radius: 20px; padding: .2em .65em; white-space: nowrap; }
-    .chevron { font-size: .7rem; color: var(--text-2); transition: transform .2s; }
-    .stage-btn[aria-expanded="true"] .chevron { transform: rotate(180deg); }
-    .stage-body { display: none; padding: 0 1.25rem 1.25rem; font-size: .9375rem; line-height: 1.7; }
-    .stage-body.open { display: block; }
+h1,h2,h3,h4{color:var(--ink);line-height:1.22;text-wrap:balance;font-weight:600;}
+h1{font-size:clamp(1.75rem,1.3rem + 1.9vw,2.4rem);letter-spacing:-.015em;font-weight:700;}
+h2{font-size:clamp(1.375rem,1.2rem + .7vw,1.6rem);letter-spacing:-.01em;}
+h3{font-size:1.125rem;}
+h4{font-size:1rem;}
+p{max-width:var(--measure);}
+p + p{margin-top:.85em;}
 
-    /* impact */
-    .impact-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem; }
-    @media (max-width: 600px) { .impact-cols { grid-template-columns: 1fr; } }
-    .col-label { font-size: .75rem; font-weight: 700; text-transform: uppercase;
-                 letter-spacing: .08em; color: var(--accent-md); margin-bottom: 1rem; }
-    .impact-item { display: flex; gap: .75rem; margin-bottom: 1.25rem; align-items: flex-start; }
-    .icon-circle { flex-shrink: 0; width: 1.25rem; height: 1.25rem; background: var(--accent-lt);
-                   border: 1.5px solid var(--accent-md); border-radius: 50%;
-                   display: flex; align-items: center; justify-content: center;
-                   font-size: .65rem; color: var(--accent); margin-top: .2rem; }
-    .impact-text h4 { font-size: .875rem; margin-bottom: .2rem; color: var(--text);
-                      text-transform: none; letter-spacing: 0; margin-top: 0; }
-    .impact-text p { font-size: .875rem; color: var(--text-2); margin: 0; }
+a{color:var(--branch-text);text-underline-offset:.18em;text-decoration-thickness:1px;}
+a:hover{text-decoration-thickness:2px;}
 
-    /* scenario cards */
-    .scenario-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--rl);
-                     padding: 1.35rem; margin-bottom: 1.25rem; }
-    .scenario-hd { display: flex; gap: .75rem; align-items: flex-start; margin-bottom: .75rem; }
-    .scenario-icon { font-size: 1.4rem; flex-shrink: 0; }
-    .scenario-card h3 { margin-top: 0; }
-    .scenario-card p { font-size: .9375rem; }
-    .change-box { background: var(--note-bg); border-left: 3px solid var(--note-border);
-                  border-radius: 0 var(--r) var(--r) 0; padding: .9rem 1.1rem; margin: 1.1rem 0;
-                  font-size: .875rem; color: var(--text-2); line-height: 1.55; }
-    .change-box strong { color: var(--text); display: block; margin-bottom: .4rem; }
+strong,b{color:var(--ink);font-weight:600;}
+code{font-family:var(--sans);font-size:.94em;font-weight:600;letter-spacing:.04em;
+  background:var(--sunk);padding:.1em .38em;border-radius:3px;color:var(--ink);}
 
-    /* reflection */
-    .r-intro { font-size: .9375rem; color: var(--text-2); margin-bottom: 1.5rem; }
-    .r-q { background: var(--bg); border: 1px solid var(--border); border-radius: var(--rl);
-           padding: 1.1rem 1.25rem; margin-bottom: .75rem; }
-    .r-q-text { font-size: .9375rem; margin-bottom: .75rem; }
-    .r-opts { display: flex; flex-direction: column; gap: .4rem; }
-    .r-opt { display: flex; align-items: flex-start; gap: .6rem; cursor: pointer;
-             font-size: .875rem; color: var(--text-2); padding: .35rem 0; line-height: 1.4; }
-    .r-opt input[type="radio"] { accent-color: var(--accent); margin-top: .15rem; flex-shrink: 0; }
-    .r-submit-row { margin-top: 1.25rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .r-submit { background: var(--accent); color: #fff; border: none; border-radius: var(--r);
-                padding: .65rem 1.4rem; font-family: var(--f); font-size: .875rem; font-weight: 600;
-                cursor: pointer; transition: background .15s; }
-    .r-submit:hover { background: #374d56; }
-    .r-submit:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    .r-warn { font-size: .8125rem; color: var(--text-2); display: none; }
-    .r-result { margin-top: 2rem; border-top: 2px solid var(--border); padding-top: 1.75rem; display: none; }
-    .r-result.show { display: block; }
-    .r-pattern { font-size: .8125rem; font-weight: 700; text-transform: uppercase;
-                 letter-spacing: .08em; color: var(--accent-md); margin-bottom: .5rem; }
-    .r-heading { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: .75rem; }
-    .r-body { font-size: .9rem; color: var(--text-2); line-height: 1.65; margin-bottom: 1.25rem; }
-    .r-qs { background: var(--note-bg); border-left: 3px solid var(--note-border);
-            border-radius: 0 var(--r) var(--r) 0; padding: 1rem 1.1rem; }
-    .r-qs p { font-size: .875rem; font-weight: 600; color: var(--text); margin-bottom: .6rem; }
-    .r-qs ul { padding-left: 1.2em; margin: 0; }
-    .r-qs li { font-size: .875rem; color: var(--text-2); margin-bottom: .4em; line-height: 1.5; }
-    .r-reset { margin-top: 1.25rem; background: none; border: 1px solid var(--border);
-               border-radius: var(--r); padding: .5rem 1rem; font-family: var(--f);
-               font-size: .8125rem; color: var(--text-2); cursor: pointer; transition: border-color .15s; }
-    .r-reset:hover { border-color: var(--accent); color: var(--accent); }
+.shell{width:var(--shell);margin-inline:auto;}
+.eyebrow{font-size:.8125rem;font-weight:600;letter-spacing:.13em;word-spacing:.14em;text-transform:uppercase;
+  color:var(--branch-text);margin:0 0 .7rem;}
+.label{font-size:.8125rem;font-weight:700;letter-spacing:.1em;word-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-muted);display:block;margin-bottom:.5rem;}
+.lede{font-size:1.1875rem;line-height:1.55;color:var(--ink-mid);max-width:38em;}
+.muted{color:var(--ink-muted);font-size:.9375rem;}
+.stack > * + *{margin-top:1.15rem;}
+.rule{border:0;border-top:1px solid var(--rule);margin:2.5rem 0;}
 
-    /* citations */
-    .cite-section { margin-bottom: 2.5rem; }
-    .cite-section h3 { font-size: .875rem; font-weight: 700; text-transform: uppercase;
-                       letter-spacing: .07em; color: var(--accent-md); margin-top: 2rem;
-                       margin-bottom: 1rem; padding-bottom: .4rem; border-bottom: 1px solid var(--border); }
-    .cite-section h3:first-child { margin-top: 0; }
-    .cite { margin-bottom: 1.1rem; padding: .9rem 1.1rem; background: var(--bg);
-            border: 1px solid var(--border); border-radius: var(--r);
-            font-size: .875rem; line-height: 1.65; }
-    .cite-lbl { font-size: .7rem; font-weight: 700; text-transform: uppercase;
-                letter-spacing: .08em; color: var(--accent-md); margin-bottom: .35rem; }
-    .cite p { margin: 0; color: var(--text-2); }
-    .cite strong { color: var(--text); }
-    .cite a { color: var(--accent); word-break: break-all; }
+/* ── 4. SKIP LINKS ───────────────────────────────────────────────────────── */
+.skips{position:absolute;top:0;left:0;z-index:200;}
+.skips ul{list-style:none;margin:0;padding:0;display:flex;gap:.5rem;}
+.skips a{
+  position:absolute;left:-9999px;
+  display:inline-block;white-space:nowrap;
+  background:var(--ink);color:var(--paper);text-decoration:none;
+  font-size:.9375rem;font-weight:600;padding:.7rem 1.1rem;border-radius:0 0 var(--r-sm) 0;
+}
+.skips a:focus{position:static;}
 
-    /* footer */
-    .page-footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border);
-                   font-size: .8125rem; color: var(--text-2); line-height: 1.6; }
-    .page-footer a { color: var(--accent); }
+/* ── 5. MASTHEAD ─────────────────────────────────────────────────────────── */
+.masthead{background:var(--paper);border-bottom:1px solid var(--rule);}
+.masthead .shell{padding:2.5rem 0 2rem;}
+.masthead h1{margin-bottom:.75rem;max-width:24ch;}
+.brandbar{height:3px;width:3.5rem;background:var(--branch);border-radius:2px;margin-bottom:1.5rem;}
 
-    @media (max-width: 600px) { .wrap { padding: 2rem 1.1rem 4rem; } }
-  </style>
+/* the orientation note: who this is for, and how to move through it */
+.orient{
+  margin-top:1.75rem;background:var(--wash);
+  border:1px solid var(--rule);border-left:3px solid var(--branch);
+  border-radius:0 var(--r-sm) var(--r-sm) 0;
+  padding:1rem 1.15rem;font-size:.9375rem;max-width:var(--measure);
+}
+.orient p{max-width:none;}
+.orient p + p{margin-top:.6rem;}
+
+/* ── 6. TAB NAVIGATION ───────────────────────────────────────────────────
+   Without JS these are ordinary in-page links and every section is visible.
+   With JS they are upgraded to an ARIA tablist. */
+.sectionnav{
+  background:var(--paper);border-bottom:1px solid var(--rule);
+  position:sticky;top:0;z-index:50;
+}
+.tablist{display:flex;gap:.15rem;overflow-x:auto;scrollbar-width:thin;}
+.tablist a{
+  flex:0 0 auto;
+  display:flex;align-items:center;min-height:2.75rem;   /* 2.5.8 target size */
+  padding:.75rem .9rem;
+  font-size:.9375rem;font-weight:500;color:var(--ink-mid);
+  text-decoration:none;border-bottom:3px solid transparent;
+  transition:color .15s var(--ease),border-color .15s var(--ease);
+}
+.tablist a:hover{color:var(--ink);border-bottom-color:var(--rule-strong);}
+.tablist a[aria-selected="true"]{
+  color:var(--branch-text);font-weight:600;border-bottom-color:var(--branch);
+}
+.js .sectionnav .shell{position:relative;}
+
+/* ── 7. PANELS ───────────────────────────────────────────────────────────── */
+main .shell{padding:2.75rem 0 5rem;}
+.panel{max-width:none;}
+.panel[hidden]{display:none;}
+.panel > h2{margin-bottom:.5rem;max-width:var(--measure);}
+.panel h3{margin-top:2rem;margin-bottom:.5rem;}
+.panel h3:first-of-type{margin-top:1.75rem;}
+.panel > .panel-lede{margin-bottom:2rem;}
+.js .panel + .panel{margin-top:0;}
+html:not(.js) .panel + .panel{margin-top:3.5rem;padding-top:3rem;border-top:1px solid var(--rule);}
+.panel:focus{outline:none;}
+
+.panel-count{font-size:.8125rem;font-weight:700;letter-spacing:.1em;word-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-muted);display:block;margin-bottom:.55rem;}
+
+/* ── 8. CARDS ────────────────────────────────────────────────────────────── */
+.cards{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));
+  margin:1.75rem 0;}
+.card{
+  background:var(--paper);border:1px solid var(--rule);border-top:3px solid var(--branch);
+  border-radius:var(--r);padding:1.2rem 1.3rem;
+}
+.card h3{font-size:1rem;margin:0 0 .35rem;}
+.card p{font-size:.9375rem;max-width:none;}
+.card-tag{display:block;font-size:.8125rem;font-weight:600;letter-spacing:.08em;
+  word-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.4rem;}
+
+/* ── 9. CALLOUT ──────────────────────────────────────────────────────────── */
+.callout{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+  padding:1.15rem 1.3rem;margin:1.75rem 0;font-size:.9375rem;max-width:var(--measure);
+}
+.callout.accent{background:var(--wash);border-left:3px solid var(--branch);
+  border-radius:0 var(--r) var(--r) 0;}
+.callout p{max-width:none;}
+.callout .label{color:var(--branch-text);}
+
+/* ── 10. STAGES (native <details>, so search and print reach inside) ─────── */
+.stages{margin:1.75rem 0;max-width:var(--measure);display:flex;flex-direction:column;gap:.4rem;}
+.stage{border:1px solid var(--rule);border-radius:var(--r);background:var(--paper);
+  overflow:hidden;}
+.stage[open]{border-color:var(--rule-strong);}
+.stage > summary{
+  display:flex;align-items:center;gap:.9rem;
+  padding:.9rem 1.1rem;min-height:2.75rem;
+  cursor:pointer;list-style:none;
+  font-weight:600;color:var(--ink);
+}
+.stage > summary::-webkit-details-marker{display:none;}
+.stage > summary:hover{background:var(--surface);}
+.stage-num{
+  flex:0 0 auto;width:1.75rem;height:1.75rem;border-radius:50%;
+  background:var(--branch-text);color:var(--on-branch);
+  display:grid;place-items:center;font-size:.8125rem;font-weight:700;
+}
+.stage-title{flex:1 1 auto;font-size:1rem;}
+.stage-title small{display:block;font-size:.875rem;font-weight:400;color:var(--ink-muted);
+  margin-top:.1rem;letter-spacing:0;text-transform:none;}
+.stage-mark{flex:0 0 auto;color:var(--ink-muted);font-size:1.25rem;line-height:1;
+  transition:transform .2s var(--ease);}
+.stage[open] > summary .stage-mark{transform:rotate(45deg);}
+.stage-body{padding:.25rem 1.1rem 1.2rem 3.75rem;}
+.stage-body p{font-size:.9375rem;}
+.stage-body > * + *{margin-top:.75rem;}
+.produces{background:var(--surface);border-radius:var(--r-sm);padding:.85rem 1rem;}
+.produces ul{margin:.4rem 0 0;padding-left:1.15rem;font-size:.9375rem;}
+.produces li + li{margin-top:.25rem;}
+
+.expander{margin:1.75rem 0 1rem;}
+
+/* ── 11. Q&A LIST (decisions) ────────────────────────────────────────────── */
+.qa{margin:1.75rem 0;max-width:var(--measure);border-top:1px solid var(--rule);}
+.qa > div{padding:1.15rem 0;border-bottom:1px solid var(--rule);}
+.qa h3{font-size:1.0625rem;margin:0 0 .3rem;}
+.qa .q{display:block;font-size:.9375rem;font-style:italic;color:var(--branch-text);
+  margin-bottom:.5rem;}
+.qa p{font-size:.9375rem;}
+
+/* ── 12. TWO-COLUMN OUTCOMES ─────────────────────────────────────────────── */
+.split{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));
+  margin:1.75rem 0;}
+.split h3{margin-top:0;padding-bottom:.6rem;border-bottom:2px solid var(--branch);margin-bottom:1rem;}
+.split ul{list-style:none;margin:0;padding:0;}
+.split li{display:flex;gap:.7rem;margin-bottom:.9rem;font-size:.9375rem;}
+.split li::before{content:"";flex:0 0 3px;background:var(--branch);border-radius:2px;
+  align-self:stretch;}
+.split li b{display:block;color:var(--ink);}
+
+/* ── 13. REFLECTION FORM ─────────────────────────────────────────────────── */
+.reflect{margin:1.75rem 0;max-width:var(--measure);}
+.qgroup{border:1px solid var(--rule);border-radius:var(--r);padding:1.15rem 1.3rem;
+  margin:0 0 .75rem;}
+.qgroup legend{font-weight:600;color:var(--ink);padding:0;font-size:1rem;}
+.qgroup .hint{font-size:.9375rem;color:var(--ink-muted);margin:.35rem 0 .9rem;}
+.opts{display:grid;gap:.4rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));}
+.opt{display:flex;align-items:flex-start;gap:.6rem;
+  border:1px solid var(--rule-strong);border-radius:var(--r-sm);
+  padding:.7rem .85rem;min-height:2.75rem;font-size:.9375rem;cursor:pointer;
+  transition:background .15s var(--ease),border-color .15s var(--ease);}
+.opt:hover{background:var(--surface);}
+.opt input{
+  flex:0 0 auto;margin:.2rem 0 0;width:1.1rem;height:1.1rem;
+  accent-color:var(--branch-text);cursor:pointer;
+}
+.opt:has(input:checked){border-color:var(--branch);background:var(--wash);}
+.opt:has(input:checked) span{color:var(--ink);font-weight:600;}
+.opt:has(input:focus-visible){outline:3px solid var(--focus);outline-offset:2px;
+  box-shadow:0 0 0 6px var(--focus-halo);}
+.opt input:focus-visible{outline:none;box-shadow:none;}
+
+.btnrow{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.1rem;}
+.btn{
+  font:inherit;font-size:.9375rem;font-weight:600;
+  min-height:2.75rem;padding:.6rem 1.25rem;border-radius:var(--r-sm);cursor:pointer;
+  border:1px solid transparent;
+}
+.btn-primary{background:var(--branch-text);color:var(--on-branch);}
+.btn-primary:hover{background:var(--ink);}
+.btn-quiet{background:var(--paper);color:var(--ink);border-color:var(--rule-strong);}
+.btn-quiet:hover{background:var(--surface);}
+.btn-small{min-height:2.25rem;padding:.4rem .85rem;font-size:.875rem;}
+
+.result{margin-top:1.15rem;background:var(--wash);border:1px solid var(--rule-strong);
+  border-radius:var(--r);padding:1.3rem 1.4rem;}
+.result[hidden]{display:none;}
+.result h3{margin:0 0 .5rem;}
+.result p{font-size:.9375rem;}
+.formnote{font-size:.9375rem;color:var(--ink-muted);margin-top:.75rem;}
+
+/* ── 14. SOURCES ─────────────────────────────────────────────────────────── */
+.srcgroup{margin:1.75rem 0;max-width:var(--measure);}
+.srcgroup > h3{margin-top:0;padding-bottom:.5rem;border-bottom:1px solid var(--rule);margin-bottom:1rem;}
+.src{padding:.85rem 0;border-bottom:1px solid var(--rule);font-size:.9375rem;}
+.src:last-child{border-bottom:0;}
+.src .kind{display:block;font-size:.8125rem;font-weight:600;letter-spacing:.08em;
+  word-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.25rem;}
+.src p{max-width:none;}
+.src cite{font-style:italic;}
+.ext::after{content:"";display:inline-block;width:.68em;height:.68em;margin-left:.3em;
+  background:currentColor;vertical-align:-.02em;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 11.6 11.6 5M6 4.6h5.4V10' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 11.6 11.6 5M6 4.6h5.4V10' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain;}
+
+/* ── 15. FOOTER ──────────────────────────────────────────────────────────── */
+.pagefoot{border-top:1px solid var(--rule);background:var(--surface);}
+.pagefoot .shell{padding:2rem 0 3rem;}
+.pagefoot p{font-size:.9375rem;color:var(--ink-muted);}
+.pagefoot p + p{margin-top:.7rem;}
+.meta{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;font-size:.875rem;
+  color:var(--ink-muted);margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--rule);}
+.meta > span{white-space:nowrap;}
+
+/* ── 16. JS-ONLY / NO-JS ─────────────────────────────────────────────────── */
+html:not(.js) .js-only{display:none !important;}
+html:not(.js) .sectionnav{position:static;}
+html:not(.js) .tablist{flex-wrap:wrap;}
+.js .nojs-note{display:none;}
+.nojs-note{margin-top:1rem;font-size:.9375rem;color:var(--ink-muted);}
+
+/* ── 17. USER PREFERENCES ────────────────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important;}
+}
+@media (prefers-contrast:more){
+  :root{--rule:#5a6a72;--rule-strong:#3d4a51;--ink-mid:#2b383e;--ink-muted:#33424a;}
+}
+@media (forced-colors:active){
+  .card,.stage,.qgroup,.opt,.callout,.result{border:1px solid CanvasText;}
+  .brandbar,.stage-num,.split li::before{forced-color-adjust:none;background:CanvasText;}
+  .tablist a[aria-selected="true"]{border-bottom-color:Highlight;}
+  :focus-visible{outline-color:Highlight;}
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#161d21;--surface:#1e262a;--sunk:#263035;
+    --ink:#e8edef;      /* 14.44 on --paper */
+    --ink-mid:#c3ced3;  /* 10.63 */
+    --ink-muted:#a3b2b9;/*  7.81 / 6.18 on --sunk */
+    --rule:#33414a;--rule-strong:#7e8f98;
+    --focus:#e8edef;--focus-halo:#161d21;
+    --on-branch:#161d21;
+    --branch-text:color-mix(in srgb, #e8edef 58%, var(--branch)); /* ≥7.4:1 */
+    --wash:color-mix(in srgb, var(--branch) 22%, var(--paper));
+  }
+  .btn-primary{color:#161d21;}
+}
+
+/* ── 18. PRINT ───────────────────────────────────────────────────────────── */
+@media print{
+  .skips,.sectionnav,.js-only,.btnrow{display:none !important;}
+  .panel[hidden]{display:block !important;}
+  .panel + .panel{margin-top:2rem;padding-top:1.5rem;border-top:1px solid #999;
+    break-before:page;}
+  .stage-body{display:block !important;}
+  body{font-size:11pt;color:#000;background:#fff;}
+  h2,h3{break-after:avoid;}
+  .card,.stage,.callout,.qgroup{break-inside:avoid;}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all;}
+}
+</style>
 </head>
+
 <body>
 
-<a class="skip" href="#main">Skip to main content</a>
+<nav class="skips" aria-label="Skip links">
+  <ul>
+    <li><a href="#main">Skip to main content</a></li>
+    <li><a href="#sections">Skip to section navigation</a></li>
+  </ul>
+</nav>
 
-<header class="site-header">Accessible Learning Labs &mdash; Knowledge Resource</header>
+<!-- ═══════════════ MASTHEAD ═══════════════ -->
+<header class="masthead">
+  <div class="shell">
+    <div class="brandbar" aria-hidden="true"></div>
 
-<main id="main" class="wrap">
+    <!-- EDIT — branch name, exactly as it appears on the landscape map -->
+    <p class="eyebrow">Accessible Learning Labs · Knowledge resource</p>
 
-  <div class="title-block">
-    <h1>Inclusive Course and Curriculum Design</h1>
-    <p class="subtitle">A reference for faculty, learning designers, department heads, and curriculum committees on the knowledge foundations, design process, assessment equity, key decisions, and institutional outcomes of inclusive curriculum design.</p>
-  </div>
+    <!-- EDIT — the node name from the landscape map -->
+    <h1>Course and Curriculum Design</h1>
 
-  <div class="banner" role="note">
-    <span aria-hidden="true">&#8505;&#65039;</span>
-    <span>Use the tabs to navigate this resource. A <a href="https://accessiblelearninglabs.github.io/services/course-curriculum-design-linear.html">screen reader and keyboard-optimised version</a> is also available.</span>
-  </div>
+    <!-- EDIT — one sentence. What this resource lets a reader do that they
+         could not do before reading it. Not a topic label; a claim. -->
+    <p class="lede">A reader who works through this resource can scope an inclusive course or curriculum design project — its entry point, its participants, its assessment strategy — and judge what such a project can and cannot be expected to change.</p>
 
-  <nav aria-label="Resource sections">
-    <div class="tab-row" role="tablist">
-      <button class="tab" role="tab" aria-selected="true"  aria-controls="p-foundation" id="t-foundation">Foundation</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p-process"    id="t-process">Design Process</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p-assessment" id="t-assessment">Assessment</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p-decisions"  id="t-decisions">Key Decisions</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p-scenario"   id="t-scenario">Scenario</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p-impact"     id="t-impact">Learner Impact</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p-reflection" id="t-reflection">Reflection</button>
-      <button class="tab" role="tab" aria-selected="false" aria-controls="p-citations"  id="t-citations">Citations</button>
+    <div class="orient">
+      <!-- EDIT — who this is for. Name the reader. -->
+      <p><strong>Who this is for.</strong> Faculty, learning designers, department heads and curriculum committees, and anyone who has to approve or maintain a course after it is built. It assumes no prior background in accessibility and defines terms as they arise. The service page is at <a href="https://www.accessiblelearninglabs.com/course-and-curriculum-design">accessiblelearninglabs.com/course-and-curriculum-design</a>.</p>
+      <!-- Keep this paragraph as-is; only the filename changes. -->
+      <p><strong>Another way to read this.</strong> A
+        <a href="linear.html">linear version</a> presents the same
+        content in one continuous column, with no tabs and no scripting. Both versions
+        carry identical content — neither is a summary of the other.</p>
     </div>
-  </nav>
+  </div>
+</header>
 
+<!-- ═══════════════ SECTION NAVIGATION ═══════════════
+     Without JS: ordinary in-page links, all sections visible below.
+     With JS: upgraded to an ARIA tablist by the script at the end of the body.
+     To add or remove a section, edit here AND the matching <section> below.
+-->
+<nav class="sectionnav" id="sections" aria-label="Sections of this resource">
+  <div class="shell">
+    <div class="tablist" data-tablist>
+      <a href="#foundations">Foundations</a>
+      <a href="#process">Process</a>
+      <a href="#decisions">Decisions</a>
+      <a href="#competencies">Competencies</a>
+      <a href="#outcomes">Outcomes</a>
+      <a href="#reflection">Reflection</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </div>
+</nav>
 
-  <!-- ═══════════════════════════════════════════ FOUNDATION -->
-  <div class="panel active" id="p-foundation" role="tabpanel" aria-labelledby="t-foundation">
-    <h2>Knowledge Foundations</h2>
-    <p class="lead">Inclusive curriculum design draws on six interconnected bodies of knowledge. None is sufficient alone; in practice they work together, with design frameworks providing structure, pedagogy providing values, and systems knowledge ensuring that change endures.</p>
+<main id="main">
+<div class="shell">
 
-    <div class="grid2">
+  <p class="nojs-note">Scripting is off, so all seven sections are shown one after
+    another. Nothing is missing.</p>
+
+  <!-- ═══════════ 1 · FOUNDATIONS ═══════════ -->
+  <section class="panel" id="foundations" aria-labelledby="h-foundations">
+    <span class="panel-count">Section one of seven</span>
+    <h2 id="h-foundations">Foundations</h2>
+    <p class="panel-lede">Inclusive curriculum design rests on seven bodies of knowledge. Design frameworks supply the structure, pedagogy supplies the values, and systems knowledge determines whether the result survives the first round of edits.</p>
+
+    <p>None is sufficient on its own. A course designed from frameworks alone tends to be technically sound and culturally narrow; a course designed from values alone tends to be well intentioned and structurally unchanged.</p>
+
+    <div class="cards">
       <div class="card">
-        <span class="card-icon" aria-hidden="true">&#127959;</span>
-        <h3>Learning Design Theory</h3>
-        <p>Backward design and constructive alignment &mdash; beginning with intended learning outcomes and working back to assessments and activities &mdash; are equity tools as much as structural ones. They force the question of whose knowledge counts and whether the design serves the actual range of learners. When outcomes are written with equity in view, that commitment carries through every subsequent design decision.</p>
+        <span class="card-tag">Framework</span>
+        <h3>Learning design theory</h3>
+        <p>Backward design and constructive alignment start from intended outcomes and work back to assessments and activities. They are equity instruments as much as structural ones, because they force the question of whose knowledge counts before any content is written.</p>
       </div>
       <div class="card">
-        <span class="card-icon" aria-hidden="true">&#9878;&#65039;</span>
-        <h3>Inclusive and Anti-Oppressive Pedagogy</h3>
-        <p>Social position &mdash; race, class, gender, disability, language &mdash; shapes access to learning in ways that content, assessment design, and classroom dynamics can reinforce or disrupt. Inclusive pedagogy involves critiquing hidden bias and deficit assumptions in existing curricula, examining which scholarly traditions are treated as authoritative, and designing from a stance that centres equity.</p>
+        <span class="card-tag">Discipline</span>
+        <h3>Inclusive and anti-oppressive pedagogy</h3>
+        <p>Social position — race, class, gender, disability, language — shapes access to learning in ways that content, assessment format and classroom dynamics can either reinforce or interrupt. This lens supplies the method for finding deficit assumptions already present in a curriculum.</p>
       </div>
       <div class="card">
-        <span class="card-icon" aria-hidden="true">&#127757;</span>
-        <h3>Decolonizing Curriculum</h3>
-        <p>Whose knowledge and ways of knowing are treated as authoritative &mdash; and whose are absent or subordinated? Decolonizing curriculum is a structural examination of what counts as expertise and valid demonstration of competence, and a redesign of how knowledge is sequenced, assessed, and made available. This work is ongoing, not a single update.</p>
+        <span class="card-tag">Discipline</span>
+        <h3>Whose knowledge counts</h3>
+        <p>Which scholarly traditions are treated as authoritative, and which are absent or subordinated, is a structural question about the curriculum rather than a question about reading lists. It bears directly on what is accepted as a valid demonstration of competence.</p>
       </div>
       <div class="card">
-        <span class="card-icon" aria-hidden="true">&#127912;</span>
+        <span class="card-tag">Framework</span>
         <h3>Universal Design for Learning</h3>
-        <p>UDL, developed by CAST, offers a framework for building flexibility into learning from the outset. Its three principles &mdash; multiple means of Engagement, Representation, and Action and Expression &mdash; shift the design question from &ldquo;how do we accommodate learners who don&rsquo;t fit?&rdquo; to &ldquo;how do we design for the full range of learners from the beginning?&rdquo; Evidence consistently shows this benefits all learners, not only those with identified disabilities.</p>
+        <p>UDL supplies a structure for building flexibility in from the outset, across engagement, representation, and action and expression. It shifts the design question from how to accommodate learners who do not fit to what the design assumes about who learners are.</p>
       </div>
       <div class="card">
-        <span class="card-icon" aria-hidden="true">&#128208;</span>
-        <h3>Digital Accessibility</h3>
-        <p>WCAG-aligned practices &mdash; captioned media, alternative text, readable document structure, keyboard-navigable interfaces &mdash; are the technical floor of accessible digital learning design. They apply to every piece of course content: slides, documents, videos, assessments, and LMS pages. WCAG compliance and inclusive pedagogy are complementary; treating them as separate workstreams produces courses that pass audits while still creating barriers.</p>
+        <span class="card-tag">Standard</span>
+        <h3>Digital accessibility</h3>
+        <p>Captioned media, alternative text, readable document structure and keyboard-operable interfaces are the technical floor for digital course content. They apply to slides, documents, video, assessments and LMS pages alike, and they are complementary to inclusive pedagogy rather than a separate workstream.</p>
       </div>
       <div class="card">
-        <span class="card-icon" aria-hidden="true">&#129309;</span>
-        <h3>Community, Belonging, and Psychological Safety</h3>
-        <p>Structurally inclusive learning environments are necessary but not sufficient. Learners must also experience belonging &mdash; the genuine sense that their presence, contributions, and ways of knowing are valued. Belonging-centred design attends to psychological safety, respectful interaction across difference, and relational pedagogy. Social-emotional learning frameworks and community-building practices are design resources, not supplementary considerations.</p>
+        <span class="card-tag">Discipline</span>
+        <h3>Belonging and psychological safety</h3>
+        <p>A structurally inclusive course is necessary but not sufficient. Learners also have to experience their presence and their ways of knowing as valued, which makes relational design — interaction norms, facilitation, community structure — a design variable rather than a soft consideration.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Governance</span>
+        <h3>Accommodation, equity and governance</h3>
+        <p>Human rights law in Canada establishes a duty to accommodate to the point of undue hardship, and federal and provincial accessibility legislation adds duties to plan for and remove barriers. Accommodation is a floor. Design that reduces the need for it is the work this resource describes.</p>
       </div>
     </div>
 
-    <div class="hl">
-      <strong>The central distinction:</strong> Inclusion as a structural principle is built into outcomes, assessments, content, delivery, and community design from the beginning. Inclusion as a retrofit is a diversity statement in the syllabus, one alternative format offered after the fact, or a guest speaker representing an entire community. The difference determines whether marginalised learners experience genuine access or a gesture toward it.
+    <div class="callout accent">
+      <span class="label">The distinction</span>
+      <p><strong>Structural inclusion and retrofitted inclusion.</strong> Structural inclusion is built into outcomes, assessment, content, delivery and community design from the start. Retrofitted inclusion is a statement in the syllabus, one alternative format added after the fact, or a single guest speaker asked to represent a whole community. The distinction determines whether a learner encounters access or a gesture toward it, and it is the distinction every decision in this resource turns on.</p>
     </div>
+  </section>
 
-    <h3>Accommodation and Equity Frameworks</h3>
-    <p>Accommodation is a legal obligation and a floor, not a design goal. Human rights legislation in Canada &mdash; including the Canadian Human Rights Act, the Accessible Canada Act (2019), and in British Columbia the Accessible British Columbia Act (2021) &mdash; requires accommodation to the point of undue hardship. Equity-centred design pushes beyond this minimum toward structural changes that reduce the need for individual accommodation in the first place. Institutions that rely on accommodation as their primary accessibility strategy are managing barriers rather than removing them.</p>
-  </div>
+  <!-- ═══════════ 2 · PROCESS ═══════════ -->
+  <section class="panel" id="process" aria-labelledby="h-process">
+    <span class="panel-count">Section two of seven</span>
+    <h2 id="h-process">Process</h2>
+    <p class="panel-lede">Six stages, in the order they are carried out. The process is iterative: material is developed, tested with the people closest to the learning, and revised before and after launch.</p>
 
+    <p>Scope and timeline determine which stages are most intensive in any given project. Stages two and three carry the most consequence, because outcomes and assessment set the constraints everything downstream has to work within.</p>
 
-  <!-- ═══════════════════════════════════════════ DESIGN PROCESS -->
-  <div class="panel" id="p-process" role="tabpanel" aria-labelledby="t-process">
-    <h2>Design Process</h2>
-    <p class="lead">Inclusive learning design is iterative. Ideas are developed, tested with the people closest to the learning, revised, and refined through repeated cycles before and after launch. The stages below represent a comprehensive approach; scope and timeline will determine which are most intensive in any given engagement.</p>
+    <div class="expander js-only">
+      <button type="button" class="btn btn-quiet btn-small" data-expand-all>Expand all stages</button>
+    </div>
 
     <div class="stages">
-
-      <div class="stage">
-        <button class="stage-btn" aria-expanded="false" aria-controls="sb1" id="st1">
-          <span class="stage-num">1</span>
-          <span class="stage-titles">
-            <span class="stage-eyebrow">Stage 1</span>
-            <span class="stage-name">Intake and Context</span>
-            <span class="stage-desc">Understanding the learning environment before designing it</span>
-          </span>
-          <span class="tags" aria-hidden="true"><span class="tag">Foundational</span><span class="tag">Collaborative</span></span>
-          <span class="chevron" aria-hidden="true">&#9660;</span>
-        </button>
-        <div class="stage-body" id="sb1" role="region" aria-labelledby="st1">
-          <p>The process begins with careful listening. Who are the learners &mdash; their professional contexts, prior experiences, language backgrounds, access needs, and the communities they serve? What does the institution already know about where learners struggle and where they thrive? What are the constraints: platform capabilities, faculty capacity, assessment governance, timeline?</p>
-          <p>Subject matter experts bring irreplaceable disciplinary and contextual knowledge. That knowledge shapes everything that follows. Skipping this stage is one of the most consistent reasons curriculum redesigns produce materials that do not land.</p>
-          <h4>This stage produces</h4>
-          <ul>
-            <li>A shared understanding of the learner population, context, and known barriers</li>
-            <li>Documented institutional constraints and design parameters</li>
-            <li>An inventory of existing expertise and materials</li>
-            <li>Clarity on scope, timeline, and decision-making authority</li>
-          </ul>
+      <details class="stage" id="stage-1">
+        <summary>
+          <span class="stage-num" aria-hidden="true">1</span>
+          <span class="stage-title">Establish intake and context
+            <small>Understanding the learning environment before designing for it</small></span>
+          <span class="stage-mark" aria-hidden="true">+</span>
+        </summary>
+        <div class="stage-body">
+          <p>The work begins by establishing who the learners are: their professional contexts, prior experience, language backgrounds, access needs and the communities they serve. It also establishes what the institution already knows about where learners struggle, and what the real constraints are — platform capability, faculty capacity, assessment governance, timeline.</p>
+          <p>Subject matter experts hold disciplinary and contextual knowledge that shapes everything downstream. Treating this stage as preliminary rather than substantive is a common reason that redesigns produce material which does not land.</p>
+          <div class="produces">
+            <span class="label">This stage produces</span>
+            <ul>
+              <li>A shared account of the learner population, context and known barriers</li>
+              <li>Documented institutional constraints and design parameters</li>
+              <li>An inventory of existing expertise and material</li>
+              <li>Agreement on scope, timeline and who holds decision-making authority</li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </details>
 
-      <div class="stage">
-        <button class="stage-btn" aria-expanded="false" aria-controls="sb2" id="st2">
-          <span class="stage-num">2</span>
-          <span class="stage-titles">
-            <span class="stage-eyebrow">Stage 2</span>
-            <span class="stage-name">Outcomes Development</span>
-            <span class="stage-desc">Determining what learners will be able to do &mdash; and for whom</span>
-          </span>
-          <span class="tags" aria-hidden="true"><span class="tag">Equity-critical</span><span class="tag">Iterative</span></span>
-          <span class="chevron" aria-hidden="true">&#9660;</span>
-        </button>
-        <div class="stage-body" id="sb2" role="region" aria-labelledby="st2">
-          <p>Learning outcomes are the design&rsquo;s first equity decision. They determine what counts as learning, whose ways of demonstrating competence are legitimate, and how the course will be assessed. Outcomes developed without attention to equity often inadvertently centre one disciplinary tradition or one way of knowing.</p>
-          <p>Inclusive outcome development asks: Are these outcomes genuinely discipline-relevant? Do they allow for diverse ways of demonstrating knowledge? Are they written in language accessible to learners? Do they reflect the professional contexts learners will enter?</p>
-          <h4>This stage produces</h4>
-          <ul>
-            <li>Measurable, discipline-authentic outcomes aligned to program goals</li>
-            <li>Outcomes mapped to assessment methods and learning activities</li>
-            <li>A shared language for what success looks like in this context</li>
-          </ul>
+      <details class="stage" id="stage-2">
+        <summary>
+          <span class="stage-num" aria-hidden="true">2</span>
+          <span class="stage-title">Develop learning outcomes
+            <small>Determining what learners will be able to do, and for whom</small></span>
+          <span class="stage-mark" aria-hidden="true">+</span>
+        </summary>
+        <div class="stage-body">
+          <p>Learning outcomes are the first equity decision in a course. They determine what counts as learning, which ways of demonstrating competence are treated as legitimate, and what the assessment will have to measure.</p>
+          <p>Outcome development asks whether the outcomes are genuinely discipline-relevant, whether they permit more than one way of demonstrating knowledge, whether they are written in language a learner can act on, and whether they reflect the professional contexts learners will actually enter.</p>
+          <div class="produces">
+            <span class="label">This stage produces</span>
+            <ul>
+              <li>Measurable, discipline-authentic outcomes aligned to programme goals</li>
+              <li>Outcomes mapped to assessment methods and learning activities</li>
+              <li>A shared statement of what success looks like in this context</li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </details>
 
-      <div class="stage">
-        <button class="stage-btn" aria-expanded="false" aria-controls="sb3" id="st3">
-          <span class="stage-num">3</span>
-          <span class="stage-titles">
-            <span class="stage-eyebrow">Stage 3</span>
-            <span class="stage-name">Assessment Design</span>
-            <span class="stage-desc">The most consequential equity decision in the course</span>
-          </span>
-          <span class="tags" aria-hidden="true"><span class="tag">High-stakes</span><span class="tag">Equity-critical</span></span>
-          <span class="chevron" aria-hidden="true">&#9660;</span>
-        </button>
-        <div class="stage-body" id="sb3" role="region" aria-labelledby="st3">
-          <p>Assessment is where inclusion most often breaks down and where the most significant equity gains are available. Assessment format can exclude learners who have fully achieved the intended learning outcomes. See the <strong>Assessment</strong> tab for a full treatment.</p>
-          <h4>This stage produces</h4>
-          <ul>
-            <li>An assessment strategy aligned to learning outcomes and equity principles</li>
-            <li>Flexible formats where appropriate, with transparent criteria</li>
-            <li>A rationale shareable with learners and governance bodies</li>
-          </ul>
+      <details class="stage" id="stage-3">
+        <summary>
+          <span class="stage-num" aria-hidden="true">3</span>
+          <span class="stage-title">Design assessment
+            <small>Separating the outcome from the conditions of demonstrating it</small></span>
+          <span class="stage-mark" aria-hidden="true">+</span>
+        </summary>
+        <div class="stage-body">
+          <p>Assessment is where inclusion most often breaks down, because format can exclude learners who have fully achieved the outcome. A timed written examination taken in a second language measures language proficiency and processing speed alongside disciplinary knowledge. An oral presentation requirement can exclude learners with communication disabilities regardless of the depth of their understanding.</p>
+          <p>What makes an alternative format rigorous is the quality of the criteria, not the uniformity of the format. Criteria developed with subject matter experts, published before learners begin and applied consistently across formats keep the format a means of demonstrating competence rather than a route around it. Transparent criteria also reduce the hidden advantage held by learners already familiar with academic convention.</p>
+          <div class="produces">
+            <span class="label">This stage produces</span>
+            <ul>
+              <li>An assessment strategy aligned to the outcomes</li>
+              <li>Flexible formats where the outcome permits them, with shared criteria</li>
+              <li>A rationale that can be put to a committee or an accreditor</li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </details>
 
-      <div class="stage">
-        <button class="stage-btn" aria-expanded="false" aria-controls="sb4" id="st4">
-          <span class="stage-num">4</span>
-          <span class="stage-titles">
-            <span class="stage-eyebrow">Stage 4</span>
-            <span class="stage-name">Content and Modality Development</span>
-            <span class="stage-desc">Multiple means, multiple pathways</span>
-          </span>
-          <span class="tags" aria-hidden="true"><span class="tag">UDL-aligned</span><span class="tag">Multimodal</span></span>
-          <span class="chevron" aria-hidden="true">&#9660;</span>
-        </button>
-        <div class="stage-body" id="sb4" role="region" aria-labelledby="st4">
-          <p>Content is developed iteratively with subject matter experts rather than handed off for production after a single design session. UDL principles shape every decision: Is material available in more than one format? Does it assume a particular language background or cultural reference point? Are representations of practitioners diverse and authentic?</p>
-          <p>Delivery mode carries distinct accessibility implications. Online delivery requires WCAG-aligned content. Hybrid delivery requires deliberate design so neither modality is a degraded version of the other. In-person delivery requires attention to physical access, sensory access, and psychological safety.</p>
-          <h4>This stage produces</h4>
-          <ul>
-            <li>Multimodal materials developed in working cycles with subject matter experts</li>
-            <li>WCAG-aligned digital content: captioned media, accessible documents, navigable LMS pages</li>
-            <li>Content sequenced for the actual learner population, not an assumed one</li>
-            <li>Representations and examples that reflect the diversity of the field</li>
-          </ul>
+      <details class="stage" id="stage-4">
+        <summary>
+          <span class="stage-num" aria-hidden="true">4</span>
+          <span class="stage-title">Develop content and modality
+            <small>Multiple means, and delivery that does not degrade</small></span>
+          <span class="stage-mark" aria-hidden="true">+</span>
+        </summary>
+        <div class="stage-body">
+          <p>Content is developed in working cycles with subject matter experts rather than handed off after a single design session. UDL principles shape each decision: whether material is available in more than one format, whether it assumes a particular language background or cultural reference point, and whether the practitioners represented in examples reflect the field.</p>
+          <p>Delivery mode carries its own requirements. Online delivery requires content that meets WCAG. Hybrid delivery requires deliberate design so that neither mode is a reduced version of the other. In-person delivery requires attention to physical access, sensory access and psychological safety.</p>
+          <div class="produces">
+            <span class="label">This stage produces</span>
+            <ul>
+              <li>Multimodal material developed iteratively with subject matter experts</li>
+              <li>Digital content meeting WCAG: captions, alternative text, navigable documents and pages</li>
+              <li>Content sequenced for the actual learner population rather than an assumed one</li>
+              <li>Examples and representations that reflect the field as it is</li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </details>
 
-      <div class="stage">
-        <button class="stage-btn" aria-expanded="false" aria-controls="sb5" id="st5">
-          <span class="stage-num">5</span>
-          <span class="stage-titles">
-            <span class="stage-eyebrow">Stage 5</span>
-            <span class="stage-name">Review with Learners and Subject Matter Experts</span>
-            <span class="stage-desc">The people closest to the barrier are the most useful guides</span>
-          </span>
-          <span class="tags" aria-hidden="true"><span class="tag">Human-centred</span><span class="tag">Evidence-based</span></span>
-          <span class="chevron" aria-hidden="true">&#9660;</span>
-        </button>
-        <div class="stage-body" id="sb5" role="region" aria-labelledby="st5">
-          <p>Before any course goes live, a structured review cycle involves the people who will actually use it. Learners with disabilities, learners from underrepresented backgrounds, and learners with different professional contexts reliably surface barriers that subject matter experts and designers working together did not anticipate. This is not a validation step &mdash; it is a design resource.</p>
-          <p>Review is structured: specific tasks, specific questions, specific dimensions of the learning experience to evaluate. Feedback is documented systematically. Accessibility testing against WCAG criteria happens here &mdash; automated tools first, then manual testing with assistive technologies.</p>
-          <h4>This stage produces</h4>
-          <ul>
-            <li>Documented feedback organised by theme and priority</li>
-            <li>WCAG findings for all digital content</li>
-            <li>Targeted revisions to content, assessment, and navigation</li>
-            <li>A record of what was changed and why, useful for governance and future iterations</li>
-          </ul>
+      <details class="stage" id="stage-5">
+        <summary>
+          <span class="stage-num" aria-hidden="true">5</span>
+          <span class="stage-title">Review with learners and experts
+            <small>The people closest to a barrier are the most reliable guide to it</small></span>
+          <span class="stage-mark" aria-hidden="true">+</span>
+        </summary>
+        <div class="stage-body">
+          <p>Before a course goes live, a structured review cycle involves the people who will use it. Learners with disabilities, learners from underrepresented backgrounds and learners from different professional contexts reliably surface barriers that designers and subject matter experts working together did not anticipate. This is a design input, not a validation step.</p>
+          <p>Review is structured: specific tasks, specific questions, specific dimensions of the experience to evaluate, and systematic documentation of what is observed. Accessibility testing against WCAG happens here, automated first and then manually with assistive technologies.</p>
+          <div class="produces">
+            <span class="label">This stage produces</span>
+            <ul>
+              <li>Documented feedback organised by theme and priority</li>
+              <li>WCAG findings for all digital content</li>
+              <li>Targeted revisions to content, assessment and navigation</li>
+              <li>A record of what changed and why, usable by governance and future iterations</li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </details>
 
-      <div class="stage">
-        <button class="stage-btn" aria-expanded="false" aria-controls="sb6" id="st6">
-          <span class="stage-num">6</span>
-          <span class="stage-titles">
-            <span class="stage-eyebrow">Stage 6</span>
-            <span class="stage-name">Launch, Iteration, and Handoff</span>
-            <span class="stage-desc">Inclusive design as ongoing practice</span>
-          </span>
-          <span class="tags" aria-hidden="true"><span class="tag">Actionable</span><span class="tag">Capacity-building</span></span>
-          <span class="chevron" aria-hidden="true">&#9660;</span>
-        </button>
-        <div class="stage-body" id="sb6" role="region" aria-labelledby="st6">
-          <p>Launch is not the end of the design process. Learner experience data, facilitator observations, and formal evaluation surface new information about what is working. A robust handoff ensures that those responsible for running and maintaining the course understand its design rationale, so future edits do not inadvertently reintroduce barriers that were deliberately removed.</p>
-          <p>Sustainable inclusive design requires institutional infrastructure: accessible templates, design guidelines, procurement standards, and faculty development that builds capacity over time.</p>
-          <h4>This stage produces</h4>
-          <ul>
-            <li>A documented design rationale to guide future maintenance</li>
-            <li>An evaluation framework for tracking learner experience and emerging barriers</li>
-            <li>Recommendations for institutional systems and infrastructure</li>
-          </ul>
+      <details class="stage" id="stage-6">
+        <summary>
+          <span class="stage-num" aria-hidden="true">6</span>
+          <span class="stage-title">Launch, iterate and hand off
+            <small>Keeping the design intact after the designers leave</small></span>
+          <span class="stage-mark" aria-hidden="true">+</span>
+        </summary>
+        <div class="stage-body">
+          <p>Launch is not the end of the design process. Learner experience data, facilitator observation and formal evaluation surface information that was not available beforehand. A documented handoff ensures that whoever maintains the course understands its rationale, so that later edits do not reintroduce barriers that were deliberately removed.</p>
+          <p>Sustained inclusive design depends on institutional infrastructure: accessible templates, design guidelines, procurement standards, and faculty development that builds capacity rather than delivering a single session.</p>
+          <div class="produces">
+            <span class="label">This stage produces</span>
+            <ul>
+              <li>A documented design rationale to guide maintenance</li>
+              <li>An evaluation framework for tracking learner experience and emerging barriers</li>
+              <li>Recommendations for the institutional systems the course depends on</li>
+            </ul>
+          </div>
         </div>
-      </div>
-
+      </details>
     </div>
+  </section>
 
-    <div class="callout"><strong>Co-design vs. consultation:</strong> Consultation asks stakeholders to react to decisions already made. Co-design involves them in making decisions. Subject matter experts and learners who are genuine partners produce materials that are more accurate, more contextually grounded, and more likely to endure after the engagement ends.</div>
-  </div>
+  <!-- ═══════════ 3 · DECISIONS ═══════════ -->
+  <section class="panel" id="decisions" aria-labelledby="h-decisions">
+    <span class="panel-count">Section three of seven</span>
+    <h2 id="h-decisions">Decisions</h2>
+    <p class="panel-lede">Seven choices that determine what a curriculum design project will produce. Each can be answered more than one way, and each answer has a cost.</p>
 
+    <p>These are settled early and constrain everything afterwards. Naming them in advance lets the person commissioning the work recognise later whether they received the project they needed.</p>
 
-  <!-- ═══════════════════════════════════════════ ASSESSMENT -->
-  <div class="panel" id="p-assessment" role="tabpanel" aria-labelledby="t-assessment">
-    <h2>Assessment Design</h2>
-    <p class="lead">Assessment format can exclude learners who have fully achieved the intended learning outcome. Addressing this is not about lowering standards &mdash; it is about ensuring that assessments measure what they are designed to measure.</p>
-
-    <p>A timed written examination in a second language measures English proficiency and processing speed as much as it measures disciplinary knowledge. An oral presentation requirement may exclude learners with communication disabilities regardless of the depth of their understanding. Recognising where format and outcome have diverged is the starting point for equitable assessment design.</p>
-
-    <div class="hl">
-      <strong>The key distinction:</strong> Measuring the learning outcome means evaluating whether a learner has achieved the intended competency. Measuring performance under specific conditions means evaluating whether they can demonstrate that competency in one particular way. These are not the same thing &mdash; and conflating them is the source of most assessment-based exclusion.
-    </div>
-
-    <h3>What Flexible Assessment Is &mdash; and Is Not</h3>
-    <p>Flexible assessment is not reduced expectations, grade inflation, or an academic integrity risk. It is the design of tasks that allow multiple ways of demonstrating the same competency, so that format is not itself the barrier. What makes alternative assessment rigorous is the quality of criteria, not the uniformity of format. When criteria are clearly tied to the learning outcome, format becomes a means of demonstrating competency rather than a loophole around demonstrating it.</p>
-    <p>Transparent criteria &mdash; rubrics co-developed with subject matter experts, shared with learners before they begin, applied consistently across formats &mdash; are among the most effective equity levers available. When learners understand what success looks like and how it will be evaluated, the hidden advantage of cultural familiarity with academic conventions is reduced.</p>
-
-    <h3>Responding to Common Institutional Concerns</h3>
-
-    <div class="grid2">
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#128274;</span>
-        <h3>Academic Integrity</h3>
-        <p class="card-sub">Does flexibility increase the risk of dishonesty?</p>
-        <div class="card-body"><p>Flexible formats tied to authentic professional contexts are typically more difficult to replicate dishonestly than standardised formats, because they require applying knowledge to a specific situation. Authentic tasks produce more individualised work.</p></div>
-      </div>
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#9878;&#65039;</span>
-        <h3>Comparability</h3>
-        <p class="card-sub">How do we compare performance across different formats?</p>
-        <div class="card-body"><p>Comparability is produced by shared, transparent criteria &mdash; not by identical formats. This is standard practice in professional licensure and competency-based education.</p></div>
-      </div>
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#128202;</span>
-        <h3>Outcome Validity</h3>
-        <p class="card-sub">Are flexible assessments measuring what matters?</p>
-        <div class="card-body"><p>Better-aligned assessments are more valid measures of learning. Research on flexible assessment consistently shows improved performance, particularly for learners disadvantaged by formats that assume a narrow cultural or linguistic background.</p></div>
-      </div>
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#127963;</span>
-        <h3>Governance</h3>
-        <p class="card-sub">How do we account for this to committees and accreditors?</p>
-        <div class="card-body"><p>The rationale is direct: these assessments measure intended learning outcomes more accurately, and provide all learners a genuine opportunity to demonstrate competency. A well-documented rationale is the appropriate governance response.</p></div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ═══════════════════════════════════════════ KEY DECISIONS -->
-  <div class="panel" id="p-decisions" role="tabpanel" aria-labelledby="t-decisions">
-    <h2>Key Decisions</h2>
-    <p class="lead">No two curriculum design engagements are the same. The decisions an organisation makes about scope, entry point, participants, and delivery mode shape what kind of process is appropriate and what it can produce.</p>
-
-    <div class="grid2">
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#127919;</span>
+    <div class="qa">
+      <div>
         <h3>Scope</h3>
-        <p class="card-sub">How much of the curriculum is in scope?</p>
-        <div class="card-body">
-          <p><strong>Module</strong> &mdash; a single unit or topic; useful for piloting</p>
-          <p><strong>Course</strong> &mdash; a full learning experience; the most common unit</p>
-          <p><strong>Program</strong> &mdash; a credential or sequence; reveals systemic patterns</p>
-          <p><strong>Institutional</strong> &mdash; policies, templates, and design standards</p>
-        </div>
-      </div>
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#128682;</span>
-        <h3>Entry Point</h3>
-        <p class="card-sub">What is the starting condition?</p>
-        <div class="card-body">
-          <p><strong>New build</strong> &mdash; designing from brief and expertise; the most effective entry point</p>
-          <p><strong>Redesign</strong> &mdash; rebuilding with new principles</p>
-          <p><strong>Retrofit</strong> &mdash; adding accessibility to existing materials; the most limited approach</p>
-          <p><strong>Audit-first</strong> &mdash; reviewing before deciding what to change; often the most responsible start</p>
-        </div>
-      </div>
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#128101;</span>
-        <h3>Who Is Involved</h3>
-        <p class="card-sub">Whose knowledge shapes the design?</p>
-        <div class="card-body">
-          <p><strong>Subject matter experts</strong> &mdash; essential in every engagement</p>
-          <p><strong>Learners</strong> &mdash; the most reliable source of information about friction in the design</p>
-          <p><strong>Community members</strong> &mdash; where the curriculum trains practitioners serving specific communities</p>
-          <p><strong>Equity specialists</strong> &mdash; for decolonization, anti-oppressive practice, or domain-specific equity work</p>
-        </div>
-      </div>
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#128187;</span>
-        <h3>Delivery Mode</h3>
-        <p class="card-sub">What accessibility requirements does the mode create?</p>
-        <div class="card-body">
-          <p><strong>Online</strong> &mdash; WCAG-aligned content, accessible LMS navigation</p>
-          <p><strong>Hybrid</strong> &mdash; neither modality should be a degraded version of the other</p>
-          <p><strong>In-person</strong> &mdash; physical access, sensory access, psychological safety</p>
-          <p><strong>Blended program</strong> &mdash; coherent experience across modes</p>
-        </div>
-      </div>
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#128196;</span>
-        <h3>Reporting and Governance</h3>
-        <p class="card-sub">Who needs to act on design decisions?</p>
-        <div class="card-body">
-          <p><strong>Academic committees</strong> &mdash; rationale for assessment and outcome choices</p>
-          <p><strong>Accreditation bodies</strong> &mdash; evidence that inclusive approaches meet or exceed professional standards</p>
-          <p><strong>Faculty teams</strong> &mdash; practical guidance for maintaining and iterating the course</p>
-        </div>
-      </div>
-      <div class="card">
-        <span class="card-icon" aria-hidden="true">&#127959;</span>
-        <h3>Institutional Constraints</h3>
-        <p class="card-sub">Which constraints are fixed &mdash; and which are habitual?</p>
-        <div class="card-body"><p>LMS capabilities, assessment governance, faculty capacity, and policy are design parameters, not obstacles. Naming constraints clearly enables the distinction between those that are structural and those that are open to negotiation with the right evidence and relationships.</p></div>
-      </div>
-    </div>
-
-    <div class="callout"><strong>On retrofit:</strong> When a course is built on inaccessible assumptions about who learners are, retrofitting adds accommodation layers without addressing the underlying design problem. The result is often a course that passes an audit while still excluding learners in practice. Retrofit is sometimes the only realistic option &mdash; but that should be named honestly, alongside the longer-term redesign work it defers.</div>
-  </div>
-
-
-  <!-- ═══════════════════════════════════════════ SCENARIO -->
-  <div class="panel" id="p-scenario" role="tabpanel" aria-labelledby="t-scenario">
-    <h2>Illustrated Scenario</h2>
-    <p class="lead">The following composite scenario draws on patterns that appear consistently in curriculum design work with higher education institutions, public sector organisations, and research bodies. It does not describe a specific institution or engagement.</p>
-
-    <p>A professional development program in global public health had been running successfully in face-to-face format for over a decade. When the organisation moved to blended online delivery to reach practitioners in lower-income settings &mdash; including health workers in sub-Saharan Africa, South Asia, and Central America &mdash; completion rates were lower than expected and accommodation requests increased significantly. The program&rsquo;s content was strong. The design was not.</p>
-
-    <p>The redesign began with a thorough intake process. Conversations with current and former participants, facilitators, and regional coordinators revealed three patterns invisible from headquarters: default assumptions of reliable high-bandwidth internet access were creating barriers for practitioners in rural settings; the primary assessment &mdash; a 3,000-word policy analysis in formal academic English &mdash; was functioning as a test of academic writing rather than public health policy competency; and case studies were drawn almost entirely from North American and European contexts. Subject matter experts were then brought in as genuine co-designers, not reviewers, and their knowledge fundamentally reshaped the learning outcomes.</p>
-
-    <div class="scenario-card">
-      <div class="scenario-hd">
-        <span class="scenario-icon" aria-hidden="true">&#128221;</span>
-        <h3>The Assessment Design Moment</h3>
-      </div>
-      <p>The most consequential decision was rethinking the policy analysis assessment. The original format asked participants to write a 3,000-word evidence synthesis in formal academic English structured according to North American and European scholarship conventions. For practitioners who had spent careers producing briefs, policy memos, programme reports, and ministerial presentations, the format was unfamiliar even though the underlying competency was not.</p>
-      <div class="change-box">
-        <strong>What changed</strong>
-        <p>The assessment was replaced with a format choice. Participants could produce a policy brief in their own country&rsquo;s public health system conventions, a structured programme recommendation, or a practitioner-facing evidence summary &mdash; each mapping to the same learning outcome. A shared rubric, developed with subject matter experts and piloted with a small beta group, made criteria explicit regardless of format. Assessment completion rates improved substantially, and facilitators reported that the depth of analysis was noticeably higher than under the original format.</p>
-      </div>
-    </div>
-
-    <div class="scenario-card">
-      <div class="scenario-hd">
-        <span class="scenario-icon" aria-hidden="true">&#128269;</span>
-        <h3>What the Beta Review Surfaced</h3>
-      </div>
-      <p>A structured beta review with twelve practitioners from three regions surfaced two barriers the design team had not anticipated.</p>
-      <p>The first was navigational. The course assumed participants would work through modules sequentially in blocks of two to three hours. In practice, many accessed the course in short windows between clinical and community responsibilities, often on mobile devices with intermittent connectivity. Restructuring the modules and adding low-bandwidth alternatives addressed this directly.</p>
-      <p>The second was relational. Discussion forums were producing interactions that felt extractive to participants from lower-income settings: participants based in well-resourced contexts were drawing on contextual knowledge from others without reciprocating. Facilitation guidelines and forum prompts were revised with attention to power dynamics in knowledge exchange.</p>
-      <div class="change-box">
-        <strong>What this illustrates</strong>
-        <p>Both barriers were invisible to the design team and subject matter experts &mdash; not because of inattention, but because neither group occupied the same position as the learners. Structured learner review is a design resource, not a validation step.</p>
-      </div>
-      <div class="change-box">
-        <strong>What did not change</strong>
-        <p>Not everything was possible to change. The program&rsquo;s accreditation framework required certain assessment formats and credit-hour structures. Some LMS limitations could not be resolved within the timeline. Faculty who had taught in the program for years had well-founded views that shaped what was feasible. Inclusive curriculum design operates within real constraints. What changes is the honesty with which those constraints are named, and the commitment to addressing what can be addressed.</p>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ═══════════════════════════════════════════ IMPACT -->
-  <div class="panel" id="p-impact" role="tabpanel" aria-labelledby="t-impact">
-    <h2>Learner Impact</h2>
-    <p class="lead">Inclusive curriculum design creates change at two horizons. Shorter-term outcomes are tangible and measurable within a course cycle. Longer-term change is cultural, and has broader effect on how an organisation understands its learners and what learning environments can do.</p>
-
-    <div class="impact-cols">
-      <div>
-        <p class="col-label">Shorter term</p>
-        <h3 style="font-size:.9375rem; margin-bottom:1rem;">What becomes visible and fixable</h3>
-        <div class="impact-item">
-          <span class="icon-circle" aria-hidden="true">&#10003;</span>
-          <div class="impact-text">
-            <h4>Barriers are named and removed at source</h4>
-            <p>Rather than being managed through individual accommodation, barriers are addressed structurally. Learners gain access through a course designed for them, not through a workaround.</p>
-          </div>
-        </div>
-        <div class="impact-item">
-          <span class="icon-circle" aria-hidden="true">&#10003;</span>
-          <div class="impact-text">
-            <h4>Assessment reflects what learners know</h4>
-            <p>When formats are better aligned to outcomes, completion rates improve and demonstrated competency deepens &mdash; particularly for learners whose experience differs from the assumed norm.</p>
-          </div>
-        </div>
-        <div class="impact-item">
-          <span class="icon-circle" aria-hidden="true">&#10003;</span>
-          <div class="impact-text">
-            <h4>Accommodation volume decreases</h4>
-            <p>Flexibility built into format, delivery, pacing, and navigation makes many individual accommodation requests unnecessary, reducing administrative burden for learners, faculty, and support teams.</p>
-          </div>
-        </div>
-        <div class="impact-item">
-          <span class="icon-circle" aria-hidden="true">&#10003;</span>
-          <div class="impact-text">
-            <h4>Team capacity grows</h4>
-            <p>Faculty and staff who co-design inclusive curriculum develop practical knowledge about UDL, assessment equity, and accessibility that carries into future work.</p>
-          </div>
-        </div>
+        <span class="q">How much of the curriculum is in scope?</span>
+        <p>A module is useful for piloting an approach before committing to it. A course is the most common unit and the one where a full design cycle fits. A programme or credential reveals patterns that no single course exposes, such as where the same barrier recurs at every level. Institutional scope addresses policies, templates and design standards, and changes the conditions rather than the artefact. Wider scope buys pattern recognition at the cost of depth in any one place.</p>
       </div>
       <div>
-        <p class="col-label">Longer term</p>
-        <h3 style="font-size:.9375rem; margin-bottom:1rem;">What becomes embedded in practice</h3>
-        <div class="impact-item">
-          <span class="icon-circle" aria-hidden="true">&#8594;</span>
-          <div class="impact-text">
-            <h4>Inclusion becomes a design habit</h4>
-            <p>Equity, accessibility, and learner variability enter the design process at the beginning rather than being raised as problems at the end.</p>
-          </div>
-        </div>
-        <div class="impact-item">
-          <span class="icon-circle" aria-hidden="true">&#8594;</span>
-          <div class="impact-text">
-            <h4>All learners benefit</h4>
-            <p>Multimodal content, clear navigation, transparent criteria, and flexible delivery benefit every learner, not only those for whom they were specifically designed &mdash; the curb-cut effect applied to curriculum.</p>
-          </div>
-        </div>
-        <div class="impact-item">
-          <span class="icon-circle" aria-hidden="true">&#8594;</span>
-          <div class="impact-text">
-            <h4>Retention and completion improve</h4>
-            <p>The evidence on inclusive curriculum consistently shows the largest positive effects on completion for learners from underrepresented groups, without negative effects on the cohort overall.</p>
-          </div>
-        </div>
-        <div class="impact-item">
-          <span class="icon-circle" aria-hidden="true">&#8594;</span>
-          <div class="impact-text">
-            <h4>Institutional culture shifts</h4>
-            <p>Organisations ask different questions about new programs: not &ldquo;what accommodation do we need to add?&rdquo; but &ldquo;what does this design assume about who learners are &mdash; and is that assumption warranted?&rdquo;</p>
-          </div>
-        </div>
+        <h3>Entry point</h3>
+        <span class="q">What is the starting condition?</span>
+        <p>A new build allows outcomes, assessment and content to be designed together, and is the entry point where inclusive design costs least. A redesign rebuilds an existing course on different principles. A retrofit adds accessibility to material whose underlying assumptions are unchanged, which can produce a course that passes an audit and still excludes learners. An audit-first start reviews before deciding what to change. Retrofit is sometimes the only realistic option; what matters is naming it as one, along with the redesign it defers.</p>
+      </div>
+      <div>
+        <h3>Assessment format</h3>
+        <span class="q">How much choice in format, and on what basis is it defended?</span>
+        <p>Format choice is defensible when each option maps to the same outcome and is judged against the same published criteria. Four objections recur. On academic integrity: tasks tied to a specific professional context are generally harder to produce dishonestly than standardised ones, because they require application rather than recall. On comparability: comparability comes from shared criteria, not identical formats, as it already does in professional licensure. On validity: an assessment better aligned to its outcome is the more valid measure. On governance: a documented rationale, showing how each format maps to the outcome, is the response a committee can act on.</p>
+      </div>
+      <div>
+        <h3>Participation</h3>
+        <span class="q">Whose knowledge shapes the design?</span>
+        <p>Subject matter experts are needed in every project. Learners are the most reliable source of information about friction in a design. Community members matter where the curriculum trains practitioners serving specific communities. Equity specialists matter where the work involves domain-specific equity questions. The distinction that decides the outcome is consultation against co-design: consultation invites reaction to decisions already made, co-design involves people in making them.</p>
+      </div>
+      <div>
+        <h3>Delivery mode</h3>
+        <span class="q">What access requirements does the mode itself create?</span>
+        <p>Online delivery requires content that meets WCAG and an LMS structure that can be navigated by keyboard and screen reader. Hybrid delivery requires deliberate design so that neither mode is the lesser one, which is more work than either mode alone. In-person delivery requires physical access, sensory access and attention to psychological safety. A blended programme requires coherence across all of these. The mode is chosen for reasons that are usually not about access, so its access consequences have to be surfaced deliberately.</p>
+      </div>
+      <div>
+        <h3>Constraints</h3>
+        <span class="q">Which constraints are fixed, and which are habitual?</span>
+        <p>LMS capability, assessment governance, faculty capacity and institutional policy are design parameters. Some are genuinely fixed within the timeline, and some are conventions that have not been tested. Naming them explicitly is what allows the two to be told apart, and it is more useful than treating all of them as obstacles or all of them as negotiable.</p>
+      </div>
+      <div>
+        <h3>Audience</h3>
+        <span class="q">Who has to approve the design, and who has to maintain it?</span>
+        <p>Academic committees need the rationale behind outcome and assessment choices. Accreditation bodies need evidence that the approach meets or exceeds professional standards. Faculty teams need practical guidance for running and iterating the course. These are different documents. Deciding the audience before the work begins changes what evidence is gathered, not only how it is presented.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 4 · COMPETENCIES ═══════════ -->
+  <section class="panel" id="competencies" aria-labelledby="h-competencies">
+    <span class="panel-count">Section four of seven</span>
+    <h2 id="h-competencies">Competencies</h2>
+    <p class="panel-lede">What a person doing this work must be able to do. Each capability maps onto a stage of the process above.</p>
+
+    <p>These are capabilities rather than topics, so each can be observed in the work produced. They are drawn from the design and pedagogy literature named in <a href="#sources">Sources</a> and from the process set out in <a href="#process">Process</a>.</p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Align outcomes, assessment and activities</h3>
+        <p>Produces a course in which each activity and each assessment traces to a stated outcome, and writes those outcomes so that they do not presume one disciplinary tradition or one way of demonstrating competence.</p>
+      </div>
+      <div class="card">
+        <h3>Design assessment that measures the outcome</h3>
+        <p>Separates what a task is intended to measure from what its format additionally requires, and builds formats and criteria that preserve the first without imposing the second.</p>
+      </div>
+      <div class="card">
+        <h3>Build multiple means into content and activity</h3>
+        <p>Identifies where a course offers only one path through engagement, representation or expression, and produces alternatives that are equivalent rather than nominal.</p>
+      </div>
+      <div class="card">
+        <h3>Produce course material that meets WCAG</h3>
+        <p>Captions media, writes useful alternative text, structures documents and LMS pages so they can be navigated by keyboard and screen reader, and can tell a genuine defect from an automated false positive.</p>
+      </div>
+      <div class="card">
+        <h3>Critique a curriculum for bias and gatekeeping</h3>
+        <p>Examines existing content, examples, reading and assessment for deficit assumptions and unexamined authority, and proposes specific alternatives rather than a general observation.</p>
+      </div>
+      <div class="card">
+        <h3>Facilitate co-design rather than consultation</h3>
+        <p>Runs design sessions in which faculty, learners and community partners hold real decisions, under conditions of informed consent and fair compensation, and can hold competing priorities without deferring automatically to the most senior voice.</p>
+      </div>
+      <div class="card">
+        <h3>Read disaggregated participation and success data</h3>
+        <p>Interprets completion, participation and attainment broken down by learner group, and distinguishes a pattern that indicates a design problem from one that does not.</p>
+      </div>
+      <div class="card">
+        <h3>Locate a course inside institutional systems</h3>
+        <p>Traces which template, policy, procurement decision or governance process a barrier came from, and writes recommendations addressed to that point rather than to the course alone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 5 · OUTCOMES ═══════════ -->
+  <section class="panel" id="outcomes" aria-labelledby="h-outcomes">
+    <span class="panel-count">Section five of seven</span>
+    <h2 id="h-outcomes">Outcomes</h2>
+    <p class="panel-lede">What inclusive curriculum design produces within a project, and what tends to follow over a longer period. The two carry different evidential weight.</p>
+
+    <p>Outcomes within the project are observable during the engagement and can be verified by someone else. Longer-term change is what the available evidence suggests, and is stated here with the hedging that evidence supports rather than the hedging that would be more persuasive.</p>
+
+    <div class="split">
+      <div>
+        <h3>Within the project</h3>
+        <ul>
+          <li><span><b>Barriers are addressed at source</b>Where a barrier is in the design rather than the learner, it is resolved in the design. Access arrives through a course built for the actual population rather than through a workaround negotiated case by case.</span></li>
+          <li><span><b>Format stops standing in for the outcome</b>Assessments are traceable to what they are meant to measure, with criteria published in advance and applied consistently across whatever formats are offered.</span></li>
+          <li><span><b>Some accommodation requests become unnecessary</b>Where flexibility in format, pacing, navigation or delivery is already in the design, the requests that would have secured it individually no longer need to be made. Requests arising from needs the design cannot anticipate continue, and should.</span></li>
+          <li><span><b>A design rationale exists in writing</b>A record of what was decided and why, held by the people who will maintain the course, so that later edits do not remove features that were put there deliberately.</span></li>
+          <li><span><b>Team capability grows</b>Faculty and staff who take part acquire working knowledge of UDL, assessment design and accessibility that carries into the next course they build.</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Over time</h3>
+        <ul>
+          <li><span><b>Inclusion enters at the start of the design cycle</b>Where the process is repeated, equity and access tend to be raised while outcomes are being written rather than after content is built, which is the point at which changes cost least.</span></li>
+          <li><span><b>Design features are used more widely than intended</b>Multimodal content, clear navigation, transparent criteria and flexible pacing are used by learners who have disclosed no disability and were not the intended beneficiaries.</span></li>
+          <li><span><b>The evidence supports the process more strongly than the outcome</b>Meta-analytic work reports that UDL improves the learning process for all students while noting that its impact on educational outcomes has not been demonstrated. Later meta-analysis reports positive effects alongside considerable heterogeneity between studies. Both are grounds for adopting the approach and for describing its effects carefully.</span></li>
+          <li><span><b>Institutional infrastructure changes</b>Templates, procurement requirements, quality assurance processes and faculty development begin to carry the design standard, which is what determines whether it survives past the people who introduced it.</span></li>
+        </ul>
       </div>
     </div>
 
-    <div class="callout"><strong>On evidence:</strong> Systematic reviews of UDL implementation in higher education show that fidelity matters significantly: high-fidelity implementation produces substantially larger achievement gains than partial or low-fidelity approaches. The case for investment in curriculum redesign rests on the evidence that better-designed learning produces better outcomes for more learners, not only on legal obligation.</div>
-  </div>
+    <div class="callout">
+      <span class="label">Limits</span>
+      <p><strong>What this work does not do.</strong> A well-designed course does not remove barriers that originate in fees, scheduling, caring responsibilities, immigration status or income, and it should not be offered as though it does. Accreditation frameworks, credit structures and platform limits constrain what any single project can change. Individual accommodation remains necessary and remains a legal duty. And a course designed inclusively can be edited back toward exclusion within a term if nobody holds the rationale, which is why the handoff in Stage six is part of the design rather than an administrative step.</p>
+    </div>
+  </section>
 
+  <!-- ═══════════ 6 · REFLECTION ═══════════ -->
+  <section class="panel" id="reflection" aria-labelledby="h-reflection">
+    <span class="panel-count">Section six of seven</span>
+    <h2 id="h-reflection">Reflection</h2>
+    <p class="panel-lede">Four questions about current practice, and four descriptions of what different patterns of answer usually indicate.</p>
 
-  <!-- ═══════════════════════════════════════════ REFLECTION -->
-  <div class="panel" id="p-reflection" role="tabpanel" aria-labelledby="t-reflection">
-    <h2>Reflection</h2>
-    <p class="r-intro">This reflection is designed to surface honest questions about where a curriculum currently sits in relation to inclusive design. Choose the response that most accurately reflects the current situation &mdash; not the intended or aspirational one. The reflection takes approximately two minutes.</p>
+    <p>Choose the option closest to the current situation rather than the intended one. The descriptions that follow address the situation, not the people working within it.</p>
 
-    <div id="r-form">
-      <div class="r-q">
-        <p class="r-q-text">1. How does your organisation currently approach inclusive curriculum design?</p>
-        <div class="r-opts" role="radiogroup">
-          <label class="r-opt"><input type="radio" name="q1" value="a"> Inclusion is not yet a structured design consideration</label>
-          <label class="r-opt"><input type="radio" name="q1" value="b"> Inclusion is addressed reactively when accommodation requests are raised</label>
-          <label class="r-opt"><input type="radio" name="q1" value="c"> UDL principles and accessible design practices are used in curriculum development</label>
-          <label class="r-opt"><input type="radio" name="q1" value="d"> Inclusive design is embedded from the start in every course and program</label>
+    <form class="reflect" novalidate>
+      <fieldset class="qgroup">
+        <legend>How does your organisation currently approach inclusive curriculum design?</legend>
+        <p class="hint">Consider what happens routinely rather than what happened once.</p>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" data-score="1"><span>Inclusion is not yet a structured design consideration</span></label>
+          <label class="opt"><input type="radio" name="q1" data-score="2"><span>Inclusion is addressed when accommodation requests are raised</span></label>
+          <label class="opt"><input type="radio" name="q1" data-score="3"><span>UDL and accessible design practices are used in course development</span></label>
+          <label class="opt"><input type="radio" name="q1" data-score="4"><span>Inclusive design is built into every course and programme from the start</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="qgroup">
+        <legend>How would you describe the current approach to assessment design?</legend>
+        <p class="hint">This asks about the design of the assessment, not about adjustments to it.</p>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" data-score="1"><span>Conventional formats are in place and not under active review</span></label>
+          <label class="opt"><input type="radio" name="q2" data-score="2"><span>Adjustments are offered to individual learners who request them</span></label>
+          <label class="opt"><input type="radio" name="q2" data-score="3"><span>Flexible or alternative formats are being piloted</span></label>
+          <label class="opt"><input type="radio" name="q2" data-score="4"><span>Assessments are designed to measure the outcome rather than performance under one set of conditions</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="qgroup">
+        <legend>To what extent do learners inform curriculum design?</legend>
+        <p class="hint">This asks about structured participation, not end-of-term surveys.</p>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" data-score="1"><span>Design is led by faculty and administrators</span></label>
+          <label class="opt"><input type="radio" name="q3" data-score="2"><span>Learner feedback is gathered informally, usually after a course has run</span></label>
+          <label class="opt"><input type="radio" name="q3" data-score="3"><span>Structured review is conducted with learners before and after launch</span></label>
+          <label class="opt"><input type="radio" name="q3" data-score="4"><span>Learners and community partners take part in designing courses and assessments</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="qgroup">
+        <legend>Where does responsibility for inclusive curriculum sit?</legend>
+        <p class="hint">Consider where decisions are made rather than where the interest lies.</p>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" data-score="1"><span>Responsibility is not formally assigned</span></label>
+          <label class="opt"><input type="radio" name="q4" data-score="2"><span>Responsibility rests with one or two individuals</span></label>
+          <label class="opt"><input type="radio" name="q4" data-score="3"><span>Responsibility is shared across a team with defined roles and some development support</span></label>
+          <label class="opt"><input type="radio" name="q4" data-score="4"><span>Responsibility is held in governance, assessment policy and design processes</span></label>
+        </div>
+      </fieldset>
+
+      <div class="btnrow js-only">
+        <button type="button" class="btn btn-primary" data-reflect-show>Show where this puts you</button>
+        <button type="button" class="btn btn-quiet" data-reflect-reset>Clear answers</button>
+      </div>
+
+      <p class="formnote js-only" data-reflect-note hidden>Answer every question to see a
+        result.</p>
+
+      <p class="formnote nojs-note">Scripting is off, so the bands below are all shown.
+        Read the one that matches your answers.</p>
+
+      <div class="result js-only" data-reflect-result hidden role="status">
+        <h3 data-band-title></h3>
+        <div data-band-body></div>
+      </div>
+
+      <div class="bands" hidden data-bands>
+        <div data-band="1">
+          <h3>Inclusion is not yet part of the design process</h3>
+          <p>In this pattern, barriers are being identified by learners rather than by the people designing the course, and usually arrive as a request or a complaint. That reflects the absence of a process rather than the priorities of the people doing the work. The most useful next step is a single course, chosen because it enrols a wide range of learners, taken through outcome and assessment review before anything else is touched.</p>
+        </div>
+        <div data-band="2">
+          <h3>Inclusion is handled through accommodation</h3>
+          <p>Access is being provided, but individually and after the fact, which places the administrative load on learners and on whoever processes the requests. This is the most common position and it does deliver access to the learners who ask. The next step is to look at the accommodation requests already on file for one course and ask which of them describe the same barrier, then remove that barrier from the design.</p>
+        </div>
+        <div data-band="3">
+          <h3>Inclusive design is practised in places</h3>
+          <p>Method is established and produces good courses where it is applied, so the constraint is usually reach and durability rather than skill. The next step is to move one practice out of the project and into the infrastructure — an accessible course template, or a required assessment rationale — so that it applies without anyone having to remember it.</p>
+        </div>
+        <div data-band="4">
+          <h3>Inclusive design is institutional</h3>
+          <p>Design decisions are made where curriculum and assessment policy are made, and the practice does not depend on particular individuals remaining in post. The remaining work is usually in maintenance and procurement, where new barriers enter. The next step is to require evidence of accessibility conformance as a condition of the next platform or content purchase.</p>
         </div>
       </div>
-      <div class="r-q">
-        <p class="r-q-text">2. How would you describe your organisation&rsquo;s current approach to assessment design?</p>
-        <div class="r-opts" role="radiogroup">
-          <label class="r-opt"><input type="radio" name="q2" value="a"> Conventional formats have been in place for some time and are not under active review</label>
-          <label class="r-opt"><input type="radio" name="q2" value="b"> Accommodations are offered to individual learners who request them</label>
-          <label class="r-opt"><input type="radio" name="q2" value="c"> Flexible or alternative assessment formats are being explored or piloted</label>
-          <label class="r-opt"><input type="radio" name="q2" value="d"> Assessments are explicitly designed to measure learning outcomes, not performance under narrow conditions</label>
-        </div>
+    </form>
+  </section>
+
+  <!-- ═══════════ 7 · SOURCES ═══════════ -->
+  <section class="panel" id="sources" aria-labelledby="h-sources">
+    <span class="panel-count">Section seven of seven</span>
+    <h2 id="h-sources">Sources</h2>
+    <p class="panel-lede">Every claim in this resource is traceable to one of the sources below. They are grouped by the foundation each supports, in the order of Section one.</p>
+
+    <p>Each entry carries a label naming what kind of source it is, so a reader can tell a standard from a meta-analysis from a practitioner text. Where a stable public address exists it is given; the books listed are held in most academic libraries.</p>
+
+    <div class="srcgroup">
+      <h3>Learning design theory</h3>
+
+      <div class="src">
+        <span class="kind">Practitioner text</span>
+        <p><strong>Wiggins, G., &amp; McTighe, J.</strong> <cite>Understanding by Design</cite>, 2nd edition. ASCD, 2005. The source of the backward design sequence used in Stages two and three: desired results, acceptable evidence, learning experiences.</p>
       </div>
-      <div class="r-q">
-        <p class="r-q-text">3. To what extent do learners inform your curriculum design?</p>
-        <div class="r-opts" role="radiogroup">
-          <label class="r-opt"><input type="radio" name="q3" value="a"> Design is led primarily by faculty and administrators</label>
-          <label class="r-opt"><input type="radio" name="q3" value="b"> Learner feedback is gathered informally, usually after a course has run</label>
-          <label class="r-opt"><input type="radio" name="q3" value="c"> Structured review is conducted with learners before and after courses go live</label>
-          <label class="r-opt"><input type="radio" name="q3" value="d"> Learners and community stakeholders are involved in co-designing curriculum and assessments</label>
-        </div>
+
+      <div class="src">
+        <span class="kind">Practitioner text</span>
+        <p><strong>Biggs, J., &amp; Tang, C.</strong> <cite>Teaching for Quality Learning at University</cite>, 4th edition. McGraw-Hill and Open University Press, 2011. The standard reference on constructive alignment.</p>
       </div>
-      <div class="r-q">
-        <p class="r-q-text">4. Where does inclusive curriculum responsibility currently sit in your organisation?</p>
-        <div class="r-opts" role="radiogroup">
-          <label class="r-opt"><input type="radio" name="q4" value="a"> It is unclear or unassigned</label>
-          <label class="r-opt"><input type="radio" name="q4" value="b"> It rests with one or two individuals</label>
-          <label class="r-opt"><input type="radio" name="q4" value="c"> It is shared across a team with defined roles and some professional development support</label>
-          <label class="r-opt"><input type="radio" name="q4" value="d"> It is embedded in governance, assessment policy, and design processes organisation-wide</label>
-        </div>
-      </div>
+
     </div>
 
-    <div class="r-submit-row">
-      <button class="r-submit" id="r-submit" type="button">See reflection</button>
-      <span class="r-warn" id="r-warn" role="alert">Please answer all four questions to continue.</span>
-    </div>
+    <div class="srcgroup">
+      <h3>Inclusive and anti-oppressive pedagogy</h3>
 
-    <div class="r-result" id="r-result" aria-live="polite" aria-atomic="true">
-      <p class="r-pattern" id="r-pattern"></p>
-      <p class="r-heading" id="r-heading"></p>
-      <p class="r-body"   id="r-body"></p>
-      <div class="r-qs">
-        <p>Questions worth sitting with:</p>
-        <ul id="r-qs-list"></ul>
+      <div class="src">
+        <span class="kind">Sector guidance</span>
+        <p><strong>Morgan, H., &amp; Houghton, A.-M.</strong> <cite>Inclusive Curriculum Design in Higher Education: considerations for effective practice across and within subject areas</cite>. The Higher Education Academy, 2011; now published by Advance HE. A widely cited sector reference covering anticipatory, flexible curriculum design generically and by discipline.</p>
+        <p><a class="ext" href="https://www.advance-he.ac.uk/knowledge-hub/inclusive-curriculum-design-higher-education" rel="noopener">advance-he.ac.uk</a></p>
       </div>
-      <button class="r-reset" id="r-reset" type="button">Start again</button>
+
     </div>
-  </div>
 
+    <div class="srcgroup">
+      <h3>Whose knowledge counts</h3>
 
-  <!-- ═══════════════════════════════════════════ CITATIONS -->
-  <div class="panel" id="p-citations" role="tabpanel" aria-labelledby="t-citations">
-    <h2>Citations</h2>
-    <p class="lead">The following sources underpin the knowledge claims, frameworks, and evidence in this resource. All citations have been verified as real, published works. References are grouped by the area of the resource they primarily support.</p>
+      <div class="src">
+        <span class="kind">Edited volume</span>
+        <p><strong>Bhambra, G. K., Gebrial, D., &amp; Nişancıoğlu, K. (eds.)</strong> <cite>Decolonising the University</cite>. Pluto Press, 2018. Used here for the argument that which knowledge is treated as authoritative is a structural feature of a curriculum rather than a matter of content selection.</p>
+        <p><a class="ext" href="https://www.plutobooks.com/product/decolonising-the-university/" rel="noopener">plutobooks.com</a></p>
+      </div>
 
-    <div class="cite-section">
+    </div>
 
+    <div class="srcgroup">
       <h3>Universal Design for Learning</h3>
 
-      <div class="cite">
-        <p class="cite-lbl">Core framework</p>
-        <p><strong>CAST.</strong> (2018). <em>Universal Design for Learning Guidelines version 2.2.</em> CAST.<br>
-        <a href="https://udlguidelines.cast.org" target="_blank" rel="noopener">udlguidelines.cast.org</a><br>
-        The primary reference for UDL&rsquo;s three principles &mdash; Engagement, Representation, and Action &amp; Expression &mdash; and the practical checkpoints that translate them into curriculum design decisions.</p>
+      <div class="src">
+        <span class="kind">Framework</span>
+        <p><strong>CAST.</strong> <cite>Universal Design for Learning Guidelines</cite>, version 3.0, released July 2024. The source of the three principles applied in Stages three and four.</p>
+        <p><a class="ext" href="https://udlguidelines.cast.org/" rel="noopener">udlguidelines.cast.org</a></p>
       </div>
 
-      <div class="cite">
-        <p class="cite-lbl">Systematic review</p>
-        <p><strong>Al-Azawei, A., Serenelli, F., &amp; Lundqvist, K.</strong> (2016). Universal Design for Learning (UDL): A content analysis of peer reviewed journals from 2012 to 2015. <em>Journal of the Scholarship of Teaching and Learning, 16</em>(3), 39&ndash;56.<br>
-        <a href="https://doi.org/10.14434/josotl.v16i3.19295" target="_blank" rel="noopener">doi.org/10.14434/josotl.v16i3.19295</a><br>
-        A peer-reviewed synthesis of UDL research in higher education, identifying areas of strongest evidence and implementation gaps.</p>
+      <div class="src">
+        <span class="kind">Meta-analysis</span>
+        <p><strong>Capp, M. J.</strong> "The effectiveness of universal design for learning: a meta-analysis of literature between 2013 and 2016." <cite>International Journal of Inclusive Education</cite>, 21(8), 791–807, 2017. Reports that UDL improves the learning process for all students while stating that its impact on educational outcomes has not been demonstrated. This is the basis of the hedging in Outcomes.</p>
+        <p><a class="ext" href="https://doi.org/10.1080/13603116.2017.1325074" rel="noopener">doi.org/10.1080/13603116.2017.1325074</a></p>
       </div>
 
-      <div class="cite">
-        <p class="cite-lbl">Foundational text</p>
-        <p><strong>Rose, D. H., &amp; Meyer, A.</strong> (2002). <em>Teaching Every Student in the Digital Age: Universal Design for Learning.</em> ASCD.<br>
-        The text that established UDL as a curriculum design framework and introduced its application to diverse learner populations in formal education settings.</p>
+      <div class="src">
+        <span class="kind">Meta-analysis</span>
+        <p><strong>Almeqdad, Q. I., Alodat, A. M., Alquraan, M. F., Mohaidat, M. A., &amp; Al-Makhzoomy, A. K.</strong> "The effectiveness of universal design for learning: a systematic review of the literature and meta-analysis." <cite>Cogent Education</cite>, 10(1), article 2218191, 2023. Reports positive effects across thirteen studies alongside considerable heterogeneity.</p>
+        <p><a class="ext" href="https://doi.org/10.1080/2331186X.2023.2218191" rel="noopener">doi.org/10.1080/2331186X.2023.2218191</a></p>
       </div>
 
-      <h3>Inclusive Curriculum Design</h3>
-
-      <div class="cite">
-        <p class="cite-lbl">Sector reference</p>
-        <p><strong>Morgan, H., &amp; Houghton, A.-M.</strong> (2011). <em>Inclusive Curriculum Design in Higher Education: Considerations for Effective Practice across and within Subject Areas.</em> The Higher Education Academy.<br>
-        One of the most widely cited sector resources for inclusive curriculum work in UK and international higher education; covers generic and subject-specific guidance on anticipatory, flexible design.</p>
+      <div class="src">
+        <span class="kind">Peer-reviewed</span>
+        <p><strong>Al-Azawei, A., Serenelli, F., &amp; Lundqvist, K.</strong> "Universal Design for Learning (UDL): a content analysis of peer-reviewed journals from 2012 to 2015." <cite>Journal of the Scholarship of Teaching and Learning</cite>, 16(3), 39–56, 2016. Identifies where the evidence is strongest and where implementation gaps remain.</p>
+        <p><a class="ext" href="https://doi.org/10.14434/josotl.v16i3.19295" rel="noopener">doi.org/10.14434/josotl.v16i3.19295</a></p>
       </div>
 
-      <div class="cite">
-        <p class="cite-lbl">Constructive alignment</p>
-        <p><strong>Biggs, J., &amp; Tang, C.</strong> (2011). <em>Teaching for Quality Learning at University</em> (4th ed.). McGraw-Hill / Open University Press.<br>
-        The standard reference on constructive alignment and outcome-focused course design; foundational for understanding how inclusive outcomes drive aligned assessment and activity design.</p>
+      <div class="src">
+        <span class="kind">Peer-reviewed</span>
+        <p><strong>Rao, K., &amp; Meo, G.</strong> "Using Universal Design for Learning to design standards-based lessons." <cite>SAGE Open</cite>, 6(4), 2016. Sets out a design cycle linking UDL to outcome-aligned assessment, which is the bridge used in Stage three.</p>
+        <p><a class="ext" href="https://doi.org/10.1177/2158244016680688" rel="noopener">doi.org/10.1177/2158244016680688</a></p>
       </div>
 
-      <div class="cite">
-        <p class="cite-lbl">Backward design</p>
-        <p><strong>Wiggins, G., &amp; McTighe, J.</strong> (2005). <em>Understanding by Design</em> (2nd ed.). ASCD.<br>
-        The definitive text on backward design, establishing the three-stage framework &mdash; desired results, acceptable evidence, learning experiences &mdash; that underpins outcome-aligned inclusive curriculum design.</p>
-      </div>
-
-      <h3>Assessment Equity</h3>
-
-      <div class="cite">
-        <p class="cite-lbl">Differentiated assessment</p>
-        <p><strong>Tomlinson, C. A.</strong> (2001). <em>How to Differentiate Instruction in Mixed-Ability Classrooms</em> (2nd ed.). ASCD.<br>
-        Foundational framework for differentiated instruction and assessment; establishes the principle that rigour and flexibility in assessment are compatible, not in tension.</p>
-      </div>
-
-      <div class="cite">
-        <p class="cite-lbl">UDL and authentic assessment</p>
-        <p><strong>Rao, K., &amp; Meo, G.</strong> (2016). Using Universal Design for Learning to design standards-based lessons. <em>SAGE Open, 6</em>(4).<br>
-        <a href="https://doi.org/10.1177/2158244016680688" target="_blank" rel="noopener">doi.org/10.1177/2158244016680688</a><br>
-        Demonstrates how UDL principles can be applied to standards-aligned assessment design, providing a bridge between inclusive pedagogy and formal accountability requirements.</p>
-      </div>
-
-      <h3>Belonging and Psychological Safety</h3>
-
-      <div class="cite">
-        <p class="cite-lbl">Belonging-centred design</p>
-        <p><strong>Wise, S.</strong> (2022). <em>Design for Belonging: How to Build Inclusion and Collaboration in Your Work.</em> Ten Speed Press.<br>
-        A practical framework for designing environments &mdash; including learning environments &mdash; that foster belonging and psychological safety; draws on Stanford d.school methods and field research.</p>
-      </div>
-
-      <h3>Digital Accessibility</h3>
-
-      <div class="cite">
-        <p class="cite-lbl">Technical standard</p>
-        <p><strong>World Wide Web Consortium (W3C).</strong> (2023). <em>Web Content Accessibility Guidelines (WCAG) 2.2.</em> W3C.<br>
-        <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">w3.org/TR/WCAG22/</a><br>
-        The current international technical standard for digital accessibility; applies to all digital course content including LMS pages, documents, media, and assessment platforms.</p>
+      <div class="src">
+        <span class="kind">Foundational text</span>
+        <p><strong>Rose, D. H., &amp; Meyer, A.</strong> <cite>Teaching Every Student in the Digital Age: Universal Design for Learning</cite>. ASCD, 2002. The text that established UDL as a curriculum design framework.</p>
       </div>
 
     </div>
-  </div>
 
+    <div class="srcgroup">
+      <h3>Digital accessibility</h3>
 
-  <footer class="page-footer">
-    Developed by <strong>Accessible Learning Labs</strong> to support organisations and learning designers working toward more inclusive learning environments. This resource draws on CAST&rsquo;s UDL framework, WCAG 2.2, the Higher Education Academy&rsquo;s Inclusive Curriculum Design guidance, and scholarship on backward design, anti-oppressive pedagogy, and belonging-centred learning. It does not constitute legal advice. A <a href="https://accessiblelearninglabs.github.io/services/course-curriculum-design-linear.html">screen reader and keyboard-optimised version</a> is also available.
-  </footer>
+      <div class="src">
+        <span class="kind">Standard</span>
+        <p><strong>World Wide Web Consortium.</strong> <cite>Web Content Accessibility Guidelines (WCAG) 2.2</cite>. W3C Recommendation, 5 October 2023. The technical baseline for all digital course content, including LMS pages, documents, media and assessment platforms.</p>
+        <p><a class="ext" href="https://www.w3.org/TR/WCAG22/" rel="noopener">w3.org/TR/WCAG22</a></p>
+      </div>
 
+    </div>
+
+    <div class="srcgroup">
+      <h3>Belonging and psychological safety</h3>
+
+      <div class="src">
+        <span class="kind">Practitioner text</span>
+        <p><strong>Wise, S.</strong> <cite>Design for Belonging: how to build inclusion and collaboration in your work</cite>. Ten Speed Press, 2022. A design framework for the relational and community dimensions addressed in Stages four and five.</p>
+      </div>
+
+      <div class="src">
+        <span class="kind">Practitioner text</span>
+        <p><strong>Tomlinson, C. A.</strong> <cite>How to Differentiate Instruction in Mixed-Ability Classrooms</cite>, 2nd edition. ASCD, 2001. The basis for treating rigour and flexibility in assessment as compatible rather than opposed.</p>
+      </div>
+
+    </div>
+
+    <div class="srcgroup">
+      <h3>Accommodation, equity and governance</h3>
+
+      <div class="src">
+        <span class="kind">Legislation</span>
+        <p><strong>Parliament of Canada.</strong> <cite>Accessible Canada Act</cite>, S.C. 2019, c. 10. Establishes the framework for a barrier-free Canada by 2040 across federally regulated sectors, with information and communication technologies among its priority areas.</p>
+        <p><a class="ext" href="https://laws-lois.justice.gc.ca/eng/acts/A-0.6/" rel="noopener">laws-lois.justice.gc.ca</a></p>
+      </div>
+
+      <div class="src">
+        <span class="kind">Legislation</span>
+        <p><strong>Legislative Assembly of British Columbia.</strong> <cite>Accessible British Columbia Act</cite>, S.B.C. 2021, c. 19. Requires prescribed public sector organisations, including school districts, to maintain an accessibility committee, an accessibility plan and a mechanism for public feedback.</p>
+        <p><a class="ext" href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/21019" rel="noopener">bclaws.gov.bc.ca</a></p>
+      </div>
+
+    </div>
+
+    <div class="callout">
+      <span class="label">On these sources</span>
+      <p>Every linked source above is publicly available at the address given, and the books are held in most academic libraries. Legislation and standards are revised: the date this resource was last reviewed appears in the footer, and anyone acting on a regulatory or accreditation question should confirm the current position with the issuing body.</p>
+    </div>
+  </section>
+</div>
 </main>
 
+<footer class="pagefoot">
+  <div class="shell">
+    <!-- EDIT — scope note. What the resource is, and what it is not. -->
+    <p>This resource is published by Accessible Learning Labs. It describes inclusive course and curriculum design as a practice, drawing on the frameworks, standards and peer-reviewed scholarship named in Sources. It is not legal advice, and it does not determine whether any particular obligation applies to any particular organisation.</p>
+    <p>A <a href="linear.html">linear version</a> of this page is
+      available, with the same content in one continuous column and no scripting.</p>
+
+    <!-- EDIT — keep all four. Update the date whenever content changes. -->
+    <p class="meta">
+      <span>Accessible Learning Labs</span>
+      <span>Accessibility</span>
+      <span>Version 1.0</span>
+      <span>Last reviewed <time datetime="2026-08-26">26 August 2026</time></span>
+    </p>
+  </div>
+</footer>
+
 <script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   Behaviour. Everything here is an enhancement: with the script removed the
+   page is a valid, complete, linear document. Nothing below creates content.
+   ═════════════════════════════════════════════════════════════════════════ */
 (function () {
-  // Tab navigation
-  const tabs   = document.querySelectorAll('[role="tab"]');
-  const panels = document.querySelectorAll('.panel');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-      panels.forEach(p => p.classList.remove('active'));
-      tab.setAttribute('aria-selected', 'true');
-      document.getElementById(tab.getAttribute('aria-controls')).classList.add('active');
+  'use strict';
+
+  /* ── Tabs ───────────────────────────────────────────────────────────────
+     The links in .tablist are upgraded in place to an ARIA tablist. Because
+     they start life as real anchors, deep links and no-JS both work. */
+  var list = document.querySelector('[data-tablist]');
+  var tabs = list ? Array.prototype.slice.call(list.querySelectorAll('a')) : [];
+  var panels = tabs.map(function (t) {
+    return document.querySelector(t.getAttribute('href'));
+  }).filter(Boolean);
+
+  if (tabs.length && tabs.length === panels.length) {
+    list.setAttribute('role', 'tablist');
+
+    tabs.forEach(function (tab, i) {
+      var panel = panels[i];
+      tab.setAttribute('role', 'tab');
+      tab.id = 'tab-' + panel.id;
+      tab.setAttribute('aria-controls', panel.id);
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', tab.id);
+      panel.setAttribute('tabindex', '-1');
     });
-    tab.addEventListener('keydown', e => {
-      const i = Array.from(tabs).indexOf(e.currentTarget);
-      let next;
-      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
-      if (e.key === 'ArrowLeft')  next = tabs[(i - 1 + tabs.length) % tabs.length];
-      if (e.key === 'Home') next = tabs[0];
-      if (e.key === 'End')  next = tabs[tabs.length - 1];
-      if (next) { next.focus(); next.click(); e.preventDefault(); }
+
+    /* writeHash is false for the selection made on load. Writing the fragment
+       before the document finishes loading makes the browser scroll to it, which
+       lands the reader below the title and the orientation note. */
+    var select = function (i, moveFocus, writeHash) {
+      tabs.forEach(function (tab, n) {
+        var on = n === i;
+        tab.setAttribute('aria-selected', String(on));
+        tab.setAttribute('tabindex', on ? '0' : '-1');
+        panels[n].hidden = !on;
+      });
+      if (moveFocus) { tabs[i].focus(); }
+      if (writeHash !== false) {
+        try { history.replaceState(null, '', '#' + panels[i].id); } catch (e) {}
+      }
+    };
+
+    var indexOfPanelContaining = function (id) {
+      var el = document.getElementById(id);
+      while (el && el !== document.body) {
+        var n = panels.indexOf(el);
+        if (n > -1) { return n; }
+        el = el.parentElement;
+      }
+      return -1;
+    };
+
+    list.addEventListener('click', function (e) {
+      var tab = e.target.closest('a[role="tab"]');
+      if (!tab) { return; }
+      e.preventDefault();
+      select(tabs.indexOf(tab), true);
+    });
+
+    list.addEventListener('keydown', function (e) {
+      var i = tabs.indexOf(document.activeElement);
+      if (i < 0) { return; }
+      var next = null;
+      if (e.key === 'ArrowRight') { next = (i + 1) % tabs.length; }
+      else if (e.key === 'ArrowLeft') { next = (i - 1 + tabs.length) % tabs.length; }
+      else if (e.key === 'Home') { next = 0; }
+      else if (e.key === 'End') { next = tabs.length - 1; }
+      if (next === null) { return; }
+      e.preventDefault();
+      select(next, true);
+    });
+
+    /* Any in-page link that points into a hidden panel opens that panel first,
+       then moves focus to the target so keyboard and screen reader users land
+       in the same place sighted users do. */
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('a[href^="#"]');
+      if (!link || link.closest('[data-tablist]')) { return; }
+      var id = link.getAttribute('href').slice(1);
+      if (!id) { return; }
+      var n = indexOfPanelContaining(id);
+      if (n < 0) { return; }
+      var target = document.getElementById(id);
+      e.preventDefault();
+      select(n, false, false);
+      history.replaceState(null, '', '#' + id);
+      if (target) {
+        if (!target.hasAttribute('tabindex')) { target.setAttribute('tabindex', '-1'); }
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ block: 'start' });
+      }
+    });
+
+    /* An incoming fragment opens its panel and is left in the URL, so a shared
+       link still lands where it promised. A bare URL opens the first panel and
+       stays at the top of the page. */
+    var opening = location.hash ? indexOfPanelContaining(location.hash.slice(1)) : -1;
+    select(opening > -1 ? opening : 0, false, opening > -1);
+  }
+
+  /* ── Expand all / collapse all ─────────────────────────────────────────── */
+  document.querySelectorAll('[data-expand-all]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var scope = btn.closest('.panel') || document;
+      var all = Array.prototype.slice.call(scope.querySelectorAll('details.stage'));
+      var open = all.every(function (d) { return d.open; });
+      all.forEach(function (d) { d.open = !open; });
+      btn.textContent = open ? 'Expand all stages' : 'Collapse all stages';
     });
   });
 
-  // Stage accordions
-  document.querySelectorAll('.stage-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const open = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!open));
-      document.getElementById(btn.getAttribute('aria-controls')).classList.toggle('open', !open);
-    });
-  });
+  /* ── Reflection ────────────────────────────────────────────────────────── */
+  document.querySelectorAll('form.reflect').forEach(function (form) {
+    var result = form.querySelector('[data-reflect-result]');
+    var note   = form.querySelector('[data-reflect-note]');
+    var bands  = form.querySelector('[data-bands]');
+    var show   = form.querySelector('[data-reflect-show]');
+    var reset  = form.querySelector('[data-reflect-reset]');
+    if (!result || !bands || !show) { return; }
 
-  // Reflection tool
-  const profiles = [
-    {
-      range: [4, 7],
-      pattern: 'Early stage',
-      heading: 'Inclusive design is not yet a structured practice in this curriculum.',
-      body: 'This is a common starting point. Most organisations begin with goodwill and reactive accommodation. The most productive next step is establishing a baseline: understanding what barriers currently exist before attempting to address them systematically.',
-      questions: [
-        'What do you actually know about the barriers your learners are experiencing, and how did that knowledge reach you?',
-        'Where in the curriculum is exclusion most likely to occur? What would it take to find out?',
-        'Who has the knowledge and authority to take a first step, and are they connected to each other?'
-      ]
-    },
-    {
-      range: [8, 10],
-      pattern: 'Reactive stage',
-      heading: 'The organisation responds to inclusion concerns but has not yet made it a proactive practice.',
-      body: 'Reactive approaches consistently miss barriers that go unreported, which are often the ones affecting learners least likely to ask for help. The gap between what gets flagged and what actually exists tends to be significant.',
-      questions: [
-        'Which learners in your context are most likely to navigate around barriers quietly rather than report them, and what does that cost them?',
-        'Are the issues your organisation addresses the most consequential ones, or the most visible ones?',
-        'What would need to change for inclusive design to be considered before a course goes live rather than after?'
-      ]
-    },
-    {
-      range: [11, 13],
-      pattern: 'Developing stage',
-      heading: 'Inclusive design practices are established, though not yet consistent or fully embedded.',
-      body: 'Organisations at this stage often have real expertise in one area while others remain underdeveloped. The most common gap is between what the design intends and what learners actually experience.',
-      questions: [
-        'Where does inclusive design work tend to stall in your organisation: at intention, implementation, or governance?',
-        'Are learners with diverse needs involved in evaluating whether inclusive design efforts are working, or is that assessment done entirely by staff?',
-        'Does inclusive practice extend to assessment policy and procurement, or primarily to content created directly by the team?'
-      ]
-    },
-    {
-      range: [14, 16],
-      pattern: 'Integrated stage',
-      heading: 'Inclusive design is embedded in how the organisation designs, assesses, and governs learning.',
-      body: 'Organisations at this stage have moved beyond individual effort toward structural integration. The most productive questions concern sustainability, evidence quality, and whether the practice is as robust as it appears from the inside.',
-      questions: [
-        'How do you know whether inclusive design is improving outcomes for learners from underrepresented groups? What evidence exists, and what is missing?',
-        'Is inclusive design expertise distributed across the organisation, or concentrated in a small number of people?',
-        'Where are the remaining blind spots: the content types, assessment formats, or learner populations not yet adequately reached?'
-      ]
+    var groups = Array.prototype.slice.call(form.querySelectorAll('fieldset.qgroup'));
+
+    show.addEventListener('click', function () {
+      var scores = groups.map(function (g) {
+        var picked = g.querySelector('input:checked');
+        return picked ? Number(picked.dataset.score) : null;
+      });
+      if (scores.indexOf(null) > -1) {
+        if (note) { note.hidden = false; }
+        var first = groups[scores.indexOf(null)].querySelector('input');
+        if (first) { first.focus(); }
+        return;
+      }
+      if (note) { note.hidden = true; }
+
+      var avg = scores.reduce(function (a, b) { return a + b; }, 0) / scores.length;
+      var band = bands.querySelector('[data-band="' + Math.round(avg) + '"]');
+      if (!band) { return; }
+
+      var body = band.cloneNode(true);
+      var heading = body.querySelector('h3');
+      var title = heading ? heading.textContent : '';
+      if (heading) { body.removeChild(heading); }
+
+      result.querySelector('[data-band-title]').textContent = title;
+      var slot = result.querySelector('[data-band-body]');
+      slot.innerHTML = '';
+      while (body.firstChild) { slot.appendChild(body.firstChild); }
+      result.hidden = false;
+      result.setAttribute('tabindex', '-1');
+      result.focus({ preventScroll: true });
+    });
+
+    if (reset) {
+      reset.addEventListener('click', function () {
+        form.querySelectorAll('input[type="radio"]').forEach(function (r) { r.checked = false; });
+        result.hidden = true;
+        if (note) { note.hidden = true; }
+        var first = form.querySelector('input[type="radio"]');
+        if (first) { first.focus(); }
+      });
     }
-  ];
-
-  const submitBtn  = document.getElementById('r-submit');
-  const warnEl     = document.getElementById('r-warn');
-  const resultEl   = document.getElementById('r-result');
-
-  submitBtn.addEventListener('click', () => {
-    const answers = ['q1','q2','q3','q4'].map(n => {
-      const sel = document.querySelector('input[name="' + n + '"]:checked');
-      return sel ? sel.value : null;
-    });
-    if (answers.includes(null)) {
-      warnEl.style.display = 'inline';
-      return;
-    }
-    warnEl.style.display = 'none';
-    const score   = answers.reduce((s, v) => s + {a:1,b:2,c:3,d:4}[v], 0);
-    const profile = profiles.find(p => score >= p.range[0] && score <= p.range[1]);
-
-    document.getElementById('r-pattern').textContent = profile.pattern;
-    document.getElementById('r-heading').textContent = profile.heading;
-    document.getElementById('r-body').textContent    = profile.body;
-    const list = document.getElementById('r-qs-list');
-    list.innerHTML = '';
-    profile.questions.forEach(q => {
-      const li = document.createElement('li');
-      li.textContent = q;
-      list.appendChild(li);
-    });
-    resultEl.classList.add('show');
-    resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    document.getElementById('r-form').style.display = 'none';
-    document.querySelector('.r-submit-row').style.display = 'none';
   });
-
-  document.getElementById('r-reset').addEventListener('click', () => {
-    document.querySelectorAll('input[name="q1"],input[name="q2"],input[name="q3"],input[name="q4"]')
-            .forEach(r => r.checked = false);
-    resultEl.classList.remove('show');
-    document.getElementById('r-form').style.display = 'block';
-    document.querySelector('.r-submit-row').style.display = 'flex';
-    warnEl.style.display = 'none';
-    document.getElementById('r-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-})();
+}());
 </script>
+
 </body>
 </html>
