@@ -1,575 +1,867 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+  ═══════════════════════════════════════════════════════════════════════════
+  KNOWLEDGE RESOURCE TEMPLATE — LINEAR
+  Template version 1.0.0 — Accessible Learning Labs — Accessibility Review
+
+  Pair file: index.html (same content, tabs, JS)
+  No JavaScript. One column. Every section visible in reading order.
+  Set the branch by changing data-branch on <html> below.
+  Every block you edit is marked EDIT.
+
+  The content of this file must match the interactive file word for word.
+  It is a different presentation of the same resource, not a summary of it.
+  ═══════════════════════════════════════════════════════════════════════════
+-->
+<html lang="en" data-branch="access">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Understanding Accessibility Review in Learning Environments — Accessible Learning Labs</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --colour-bg: #f4f6f7;
-      --colour-surface: #ffffff;
-      --colour-border: #d0d8db;
-      --colour-text: #303e44;
-      --colour-text-secondary: #566870;
-      --colour-accent: #475f6a;
-      --colour-accent-light: #eaeeef;
-      --colour-accent-muted: #7a9299;
-      --colour-note-bg: #f0f3f4;
-      --colour-note-border: #b8c5c9;
-      --radius: 6px;
-      --radius-lg: 10px;
-      --font-body: "Asap", system-ui, sans-serif;
-      --font-ui: "Asap", system-ui, sans-serif;
-    }
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { background: var(--colour-bg); color: var(--colour-text); font-family: var(--font-body); line-height: 1.75; }
-    .skip-link { position: absolute; top: -100%; left: 1rem; background: var(--colour-accent); color: #fff; padding: 0.5rem 1rem; border-radius: var(--radius); font-family: var(--font-ui); font-size: 0.875rem; text-decoration: none; z-index: 1000; }
-    .skip-link:focus { top: 1rem; }
-    .skip-toc { position: absolute; top: -100%; left: 8rem; background: var(--colour-accent); color: #fff; padding: 0.5rem 1rem; border-radius: var(--radius); font-family: var(--font-ui); font-size: 0.875rem; text-decoration: none; z-index: 1000; }
-    .skip-toc:focus { top: 1rem; }
-    .site-header { background: var(--colour-surface); border-bottom: 1px solid var(--colour-border); padding: 0.75rem 2rem; font-family: var(--font-ui); font-size: 0.8125rem; color: var(--colour-text-secondary); }
-    .page-wrapper { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 6rem; }
-    .page-title-block { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--colour-border); }
-    h1 { font-family: var(--font-body); font-size: clamp(1.5rem, 4vw, 2rem); font-weight: normal; line-height: 1.25; color: var(--colour-text); margin-bottom: 0.75rem; }
-    .page-subtitle { font-family: var(--font-ui); font-size: 0.9375rem; color: var(--colour-text-secondary); line-height: 1.5; margin-bottom: 1rem; }
-    .at-banner { background: var(--colour-accent-light); border: 1px solid #c0cdd1; border-radius: var(--radius); padding: 0.875rem 1.1rem; font-family: var(--font-ui); font-size: 0.875rem; color: #2e3f45; line-height: 1.5; margin-bottom: 0; }
-    .at-banner a { color: var(--colour-accent); }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 
-    /* TOC */
-    .toc-section { background: var(--colour-surface); border: 1px solid var(--colour-border); border-radius: var(--radius-lg); padding: 1.5rem 1.75rem; margin: 2rem 0; }
-    .toc-section h2 { font-family: var(--font-ui); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--colour-text-secondary); margin-bottom: 1rem; }
-    .toc-section ol { padding-left: 1.25em; font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.6; }
-    .toc-section li { margin-bottom: 0.25em; }
-    .toc-section ul { padding-left: 1.25em; margin-top: 0.25em; }
-    .toc-section a { color: var(--colour-accent); text-decoration: none; }
-    .toc-section a:hover, .toc-section a:focus { text-decoration: underline; }
+<!-- EDIT — same title as the interactive file -->
+<title>Accessibility Review — Accessible Learning Labs — Knowledge Resource</title>
+<!-- EDIT — same description as the interactive file -->
+<meta name="description" content="How accessibility review is carried out in learning environments: the bodies of knowledge it draws on, the stages of the work, the decisions that shape it, and the outcomes it can and cannot produce.">
 
-    /* Section blocks */
-    .section-block { margin-bottom: 3.5rem; padding-bottom: 3rem; border-bottom: 1px solid var(--colour-border); }
-    .section-block:last-of-type { border-bottom: none; }
-    .section-label { font-family: var(--font-ui); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--colour-accent-muted); display: block; margin-bottom: 0.5rem; }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap">
 
-    h2 { font-family: var(--font-body); font-size: 1.5rem; font-weight: normal; line-height: 1.3; color: var(--colour-text); margin-bottom: 1rem; }
-    h3 { font-family: var(--font-ui); font-size: 1rem; font-weight: 600; color: var(--colour-text); margin-top: 2rem; margin-bottom: 0.5rem; }
-    h4 { font-family: var(--font-ui); font-size: 0.875rem; font-weight: 600; color: var(--colour-text); margin-top: 1.5rem; margin-bottom: 0.4rem; }
-    p { margin-bottom: 1em; }
-    p:last-child { margin-bottom: 0; }
-    ul, ol { padding-left: 1.4em; margin-bottom: 1em; }
-    li { margin-bottom: 0.35em; }
-    strong { font-weight: 600; }
-    a { color: var(--colour-accent); }
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   1. TOKENS — shared block, identical in both templates. Do not edit per page.
+   Contrast ratios below are measured against the surface each token is used
+   on. Every text token clears WCAG 1.4.3 (4.5:1); every control boundary
+   clears 1.4.11 (3:1).
+   ══════════════════════════════════════════════════════════════════════════ */
+:root{
+  /* surfaces */
+  --paper:#ffffff;
+  --surface:#f5f6f7;
+  --sunk:#eaecee;
 
-    .callout { background: var(--colour-note-bg); border-left: 3px solid var(--colour-note-border); padding: 0.9rem 1.1rem; margin: 1.5rem 0; font-family: var(--font-ui); font-size: 0.875rem; color: var(--colour-text-secondary); line-height: 1.55; border-radius: 0 var(--radius) var(--radius) 0; }
-    .callout strong { color: var(--colour-text); }
-    .highlight-box { background: var(--colour-accent-light); border: 1px solid #c0cdd1; border-radius: var(--radius-lg); padding: 1.1rem 1.35rem; margin: 1.75rem 0; font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.6; color: #2b3c42; }
-    .highlight-box strong { color: #303e44; }
+  /* ink — ratios on --paper / --sunk */
+  --ink:#303e44;        /* 11.06 / 9.34 — headings, emphasis */
+  --ink-mid:#4f6068;    /*  6.55 / 5.53 — body copy */
+  --ink-muted:#576a73;  /*  5.65 / 4.77 — labels, captions, metadata */
+  --on-branch:#ffffff;
 
-    /* Stage blocks */
-    .stage-block { margin: 2rem 0; border-left: 3px solid var(--colour-accent-muted); padding-left: 1.5rem; }
-    .stage-meta { font-family: var(--font-ui); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--colour-accent-muted); margin-bottom: 0.25rem; }
-    .stage-block h3 { margin-top: 0; }
+  /* rules */
+  --rule:#d5dde1;       /* 1.38 — decorative hairlines ONLY, never a control edge */
+  --rule-strong:#7b8990;/* 3.61 — edges of buttons, inputs, focusable cards */
 
-    /* Decision subsections */
-    .decision-subsection { margin: 1.5rem 0; }
-    .decision-subsection h4 { color: var(--colour-text); text-transform: none; letter-spacing: 0; font-size: 0.9375rem; }
-    .decision-list { font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.7; list-style: none; padding: 0; }
-    .decision-list li { padding: 0.2em 0; border-bottom: 1px solid var(--colour-border); }
-    .decision-list li:last-child { border-bottom: none; }
-    .decision-list strong { color: var(--colour-text); }
+  /* branch identity — see §2. --branch is non-text (bars, dots, edges);
+     --branch-text is the text-safe variant. Never swap them. */
+  --branch:#8a6a60;
+  --branch-text:#88685f;
+  --wash:color-mix(in srgb, var(--branch) 8%, var(--paper));
 
-    /* Impact tables */
-    table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-family: var(--font-ui); font-size: 0.875rem; }
-    thead th { background: var(--colour-accent-light); color: var(--colour-accent); font-weight: 600; padding: 0.6rem 0.85rem; text-align: left; border-bottom: 2px solid #c5d8ef; }
-    tbody td { padding: 0.7rem 0.85rem; border-bottom: 1px solid var(--colour-border); vertical-align: top; line-height: 1.5; }
-    tbody tr:last-child td { border-bottom: none; }
-    tbody tr:nth-child(even) { background: var(--colour-bg); }
+  /* focus */
+  --focus:#303e44;
+  --focus-halo:#ffffff;
 
-    /* Reflection questions */
-    .reflection-question { margin: 1.5rem 0; }
-    .reflection-question h4 { font-size: 0.9375rem; color: var(--colour-text); text-transform: none; letter-spacing: 0; margin-bottom: 0.75rem; }
-    .reflection-question ul { list-style: none; padding: 0; }
-    .reflection-question li { padding: 0.3em 0 0.3em 1.5em; position: relative; font-family: var(--font-ui); font-size: 0.9rem; color: var(--colour-text-secondary); }
-    .reflection-question li::before { content: "🤔"; position: absolute; left: 0; font-size: 0.85rem; }
+  /* scale */
+  --measure:66ch;
+  --shell:min(100% - 2.5rem, 48rem);
+  --r:8px;
+  --r-sm:5px;
+  --ease:cubic-bezier(.22,.61,.36,1);
 
-    .back-to-top { display: inline-block; margin-top: 2rem; font-family: var(--font-ui); font-size: 0.875rem; color: var(--colour-accent); text-decoration: none; }
-    .back-to-top:hover { text-decoration: underline; }
+  --sans:"Asap",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
 
-    .page-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--colour-border); font-family: var(--font-ui); font-size: 0.8125rem; color: var(--colour-text-secondary); line-height: 1.6; }
+/* ── 2. BRANCH THEMES ──────────────────────────────────────────────────────
+   Colours are the landscape map's own. Where the map colour fell below 4.5:1
+   as text, a darkened text variant is supplied; the map colour is kept for
+   non-text use so the two surfaces still read as the same branch. */
+[data-branch="trunk"] {--branch:#55666e;--branch-text:#55666e;}
+[data-branch="access"]{--branch:#8a6a60;--branch-text:#88685f;}
+[data-branch="epist"] {--branch:#7a5c6b;--branch-text:#7a5c6b;}
+[data-branch="eval"]  {--branch:#41697a;--branch-text:#41697a;}
+[data-branch="hr"]    {--branch:#3f5570;--branch-text:#3f5570;}
+[data-branch="hwe"]   {--branch:#2e5f8a;--branch-text:#2e5f8a;}
+[data-branch="kmb"]   {--branch:#47607a;--branch-text:#47607a;}
+[data-branch="lxd"]   {--branch:#4c6b66;--branch-text:#4c6b66;}
+[data-branch="lsd"]   {--branch:#6d6550;--branch-text:#6d6550;}
+[data-branch="public"]{--branch:#5b7d8c;--branch-text:#557482;}
+[data-branch="udl"]   {--branch:#635f7a;--branch-text:#635f7a;}
 
-    /* Citations */
-    .citation-group-heading { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--colour-accent-muted); margin-top: 2rem; margin-bottom: 0.75rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--colour-border); }
-    .citation-group-heading:first-child { margin-top: 0; }
-    .citation-entry { margin-bottom: 1rem; padding: 0.85rem 1rem; background: var(--colour-surface); border: 1px solid var(--colour-border); border-radius: var(--radius); font-size: 0.875rem; line-height: 1.65; }
-    .citation-entry .citation-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--colour-accent-muted); margin-bottom: 0.3rem; }
-    .citation-entry p { margin: 0; color: var(--colour-text-secondary); }
-    .citation-entry a { color: var(--colour-accent); word-break: break-all; }
-    .citation-entry a:hover { text-decoration: underline; }
-    .citation-entry strong { color: var(--colour-text); }
-  </style>
+/* ── 3. RESET & BASE ─────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:1.0625rem;
+  line-height:1.7;                     /* slightly looser: long-form reading */
+  color:var(--ink-mid);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,p,ul,ol,dl,figure,blockquote{margin:0;}
+/* Form controls take a UA font unless told otherwise, so route them through
+   the same stack as everything else. Without this, radios, buttons, legends
+   and any field added later render in Arial. */
+button,input,select,textarea,optgroup,legend{font:inherit;}
+img,svg{max-width:100%;height:auto;}
+:target{scroll-margin-top:2rem;}
+
+:focus{outline:none;}
+:focus-visible{
+  outline:3px solid var(--focus);
+  outline-offset:2px;
+  border-radius:2px;
+  box-shadow:0 0 0 6px var(--focus-halo);
+}
+
+h1,h2,h3,h4{color:var(--ink);line-height:1.22;text-wrap:balance;font-weight:600;}
+h1{font-size:clamp(1.75rem,1.3rem + 1.9vw,2.4rem);letter-spacing:-.015em;font-weight:700;}
+h2{font-size:clamp(1.375rem,1.2rem + .7vw,1.6rem);letter-spacing:-.01em;}
+h3{font-size:1.125rem;}
+h4{font-size:1rem;}
+p{max-width:var(--measure);}
+p + p{margin-top:.85em;}
+
+a{color:var(--branch-text);text-underline-offset:.18em;text-decoration-thickness:1px;}
+a:hover{text-decoration-thickness:2px;}
+
+strong,b{color:var(--ink);font-weight:600;}
+code{font-family:var(--sans);font-size:.94em;font-weight:600;letter-spacing:.04em;
+  background:var(--sunk);padding:.1em .38em;border-radius:3px;color:var(--ink);}
+
+.shell{width:var(--shell);margin-inline:auto;}
+.eyebrow{font-size:.8125rem;font-weight:600;letter-spacing:.13em;word-spacing:.14em;text-transform:uppercase;
+  color:var(--branch-text);margin:0 0 .7rem;}
+.label{font-size:.8125rem;font-weight:700;letter-spacing:.1em;word-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-muted);display:block;margin-bottom:.5rem;}
+.lede{font-size:1.1875rem;line-height:1.55;color:var(--ink-mid);max-width:38em;}
+.rule{border:0;border-top:1px solid var(--rule);margin:2.5rem 0;}
+
+/* ── 4. SKIP LINKS ───────────────────────────────────────────────────────── */
+.skips{position:absolute;top:0;left:0;z-index:200;}
+.skips ul{list-style:none;margin:0;padding:0;display:flex;gap:.5rem;}
+.skips a{
+  position:absolute;left:-9999px;
+  display:inline-block;white-space:nowrap;
+  background:var(--ink);color:var(--paper);text-decoration:none;
+  font-size:.9375rem;font-weight:600;padding:.7rem 1.1rem;border-radius:0 0 var(--r-sm) 0;
+}
+.skips a:focus{position:static;}
+
+/* ── 5. MASTHEAD — identical to the interactive template ─────────────────── */
+.masthead{background:var(--paper);border-bottom:1px solid var(--rule);}
+.masthead .shell{padding:2.5rem 0 2rem;}
+.masthead h1{margin-bottom:.75rem;max-width:20ch;}
+.brandbar{height:3px;width:3.5rem;background:var(--branch);border-radius:2px;margin-bottom:1.5rem;}
+.orient{
+  margin-top:1.75rem;background:var(--wash);
+  border:1px solid var(--rule);border-left:3px solid var(--branch);
+  border-radius:0 var(--r-sm) var(--r-sm) 0;
+  padding:1rem 1.15rem;font-size:.9375rem;max-width:var(--measure);
+}
+.orient p{max-width:none;}
+.orient p + p{margin-top:.6rem;}
+
+/* ── 6. CONTENTS ─────────────────────────────────────────────────────────── */
+main .shell{padding:2.75rem 0 5rem;}
+#contents{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+  padding:1.4rem 1.6rem;margin-bottom:3rem;
+}
+#contents h2{font-size:.8125rem;font-weight:700;letter-spacing:.1em;word-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-muted);margin-bottom:.9rem;}
+#contents ol{margin:0;padding-left:1.4rem;}
+#contents > ol > li{margin-bottom:.55rem;font-weight:600;color:var(--ink);}
+#contents ul{list-style:disc;margin:.3rem 0 0;padding-left:1.1rem;}
+#contents ul li{font-weight:400;font-size:.9375rem;margin-bottom:.15rem;}
+#contents a{color:inherit;text-decoration:none;
+  display:inline-block;padding:.15rem 0;min-height:1.5rem;}
+#contents a:hover{text-decoration:underline;color:var(--branch-text);}
+#contents ul a{color:var(--ink-mid);}
+
+/* ── 7. SECTIONS ─────────────────────────────────────────────────────────── */
+.section{max-width:var(--measure);}
+.section + .section{margin-top:3.5rem;padding-top:3rem;border-top:1px solid var(--rule);}
+.section > h2{margin-bottom:.5rem;}
+.section > .section-lede{margin-bottom:2rem;}
+.section-count{font-size:.8125rem;font-weight:700;letter-spacing:.1em;word-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-muted);display:block;margin-bottom:.55rem;}
+.section h3{margin-top:2rem;margin-bottom:.5rem;}
+.section h4{margin-top:1.5rem;margin-bottom:.35rem;}
+
+/* ── 8. CARD LIST — a definition list in linear form, not a grid ─────────── */
+.deflist{margin:1.5rem 0;border-top:1px solid var(--rule);}
+.deflist > div{padding:1.1rem 0;border-bottom:1px solid var(--rule);}
+.deflist h3{margin-top:0;font-size:1.0625rem;margin-bottom:.3rem;}
+.deflist .kindtag{display:block;font-size:.8125rem;font-weight:600;letter-spacing:.08em;
+  word-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.3rem;}
+.deflist p{font-size:.9375rem;}
+
+/* ── 9. CALLOUT — identical to the interactive template ──────────────────── */
+.callout{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);
+  padding:1.15rem 1.3rem;margin:1.75rem 0;font-size:.9375rem;max-width:var(--measure);
+}
+.callout.accent{background:var(--wash);border-left:3px solid var(--branch);
+  border-radius:0 var(--r) var(--r) 0;}
+.callout p{max-width:none;}
+.callout .label{color:var(--branch-text);}
+
+/* ── 10. STAGES — open headings, not disclosure widgets ──────────────────── */
+.stage-block{margin:1.75rem 0 0;padding-left:1.5rem;border-left:3px solid var(--branch);}
+.stage-block h3{margin-top:0;display:flex;align-items:baseline;gap:.6rem;}
+.stage-block h3 .n{color:var(--branch-text);font-weight:700;font-size:.9375rem;
+  letter-spacing:.06em;text-transform:uppercase;flex:0 0 auto;}
+.stage-block .stage-sub{font-size:.9375rem;color:var(--ink-muted);margin-bottom:.7rem;}
+.stage-block p{font-size:.9375rem;}
+.produces{background:var(--surface);border-radius:var(--r-sm);padding:.85rem 1rem;
+  margin-top:.85rem;}
+.produces ul{margin:.4rem 0 0;padding-left:1.15rem;font-size:.9375rem;}
+.produces li + li{margin-top:.25rem;}
+
+/* ── 11. Q&A — identical to the interactive template ─────────────────────── */
+.qa{margin:1.5rem 0;border-top:1px solid var(--rule);}
+.qa > div{padding:1.15rem 0;border-bottom:1px solid var(--rule);}
+.qa h3{margin-top:0;font-size:1.0625rem;margin-bottom:.3rem;}
+.qa .q{display:block;font-size:.9375rem;font-style:italic;color:var(--branch-text);
+  margin-bottom:.5rem;}
+.qa p{font-size:.9375rem;}
+
+/* ── 12. OUTCOME LISTS — stacked, not columns ────────────────────────────── */
+.outcomes{list-style:none;margin:1rem 0 0;padding:0;}
+.outcomes li{display:flex;gap:.7rem;margin-bottom:.9rem;font-size:.9375rem;}
+.outcomes li::before{content:"";flex:0 0 3px;background:var(--branch);border-radius:2px;
+  align-self:stretch;}
+.outcomes li b{display:block;color:var(--ink);}
+
+/* ── 13. REFLECTION — questions and all bands, no scoring ────────────────── */
+.qlist{margin:1.5rem 0;counter-reset:rq;list-style:none;padding:0;}
+.qlist > li{border:1px solid var(--rule);border-radius:var(--r);padding:1.15rem 1.3rem;
+  margin-bottom:.75rem;}
+.qlist h4{margin:0 0 .35rem;font-size:1.0625rem;}
+.qlist h4::before{counter-increment:rq;content:"Question " counter(rq) " · ";
+  color:var(--ink-muted);font-weight:600;font-size:.9375rem;letter-spacing:.04em;}
+.qlist .hint{font-size:.9375rem;color:var(--ink-muted);margin-bottom:.7rem;}
+.qlist ul{margin:0;padding-left:1.2rem;font-size:.9375rem;}
+.qlist ul li{margin-bottom:.2rem;}
+.band{border:1px solid var(--rule);border-left:3px solid var(--branch);
+  border-radius:0 var(--r) var(--r) 0;padding:1.1rem 1.3rem;margin-bottom:.75rem;
+  background:var(--wash);}
+.band h4{margin:0 0 .35rem;font-size:1.0625rem;}
+.band p{font-size:.9375rem;}
+
+/* ── 14. SOURCES — identical to the interactive template ─────────────────── */
+.srcgroup{margin:1.75rem 0;}
+.srcgroup > h3{margin-top:0;padding-bottom:.5rem;border-bottom:1px solid var(--rule);
+  margin-bottom:1rem;}
+.src{padding:.85rem 0;border-bottom:1px solid var(--rule);font-size:.9375rem;}
+.src:last-child{border-bottom:0;}
+.src .kind{display:block;font-size:.8125rem;font-weight:600;letter-spacing:.08em;
+  word-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.25rem;}
+.src p{max-width:none;}
+.src cite{font-style:italic;}
+.ext::after{content:"";display:inline-block;width:.68em;height:.68em;margin-left:.3em;
+  background:currentColor;vertical-align:-.02em;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 11.6 11.6 5M6 4.6h5.4V10' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5 11.6 11.6 5M6 4.6h5.4V10' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center/contain;}
+
+/* ── 15. BACK TO CONTENTS ────────────────────────────────────────────────── */
+.backlink{display:inline-block;margin-top:3rem;font-size:.9375rem;font-weight:600;
+  min-height:2.75rem;padding:.7rem 0;}
+
+/* ── 16. FOOTER — identical to the interactive template ──────────────────── */
+.pagefoot{border-top:1px solid var(--rule);background:var(--surface);}
+.pagefoot .shell{padding:2rem 0 3rem;}
+.pagefoot p{font-size:.9375rem;color:var(--ink-muted);}
+.pagefoot p + p{margin-top:.7rem;}
+.meta{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;font-size:.875rem;
+  color:var(--ink-muted);margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--rule);}
+.meta > span{white-space:nowrap;}
+
+/* ── 17. USER PREFERENCES — identical to the interactive template ────────── */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important;}
+}
+@media (prefers-contrast:more){
+  :root{--rule:#5a6a72;--rule-strong:#3d4a51;--ink-mid:#2b383e;--ink-muted:#33424a;}
+}
+@media (forced-colors:active){
+  .callout,.band,.qlist > li,.deflist > div{border:1px solid CanvasText;}
+  .brandbar,.outcomes li::before,.stage-block{forced-color-adjust:none;}
+  :focus-visible{outline-color:Highlight;}
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#161d21;--surface:#1e262a;--sunk:#263035;
+    --ink:#e8edef;      /* 14.44 on --paper */
+    --ink-mid:#c3ced3;  /* 10.63 */
+    --ink-muted:#a3b2b9;/*  7.81 */
+    --rule:#33414a;--rule-strong:#7e8f98;
+    --focus:#e8edef;--focus-halo:#161d21;
+    --on-branch:#161d21;
+    --branch-text:color-mix(in srgb, #e8edef 58%, var(--branch));
+    --wash:color-mix(in srgb, var(--branch) 22%, var(--paper));
+  }
+}
+
+/* ── 18. PRINT ───────────────────────────────────────────────────────────── */
+@media print{
+  .skips,.backlink{display:none !important;}
+  body{font-size:11pt;color:#000;background:#fff;}
+  #contents{break-after:page;}
+  .section + .section{break-before:page;border-top:0;padding-top:0;}
+  h2,h3{break-after:avoid;}
+  .callout,.band,.qlist > li,.stage-block{break-inside:avoid;}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all;}
+}
+</style>
 </head>
+
 <body>
 
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<a class="skip-toc" href="#toc">Skip to table of contents</a>
+<nav class="skips" aria-label="Skip links">
+  <ul>
+    <li><a href="#main">Skip to main content</a></li>
+    <li><a href="#contents">Skip to contents</a></li>
+  </ul>
+</nav>
 
-<header class="site-header">Accessible Learning Labs — Knowledge Resource</header>
+<!-- ═══════════════ MASTHEAD ═══════════════ -->
+<header class="masthead">
+  <div class="shell">
+    <div class="brandbar" aria-hidden="true"></div>
 
-<main id="main-content" class="page-wrapper">
+    <!-- EDIT — must match the interactive file exactly -->
+    <p class="eyebrow">Accessible Learning Labs · Knowledge resource</p>
+    <h1>Accessibility Review</h1>
+    <p class="lede">A reader who works through this resource can specify an accessibility review for their own context — its scope, its standard, its depth and its method — and judge whether the findings they receive can be acted on.</p>
 
-  <div class="page-title-block">
-    <h1>Understanding Accessibility Review in Learning Environments</h1>
-    <p class="page-subtitle">A guide to the knowledge foundations, methodology, key decisions, and learner outcomes that characterise effective accessibility review.</p>
-    <div class="at-banner">
-      <strong>Screen reader and keyboard-optimised version.</strong> This is a fully linear, plain-structure version of this resource designed for use with assistive technologies. All content is presented in reading order with no tabs, accordions, or JavaScript. An <a href="https://accessiblelearninglabs.github.io/services/accessibility-review.html">interactive version with tabs and expandable sections</a> is also available.
+    <div class="orient">
+      <p><strong>Who this is for.</strong> Learning designers, faculty, accessibility practitioners, and the people who commission review findings and decide what happens to them. It assumes no technical background and defines terms as they arise. The service page is at <a href="https://www.accessiblelearninglabs.com/accessibility-review">accessiblelearninglabs.com/accessibility-review</a>.</p>
+      <p><strong>This is the linear version.</strong> All content is in one column, in
+        reading order, with no tabs, no disclosure widgets, and no scripting. An
+        <a href="./">interactive version</a> presents
+        the same content in tabbed sections. Neither version is a summary of the other.</p>
     </div>
   </div>
+</header>
 
-  <!-- TABLE OF CONTENTS -->
-  <nav id="toc" aria-label="Table of contents">
-    <div class="toc-section">
-      <h2>Contents</h2>
-      <ol>
-        <li><a href="#foundation">Knowledge Foundations</a>
-          <ul>
-            <li><a href="#four-pillars">The four knowledge pillars</a></li>
-            <li><a href="#beyond-checklist">Beyond checklist compliance</a></li>
-            <li><a href="#accommodation-vs-design">Accommodation versus design</a></li>
-          </ul>
-        </li>
-        <li><a href="#methodology">Methodology</a>
-          <ul>
-            <li><a href="#stage-1">Stage 1: Intake and scoping</a></li>
-            <li><a href="#stage-2">Stage 2: Barrier analysis</a></li>
-            <li><a href="#stage-3">Stage 3: Technical standards audit</a></li>
-            <li><a href="#stage-4">Stage 4: User-centered evaluation</a></li>
-            <li><a href="#stage-5">Stage 5: Learning design and UDL assessment</a></li>
-            <li><a href="#stage-6">Stage 6: Reporting and remediation planning</a></li>
-          </ul>
-        </li>
-        <li><a href="#decisions">Key Decisions That Shape a Review</a></li>
-        <li><a href="#impact">Learner Impact</a>
-          <ul>
-            <li><a href="#short-term">Shorter-term outcomes</a></li>
-            <li><a href="#long-term">Longer-term change</a></li>
-          </ul>
-        </li>
-        <li><a href="#legal">Legal and Regulatory Context</a>
-          <ul>
-            <li><a href="#aca">Accessible Canada Act</a></li>
-            <li><a href="#abca">Accessible British Columbia Act</a></li>
-            <li><a href="#compliance-gap">The gap between legislation and practice</a></li>
-          </ul>
-        </li>
-        <li><a href="#reflection">Organisational Reflection</a></li>
-        <li><a href="#citations">Academic Citations</a>
-          <ul>
-            <li><a href="#cite-technical">Technical standards</a></li>
-            <li><a href="#cite-bok">Professional bodies of knowledge</a></li>
-            <li><a href="#cite-empirical">Empirical evidence and audit data</a></li>
-            <li><a href="#cite-he-online">Higher education — online learning</a></li>
-            <li><a href="#cite-he-udl">Higher education — universal design</a></li>
-          </ul>
-        </li>
-      </ol>
-    </div>
+<main id="main">
+<div class="shell">
+
+  <!-- ═══════════ CONTENTS ═══════════ -->
+  <nav id="contents" aria-labelledby="contents-h">
+    <h2 id="contents-h">Contents</h2>
+    <ol>
+      <li><a href="#foundations">Foundations</a></li>
+      <li><a href="#process">Process</a>
+        <ul>
+          <li><a href="#stage-1">Stage 1 · Establish scope and context</a></li>
+          <li><a href="#stage-2">Stage 2 · Analyse barriers</a></li>
+          <li><a href="#stage-3">Stage 3 · Audit against the standard</a></li>
+          <li><a href="#stage-4">Stage 4 · Evaluate with users</a></li>
+          <li><a href="#stage-5">Stage 5 · Assess the learning design</a></li>
+          <li><a href="#stage-6">Stage 6 · Report and plan remediation</a></li>
+        </ul>
+      </li>
+      <li><a href="#decisions">Decisions</a></li>
+      <li><a href="#competencies">Competencies</a></li>
+      <li><a href="#outcomes">Outcomes</a>
+        <ul>
+          <li><a href="#short-term">Within the project</a></li>
+          <li><a href="#over-time">Over time</a></li>
+        </ul>
+      </li>
+      <li><a href="#reflection">Reflection</a>
+        <ul>
+          <li><a href="#reflection-questions">Questions</a></li>
+          <li><a href="#reflection-bands">Reading your answers</a></li>
+        </ul>
+      </li>
+      <li><a href="#sources">Sources</a></li>
+    </ol>
   </nav>
 
-  <!-- SECTION 1: KNOWLEDGE FOUNDATIONS -->
-  <div class="section-block" id="foundation">
-    <span class="section-label">Section 1</span>
-    <h2>Knowledge Foundations</h2>
-    <p>Effective accessibility review draws on four interconnected bodies of knowledge. The most rigorous reviews hold all four in view simultaneously — and produce findings that a surface-level compliance check cannot.</p>
+  <!-- ═══════════ 1 · FOUNDATIONS ═══════════ -->
+  <section class="section" id="foundations" aria-labelledby="h-foundations">
+    <span class="section-count">Section one of seven</span>
+    <h2 id="h-foundations">Foundations</h2>
+    <p class="section-lede">Accessibility review rests on five bodies of knowledge. A review that omits one of them will still produce findings, but predictably narrow ones.</p>
 
-    <h3 id="four-pillars">The four knowledge pillars</h3>
-    <p>Each pillar represents a distinct area of expertise that contributes to a complete review. In practice, they are deeply interconnected: strong barrier analysis requires disability knowledge; evaluating a learning experience requires UDL fluency; connecting findings to action requires understanding governance and law.</p>
+    <p>They are ordered below by how much of the work rests on each. The first three determine what a reviewer is able to see. The last two determine whether what they find can be acted on by anyone.</p>
 
-    <h4>1. Disability and learner variability</h4>
-    <p>Accessibility review begins with understanding disability as a relationship between a person and their environment — not a fixed category. This includes familiarity with major disability categories (visual, auditory, motor, cognitive, neurological, and situational), how assistive technologies work and what they require from content, and how barriers affect participation across physical, cognitive, sensory, and situational contexts. Many barriers also affect people without formal disability designations — including those with temporary impairments, older learners, or people accessing content in constrained environments.</p>
-
-    <h4>2. Universal Design for Learning (UDL) and inclusive design</h4>
-    <p>Universal Design for Learning (UDL), developed by CAST, guides the design of learning experiences to accommodate variability from the outset. It is organised around three principles:</p>
-    <ul>
-      <li><strong>Multiple means of Engagement</strong> — the why of learning: recruiting interest, sustaining effort, enabling self-regulation</li>
-      <li><strong>Multiple means of Representation</strong> — the what of learning: offering content through different modalities and formats</li>
-      <li><strong>Multiple means of Action and Expression</strong> — the how of learning: allowing learners to demonstrate knowledge in varied ways</li>
-    </ul>
-    <p>UDL is complementary to technical accessibility standards: where WCAG addresses whether content is technically accessible, UDL addresses whether the learning experience offers all learners genuine ways to engage with and demonstrate knowledge.</p>
-
-    <h4>3. Technical accessibility standards</h4>
-    <p>The Web Content Accessibility Guidelines (WCAG), currently at versions 2.1 and 2.2, provide the technical baseline for digital accessibility across web content, LMS platforms, digital documents, multimedia, and interactive learning objects. They are organised around four principles — Perceivable, Operable, Understandable, and Robust (POUR). Standards fluency means interpreting and applying criteria in context, not simply running automated checks and reporting pass/fail results.</p>
-
-    <h4>4. Laws, governance, and institutional context</h4>
-    <p>Technical findings create lasting change only when they connect to real accountability structures. This requires understanding relevant legislation (addressed in Section 5) and also institutional governance: who has authority to require accessibility in procurement, which workflows create barriers that no individual designer can resolve, and how accessibility responsibilities are distributed across an organisation. Reviews that ignore institutional context produce findings that sit in reports without generating change.</p>
-
-    <div class="highlight-box">
-      <strong>A practical hierarchy:</strong> Use WCAG to audit the artefact. Use UDL to evaluate the learning experience. Use inclusive design principles to assess the system. Effective review holds all three lenses simultaneously and situates findings within the institutional context where they must be acted on.
+    <div class="deflist">
+      <div>
+        <span class="kindtag">Discipline</span>
+        <h3>Disability and assistive technology</h3>
+        <p>A barrier is produced by the relationship between a person and an environment, not by a diagnosis. Reviewing well requires knowing the major categories of disability, how screen readers, magnification, speech input and switch access interact with content, and how temporary and situational constraints produce the same barriers.</p>
+      </div>
+      <div>
+        <span class="kindtag">Framework</span>
+        <h3>Accessibility and universal design</h3>
+        <p>Accommodation resolves one person’s access need after the fact. Design anticipates variability in advance. Both remain necessary, and the distinction is what tells a reviewer whether a finding calls for a repair, a redesign, or a change to a process.</p>
+      </div>
+      <div>
+        <span class="kindtag">Standard</span>
+        <h3>Web and digital accessibility standards</h3>
+        <p>WCAG organises digital accessibility around four principles: perceivable, operable, understandable and robust. Fluency means interpreting a success criterion against a specific piece of content, which is a different skill from running a checker across it.</p>
+      </div>
+      <div>
+        <span class="kindtag">Framework</span>
+        <h3>Learning design and Universal Design for Learning</h3>
+        <p>Universal Design for Learning asks whether a learning experience offers multiple means of engagement, representation, and action and expression. A course can satisfy every technical criterion and still narrow who is able to take part, which is what this lens is for.</p>
+      </div>
+      <div>
+        <span class="kindtag">Governance</span>
+        <h3>Law, regulation and institutional governance</h3>
+        <p>Findings change practice only where someone holds the authority to act on them. That means knowing which obligations apply to the organisation, and where accessibility is settled in practice: procurement, platform selection, content workflows and maintenance.</p>
+      </div>
     </div>
 
-    <h3 id="beyond-checklist">What distinguishes expertise from checklist compliance</h3>
-    <p>Automated tools efficiently detect a meaningful subset of issues — missing alternative text, insufficient heading structure, colour contrast failures, and ARIA errors — but can identify only approximately 30–40% of real accessibility barriers. They cannot assess whether a learning experience is equitably designed, whether assessment tasks assume a narrow range of abilities, or whether the barriers most affecting a specific learner population have been addressed. The gap between "technically passes" and "actually works for learners" is where human expertise is irreplaceable.</p>
+    <div class="callout accent">
+      <span class="label">The thread</span>
+      <p><strong>One review, three lenses.</strong> WCAG examines the artefact. Universal Design for Learning examines the learning experience. Inclusive design examines the system that produced both. The three answer different questions, and a finding is only complete once it names which of the three it belongs to, because that is what determines who is able to resolve it.</p>
+    </div>
+  </section>
 
-    <h3 id="accommodation-vs-design">Accommodation versus design: an important distinction</h3>
-    <p>Accommodation addresses a specific learner's access need after the fact. Accessible design anticipates learner variability from the outset, building flexibility into the learning experience itself. The two are complementary: accommodation remains necessary for some learners in some situations, but organisations that rely on it as their primary accessibility strategy are managing barriers rather than removing them. The purpose of accessibility review is to identify what barriers exist and where they are located — in content, technology, workflows, or institutional structures.</p>
-  </div>
+  <!-- ═══════════ 2 · PROCESS ═══════════ -->
+  <section class="section" id="process" aria-labelledby="h-process">
+    <span class="section-count">Section two of seven</span>
+    <h2 id="h-process">Process</h2>
+    <p class="section-lede">Six stages, in the order they are carried out. Few reviews run all six; naming them all is what makes visible what an abbreviated review leaves out.</p>
 
-  <!-- SECTION 2: METHODOLOGY -->
-  <div class="section-block" id="methodology">
-    <span class="section-label">Section 2</span>
-    <h2>Methodology</h2>
-    <p>Effective accessibility review is structured, iterative, and multidimensional. The six stages below represent a comprehensive approach; in practice, scope and depth vary with context, resources, and organisational need. Understanding the full methodology clarifies what is gained or lost when particular stages are abbreviated.</p>
+    <p>Scope and depth vary with context and resources, and stages three, four and five can be reordered or run in parallel. Stages one and six hold the rest together: without scoping, findings do not connect to the organisation, and without reporting, they do not reach anyone able to act.</p>
 
     <div class="stage-block" id="stage-1">
-      <p class="stage-meta">Stage 1</p>
-      <h3>Intake and Scoping</h3>
-      <p><em>Understanding the context before assessing it</em></p>
-      <p>Before any review begins, it is essential to understand the learning environment, the learner population, and the institutional context. What types of content are in scope — web pages, LMS courses, documents, multimedia, assessments, interactive tools? Which platforms and systems are involved? Who are the learners, and what is already known about the barriers they face?</p>
-      <p>Scoping establishes a shared understanding of what "accessible" means in this specific context and what a realistic level of review looks like given available time and resources. This stage shapes the relevance and usefulness of everything that follows.</p>
-      <h4>What this stage produces</h4>
-      <ul>
-        <li>Shared documentation of scope and review boundaries</li>
-        <li>Learner population context, including known barriers and assistive technology use</li>
-        <li>Prioritised list of content and systems for review</li>
-      </ul>
-      <div class="callout"><strong>Note:</strong> Findings from a review that lacks adequate scoping are often difficult to act on, because they are not connected to the actual context of the organisation.</div>
+      <h3><span class="n">Stage 1</span> Establish scope and context</h3>
+      <p class="stage-sub">Understanding the environment before assessing it</p>
+      <p>The reviewer establishes which content and platforms are in scope, who the learners are, what is already known about the barriers they encounter, and which accessibility obligations apply to the organisation. The scope is agreed in writing before assessment begins.</p>
+      <p>The judgement call is how much to take in. A scope wide enough to be representative and narrow enough to examine properly is what separates a review that can be acted on from one that returns a list nobody can prioritise. Where testing every page is not feasible, a documented sampling approach, such as the one set out in the W3C evaluation methodology, keeps the basis of the findings checkable.</p>
+      <div class="produces">
+        <span class="label">This stage produces</span>
+        <ul>
+          <li>A written scope, recording what was excluded and why</li>
+          <li>Learner context: known barriers and assistive technologies in use</li>
+          <li>The standard, version and conformance level the review will apply</li>
+          <li>A prioritised inventory of content and systems</li>
+        </ul>
+      </div>
     </div>
 
     <div class="stage-block" id="stage-2">
-      <p class="stage-meta">Stage 2</p>
-      <h3>Barrier Analysis</h3>
-      <p><em>Identifying what blocks participation — and where</em></p>
-      <p>Barrier analysis looks across four dimensions — physical and motor, cognitive, sensory, and situational — to identify where learners encounter obstacles. A key distinction is between minor friction and task-blocking barriers: not all issues carry equal weight, and effective review prioritises those that most significantly affect access.</p>
-      <p>Equally important is locating where the barrier lives. Barriers in content are addressed through remediation. Barriers in technology platforms require vendor engagement or platform changes. Barriers in workflows or institutional policy require structural responses that no individual designer can implement alone. Content-focused audits often miss the latter two categories.</p>
-      <h4>What this stage produces</h4>
-      <ul>
-        <li>Categorised barrier inventory by type (physical, cognitive, sensory, situational) and severity</li>
-        <li>Clear distinction between access blockers and usability friction</li>
-        <li>Identification of workflow and policy-level barriers alongside content issues</li>
-      </ul>
-      <div class="callout"><strong>Note:</strong> Barrier analysis that draws on educators, technologists, and learners with disabilities consistently produces more actionable findings than single-discipline review.</div>
+      <h3><span class="n">Stage 2</span> Analyse barriers</h3>
+      <p class="stage-sub">Identifying what blocks participation, and where it lives</p>
+      <p>Barriers are examined across physical and motor, cognitive, sensory and situational dimensions. Two distinctions carry most of the weight: whether an issue blocks a task or adds friction to it, and where the barrier actually lives.</p>
+      <p>A barrier in content is remediated. A barrier in a platform requires a configuration change or vendor engagement. A barrier in a workflow or a policy requires a structural response that no individual designer can make alone. A review confined to content will report the first category accurately and leave the other two unreported.</p>
+      <div class="produces">
+        <span class="label">This stage produces</span>
+        <ul>
+          <li>A barrier inventory categorised by type and severity</li>
+          <li>Task-blocking barriers separated from usability friction</li>
+          <li>Each barrier attributed to content, platform, workflow or policy</li>
+        </ul>
+      </div>
     </div>
 
     <div class="stage-block" id="stage-3">
-      <p class="stage-meta">Stage 3</p>
-      <h3>Technical Standards Audit</h3>
-      <p><em>Automated and manual testing against WCAG</em></p>
-      <p>Automated tools — such as Axe, IBM Equal Access Checker, and browser-based accessibility checkers — can rapidly detect a subset of accessibility issues: missing alternative text, insufficient heading structure, colour contrast failures, and ARIA implementation errors. They are a useful and efficient starting point.</p>
-      <p>Manual testing using assistive technologies — including screen readers such as NVDA, JAWS, and VoiceOver, keyboard-only navigation, and magnification tools — is essential for capturing issues that require human judgement. A result of "no automated errors detected" does not mean a page or course is accessible. Results should always be interpreted in context, not simply reported as pass or fail.</p>
-      <h4>What this stage produces</h4>
-      <ul>
-        <li>WCAG compliance mapping by criterion and content type</li>
-        <li>Screen reader and keyboard navigation findings</li>
-        <li>Colour contrast, visual structure, and readability analysis</li>
-        <li>Documentation of issues requiring manual verification</li>
-      </ul>
+      <h3><span class="n">Stage 3</span> Audit against the standard</h3>
+      <p class="stage-sub">Automated and manual testing, and the difference between them</p>
+      <p>Automated tools detect a defined subset of issues quickly and consistently, among them missing alternative text, heading structure, colour contrast and ARIA errors. They are an efficient first pass and a poor last one.</p>
+      <p>Manual testing supplies what automation cannot: keyboard-only navigation, screen reader behaviour, magnification and reflow, and the judgement of whether alternative text conveys what an image is doing. The W3C states that no tool alone can determine whether content meets accessibility standards, so results are reported as findings that require interpretation rather than as a pass or a failure.</p>
+      <div class="produces">
+        <span class="label">This stage produces</span>
+        <ul>
+          <li>Findings mapped to specific success criteria and content types</li>
+          <li>Keyboard and screen reader results, with the environments tested named</li>
+          <li>Contrast, reflow and text-spacing findings</li>
+          <li>An explicit record of what automated testing could not determine</li>
+        </ul>
+      </div>
     </div>
 
     <div class="stage-block" id="stage-4">
-      <p class="stage-meta">Stage 4</p>
-      <h3>User-Centered Evaluation</h3>
-      <p><em>Centering the lived experience of disabled learners</em></p>
-      <p>Engaging learners with disabilities in structured evaluation surfaces the gap between "technically compliant" and "actually usable." This includes heuristic evaluation against established accessibility guidelines, task-based usability testing with participants who use assistive technologies, and systematic documentation and analysis of user feedback. Small, focused tests that examine specific tasks or interface elements typically yield more actionable insights than large, undifferentiated studies.</p>
-      <h4>What this stage produces</h4>
-      <ul>
-        <li>Task completion analysis and friction mapping</li>
-        <li>Heuristic evaluation findings from disability-centered perspectives</li>
-        <li>Documented user feedback with analysis</li>
-        <li>Identification of usability gaps not captured by technical audit</li>
-      </ul>
-      <div class="callout"><strong>Note:</strong> Legal enforcement increasingly scrutinises whether users can independently complete tasks on digital platforms — not only whether technical standards are met. Experiences that pass automated checks but remain unusable with assistive technologies have been cited in accessibility complaints and settlements. Technical compliance and genuine usability are not the same thing.</div>
+      <h3><span class="n">Stage 4</span> Evaluate with users</h3>
+      <p class="stage-sub">Testing with people who encounter the barriers</p>
+      <p>Structured evaluation with learners who use assistive technologies surfaces the distance between content that conforms and content that works. Task-based sessions focused on specific tasks or interface elements generally yield more usable findings than broad, undifferentiated studies.</p>
+      <p>Participation is consented, compensated and scoped. Participants are asked to complete tasks, not to audit the product; interpreting what happens remains the reviewer’s responsibility, and a small sample is reported as a small sample.</p>
+      <div class="produces">
+        <span class="label">This stage produces</span>
+        <ul>
+          <li>Task completion findings, with points of friction located</li>
+          <li>Heuristic evaluation from a disability-centred perspective</li>
+          <li>Documented participant feedback and its analysis</li>
+          <li>Usability barriers not visible to a technical audit</li>
+        </ul>
+      </div>
     </div>
 
     <div class="stage-block" id="stage-5">
-      <p class="stage-meta">Stage 5</p>
-      <h3>Learning Design and UDL Assessment</h3>
-      <p><em>Is the learning experience itself inclusive?</em></p>
-      <p>A technically accessible course can still exclude learners if its learning design is inflexible or its assessments assume a narrow range of abilities. This stage evaluates whether the learning experience offers genuine multiple means across all three UDL dimensions: Engagement (the why of learning), Representation (the what), and Action and Expression (the how).</p>
-      <p>It also assesses whether assessment tasks are designed equitably — whether the format of assessment is measuring the intended learning outcome, or inadvertently measuring a learner's ability to perform under conditions unrelated to that outcome.</p>
-      <h4>What this stage produces</h4>
-      <ul>
-        <li>UDL alignment map across all three dimensions</li>
-        <li>Assessment equity analysis identifying format-based barriers</li>
-        <li>Recommendations for flexible pathways and varied representation</li>
-        <li>Identification of where inflexibility creates barriers for specific learner groups</li>
-      </ul>
-      <div class="callout"><strong>Note:</strong> Assessment equity analysis asks not only whether assessment platforms are technically accessible, but whether the format of assessment is measuring the intended learning outcome — or inadvertently measuring a learner's ability to perform under conditions unrelated to that outcome.</div>
+      <h3><span class="n">Stage 5</span> Assess the learning design</h3>
+      <p class="stage-sub">Examining the experience, not only the artefact</p>
+      <p>A technically conformant course can still narrow who is able to participate. This stage examines whether the design offers genuine alternatives across engagement, representation, and action and expression, and whether those alternatives are equivalent rather than nominal.</p>
+      <p>It also examines assessment. The question is whether the format of a task measures the outcome it is intended to measure, or whether it additionally measures something unrelated to that outcome: speed, recall, a particular sensory channel, or access to a specific device.</p>
+      <div class="produces">
+        <span class="label">This stage produces</span>
+        <ul>
+          <li>An alignment map across the three UDL principles</li>
+          <li>Assessment findings identifying format-based barriers</li>
+          <li>Recommendations for flexible pathways and equivalent alternatives</li>
+        </ul>
+      </div>
     </div>
 
     <div class="stage-block" id="stage-6">
-      <p class="stage-meta">Stage 6</p>
-      <h3>Reporting and Remediation Planning</h3>
-      <p><em>Findings that can actually be acted on</em></p>
-      <p>Findings are only useful if they can be acted on. Effective reporting translates technical and learning design findings into a prioritised remediation roadmap — distinguishing quick wins from longer-term structural changes, and connecting recommendations to real governance, workflow, and procurement contexts.</p>
-      <p>Reports should serve multiple audiences with different needs. Technical teams need specific, reproducible guidance. Learning designers need design principles and concrete alternatives. Leadership needs strategic framing, risk context, and understanding of what systemic changes are required. A single report that attempts to serve all three audiences typically serves none of them well.</p>
-      <h4>What this stage produces</h4>
-      <ul>
-        <li>Prioritised remediation roadmap with effort and impact framing</li>
-        <li>Differentiated outputs for technical, design, and leadership audiences</li>
-        <li>Connection of findings to governance, policy, and procurement contexts</li>
-        <li>Framework for continuous improvement, not one-time remediation</li>
-      </ul>
-      <div class="callout"><strong>Note:</strong> Accessibility barriers accumulate as content is created, platforms are updated, and organisational contexts change. Periodic review, embedded in ongoing practice, prevents the buildup of unresolved issues and is more effective than a single comprehensive audit conducted in isolation.</div>
-    </div>
-  </div>
-
-  <!-- SECTION 3: KEY DECISIONS -->
-  <div class="section-block" id="decisions">
-    <span class="section-label">Section 3</span>
-    <h2>Key Decisions That Shape a Review</h2>
-    <p>No two accessibility reviews look the same. The decisions an organisation makes about scope, depth, timing, and involvement determine what kind of review is appropriate and what it will produce. Understanding these dimensions helps set realistic expectations — and make better use of the review process.</p>
-
-    <div class="decision-subsection">
-      <h3>Scope: what is being reviewed</h3>
-      <ul class="decision-list">
-        <li><strong>Spot audit</strong> — a single course, module, document, or platform feature. Useful for prioritisation or addressing a known concern. Limited in what it reveals about systemic patterns.</li>
-        <li><strong>Programme review</strong> — a full learning pathway or credential. Reveals patterns across content types and surfaces inconsistencies in how accessibility is applied across a curriculum.</li>
-        <li><strong>Institutional review</strong> — systems, policies, and practices organisation-wide. Required to address workflow, governance, and procurement-level barriers that individual content reviews cannot reach.</li>
-      </ul>
+      <h3><span class="n">Stage 6</span> Report and plan remediation</h3>
+      <p class="stage-sub">Findings in a form the organisation can act on</p>
+      <p>Findings are translated into a prioritised remediation plan that distinguishes what can be corrected quickly from what requires structural change, and connects each item to the workflow, policy or contract where it will be resolved.</p>
+      <p>Different audiences need different documents. Technical teams need specific and reproducible detail. Designers need principles and concrete alternatives. Those who control budget and procurement need prioritisation, resourcing and regulatory context. A single report written for all three usually serves none of them well.</p>
+      <div class="produces">
+        <span class="label">This stage produces</span>
+        <ul>
+          <li>A prioritised remediation plan stating effort and impact</li>
+          <li>Separate outputs for technical, design and decision-making audiences</li>
+          <li>Findings connected to governance, procurement and content workflows</li>
+          <li>A schedule for re-review</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="decision-subsection">
-      <h3>Depth: how thorough the review is</h3>
-      <ul class="decision-list">
-        <li><strong>Rapid assessment</strong> — key barriers identified efficiently, useful for initial prioritisation. Trades methodological completeness for speed. Findings should be treated as a starting point, not a complete picture.</li>
-        <li><strong>Comprehensive audit</strong> — full WCAG, UDL, and user-centered evaluation across all six stages. Produces the most complete findings but requires more time and resources.</li>
-        <li><strong>Ongoing review</strong> — iterative review embedded in the design and development cycle. The most effective long-term approach, as it prevents accumulation of barriers rather than addressing them retrospectively.</li>
-      </ul>
+  </section>
+
+  <!-- ═══════════ 3 · DECISIONS ═══════════ -->
+  <section class="section" id="decisions" aria-labelledby="h-decisions">
+    <span class="section-count">Section three of seven</span>
+    <h2 id="h-decisions">Decisions</h2>
+    <p class="section-lede">Six choices that determine what a review will produce. Each can reasonably be answered more than one way, and each answer has a cost.</p>
+
+    <p>These are settled at scoping, and each one narrows what the review is able to report. Naming them in advance is what allows the person commissioning a review to recognise afterwards whether they received the review they needed.</p>
+
+    <div class="qa">
+      <div>
+        <h3>Scope</h3>
+        <span class="q">What exactly is being reviewed, and what is being left out?</span>
+        <p>Scope runs from a single course, document or platform feature, through a full programme or credential, to organisation-wide systems and policy. A narrow scope produces findings that are specific and immediately actionable but may miss the pattern that generated them. A wide scope locates the pattern but rarely reaches the depth needed to resolve any single instance. Whichever is chosen, recording what was excluded is what keeps the findings honest.</p>
+      </div>
+      <div>
+        <h3>Standard</h3>
+        <span class="q">Which standard, at which conformance level, is the review conducted against?</span>
+        <p>WCAG 2.2 Level AA is the common baseline for digital content. Organisations subject to federal regulation in Canada are moving toward CAN/ASC-EN 301 549, which incorporates WCAG and adds requirements covering hardware, software and documents. Naming the standard and version at the outset determines what counts as a finding; changing it partway through makes the results incomparable.</p>
+      </div>
+      <div>
+        <h3>Depth</h3>
+        <span class="q">How thorough does this review need to be to answer the question being asked?</span>
+        <p>A rapid assessment identifies major barriers for prioritisation. A comprehensive audit combines technical testing, user evaluation and learning design assessment. A continuous review embeds checks in the design cycle. Rapid assessment trades completeness for speed, which is a defensible trade where resources are constrained, provided its findings are treated as a starting point rather than a full picture.</p>
+      </div>
+      <div>
+        <h3>Participation</h3>
+        <span class="q">Are the people who encounter the barriers part of the evaluation, or only its subject?</span>
+        <p>Expert review alone is faster and less expensive. Structured user testing surfaces barriers that conformance testing does not reach. Co-design extends participation into deciding what is changed and how. Each step increases both what the review is able to find and what it costs in time, coordination and compensation.</p>
+      </div>
+      <div>
+        <h3>Timing</h3>
+        <span class="q">Where in the design cycle does the review sit?</span>
+        <p>Review before development shapes decisions before anything is built. Review before launch catches barriers while changes remain inexpensive. Remediation after launch addresses content already in use, where learners are already encountering the barriers and the cost of change is highest. Many organisations begin with the third and move earlier over time.</p>
+      </div>
+      <div>
+        <h3>Audience</h3>
+        <span class="q">Who has to act on the findings, and what do they need in order to do so?</span>
+        <p>A report written for developers, one written for learning designers and one written for those who hold budget and procurement authority differ in detail, framing and length. Settling the audience before the review begins changes what evidence is gathered, not only how it is presented afterwards.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 4 · COMPETENCIES ═══════════ -->
+  <section class="section" id="competencies" aria-labelledby="h-competencies">
+    <span class="section-count">Section four of seven</span>
+    <h2 id="h-competencies">Competencies</h2>
+    <p class="section-lede">What a person conducting an accessibility review must be able to do. Each capability maps onto a stage of the process above.</p>
+
+    <p>These are capabilities rather than topics, so each can be observed in the work produced. They are drawn from the professional bodies of knowledge named in <a href="#sources">Sources</a> and from the process set out in <a href="#process">Process</a>.</p>
+
+    <div class="deflist">
+      <div>
+        <h3>Analyse barriers and rank them by what they block</h3>
+        <p>Produces an inventory in which task-blocking barriers are separated from friction, and each item is attributed to content, platform, workflow or policy. Without this, every finding arrives at the same priority.</p>
+      </div>
+      <div>
+        <h3>Apply a standard to specific content</h3>
+        <p>Reads a success criterion against a particular piece of content and states whether it is met, on what basis, and what would meet it. Requires working knowledge of WCAG and, for regulated organisations, of the ICT standard that incorporates it.</p>
+      </div>
+      <div>
+        <h3>Test with assistive technology</h3>
+        <p>Navigates content by keyboard alone and operates at least one screen reader and one magnification tool competently enough to tell a defect in the content from unfamiliarity with the tool.</p>
+      </div>
+      <div>
+        <h3>Evaluate a learning experience against UDL</h3>
+        <p>Identifies where a course offers only one path through engagement, representation or expression, and proposes alternatives that are equivalent rather than nominal.</p>
+      </div>
+      <div>
+        <h3>Examine assessment for barriers unrelated to the outcome</h3>
+        <p>Distinguishes what a task is intended to measure from what its format additionally requires, and proposes formats that preserve the first without imposing the second.</p>
+      </div>
+      <div>
+        <h3>Specify remediation, not only detect defects</h3>
+        <p>Writes fixes that a developer, designer or instructor can implement without further interpretation, across documents, media, HTML, LMS content and assessments.</p>
+      </div>
+      <div>
+        <h3>Conduct evaluation with the people affected</h3>
+        <p>Plans and facilitates sessions with participants who use assistive technologies, under informed consent and fair compensation, and analyses what is observed without overstating a small sample.</p>
+      </div>
+      <div>
+        <h3>Trace accessibility through governance and procurement</h3>
+        <p>Locates where in an organisation a barrier was introduced and who is able to prevent its recurrence — a contract, a template, a workflow or a maintenance schedule — and addresses the finding to that point.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 5 · OUTCOMES ═══════════ -->
+  <section class="section" id="outcomes" aria-labelledby="h-outcomes">
+    <span class="section-count">Section five of seven</span>
+    <h2 id="h-outcomes">Outcomes</h2>
+    <p class="section-lede">What a review produces inside a project, and what tends to follow over a longer period. The two carry different evidential weight.</p>
+
+    <p>Outcomes within the project are observable during the engagement and can be verified by someone else. Longer-term change is what the available evidence suggests tends to follow, and is stated here with the hedging that evidence supports.</p>
+
+    <h3 id="short-term">Within the project</h3>
+    <ul class="outcomes">
+      <li><span><b>Barriers are named and prioritised</b>An inventory that distinguishes what blocks a task from what slows it, with each item attributed to the content, platform, workflow or policy where it originates.</span></li>
+      <li><span><b>Common defects are corrected</b>Missing captions and alternative text, insufficient contrast, unlabelled controls and inaccessible documents are among the barriers that can usually be resolved soon after they are identified.</span></li>
+      <li><span><b>A conformance position is documented</b>A record of what was tested, against which standard and version, what was found and what remains outstanding. Federal regulation in Canada will require conformity assessments of this kind from federally regulated entities beginning in 2027.</span></li>
+      <li><span><b>Team capability grows</b>People who take part in a review acquire practical accessibility literacy that carries into the next piece of content they build.</span></li>
+    </ul>
+
+    <h3 id="over-time">Over time</h3>
+    <ul class="outcomes">
+      <li><span><b>Accessibility moves earlier in the design cycle</b>Where review is repeated, barriers tend to be addressed at the design stage rather than after publication, which is the point at which changes are least costly to make.</span></li>
+      <li><span><b>Benefits reach beyond learners with disabilities</b>Clearer structure, consistent navigation and alternative formats are used by learners who have disclosed no disability. Meta-analytic evidence for UDL reports positive effects on educational outcomes alongside considerable heterogeneity between studies, so the finding is best treated as directional rather than precise.</span></li>
+      <li><span><b>Procurement and governance change</b>Organisations that have been through review are better placed to state accessibility requirements in vendor contracts and to evaluate the responses they receive.</span></li>
+      <li><span><b>Review becomes periodic rather than singular</b>Barriers accumulate as content is added and platforms are updated. Where review is scheduled rather than commissioned in response to a complaint, the backlog is smaller at each pass.</span></li>
+    </ul>
+
+    <div class="callout">
+      <span class="label">Limits</span>
+      <p><strong>What a review does not do.</strong> It identifies barriers; it does not remove them. Conformance with a technical standard does not establish that a learning experience is usable, and the W3C is explicit that no tool can determine conformance on its own. Findings describe content as it stood on the date of testing, in the environments named, and they age as content and platforms change. A review also cannot supply the authority to act on what it finds; where that authority is absent, the report will document barriers that persist.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ 6 · REFLECTION ═══════════ -->
+  <section class="section" id="reflection" aria-labelledby="h-reflection">
+    <span class="section-count">Section six of seven</span>
+    <h2 id="h-reflection">Reflection</h2>
+    <p class="section-lede">Four questions about current practice, and four descriptions of what different patterns of answer usually indicate.</p>
+
+    <p>Choose the option closest to the current situation rather than the one that would be preferable to report. The descriptions that follow address the situation, not the people working within it.</p>
+
+    <h3 id="reflection-questions">Questions</h3>
+    <ol class="qlist">
+      <li>
+        <h4>How is accessibility review currently carried out in your organisation?</h4>
+        <p class="hint">Consider what happens routinely rather than what happened once.</p>
+        <ul>
+          <li>No formal review takes place</li>
+          <li>Automated scans are run when an issue is raised</li>
+          <li>Periodic reviews combine automated and manual methods</li>
+          <li>Review is built into the content development cycle</li>
+        </ul>
+      </li>
+      <li>
+        <h4>How well understood are the accessibility obligations that apply to your organisation?</h4>
+        <p class="hint">Obligations differ by jurisdiction, sector and organisation size.</p>
+        <ul>
+          <li>The applicable legislation has not been identified</li>
+          <li>The legislation is known but the obligations are unclear</li>
+          <li>The obligations are understood and documented</li>
+          <li>Regulatory developments are monitored and practice is adjusted</li>
+        </ul>
+      </li>
+      <li>
+        <h4>To what extent do learners with disabilities inform this work?</h4>
+        <p class="hint">This asks about structured participation, not about handling complaints.</p>
+        <ul>
+          <li>Learners with disabilities are not involved in review</li>
+          <li>Feedback is gathered informally when issues are reported</li>
+          <li>Structured testing is conducted with learners with disabilities</li>
+          <li>Learners with disabilities help decide what is changed</li>
+        </ul>
+      </li>
+      <li>
+        <h4>Where does responsibility for accessibility sit?</h4>
+        <p class="hint">Consider where decisions are made rather than where the interest lies.</p>
+        <ul>
+          <li>Responsibility is not formally assigned</li>
+          <li>Responsibility rests with one or two individuals</li>
+          <li>Responsibility is shared across a team with defined roles</li>
+          <li>Responsibility is held in governance, procurement and design processes</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3 id="reflection-bands">Reading your answers</h3>
+    <p>Take the option you chose most often. If your answers are evenly split, read the
+      lower of the two bands.</p>
+
+    <div class="band">
+      <h4>No established review practice</h4>
+      <p>In this pattern, barriers are being identified by learners rather than by the organisation, and usually arrive as a complaint or an accommodation request. Nothing about that reflects on the people doing the work; it reflects the absence of a process for finding barriers before learners do. The most useful next step is a single scoped review of one high-traffic course or platform area, conducted against WCAG 2.2 Level AA, to establish what the barriers actually are before deciding how to organise the work.</p>
+    </div>
+    <div class="band">
+      <h4>Review is reactive</h4>
+      <p>Checks are happening, but they are triggered by problems rather than scheduled, and automated results are carrying more weight than they can bear. This is the most common position, and it produces a reliable picture of a narrow band of issues. The next step is to add manual testing — keyboard navigation and one screen reader — to whatever is already being scanned, which will show how much the automated pass leaves unreported.</p>
+    </div>
+    <div class="band">
+      <h4>Review is periodic and structured</h4>
+      <p>Method is established and findings are produced consistently, so the constraint is usually reach rather than rigour: review is thorough where it happens and absent where it does not. The next step is to move one review earlier in the design cycle, so that at least one piece of content is examined before publication rather than after.</p>
+    </div>
+    <div class="band">
+      <h4>Review is embedded</h4>
+      <p>Accessibility is settled where content and systems are settled, and review is generating findings that reach people able to act on them. The remaining work is usually in maintenance and procurement, where new barriers enter. The next step is to require a conformity assessment as a condition of the next platform or content purchase, so that barriers are not acquired faster than existing ones are removed.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ 7 · SOURCES ═══════════ -->
+  <section class="section" id="sources" aria-labelledby="h-sources">
+    <span class="section-count">Section seven of seven</span>
+    <h2 id="h-sources">Sources</h2>
+    <p class="section-lede">Every claim in this resource is traceable to one of the sources below. They are grouped by the foundation each supports, in the order of Section one.</p>
+
+    <p>Each entry carries a label naming what kind of source it is, so a reader can tell a standard from a study from a professional body of knowledge. Each address is public and stable at the time of the review date in the footer.</p>
+
+    <div class="srcgroup">
+      <h3>Disability and assistive technology</h3>
+
+      <div class="src">
+        <span class="kind">Body of knowledge</span>
+        <p><strong>International Association of Accessibility Professionals.</strong> <cite>Certified Professional in Accessibility Core Competencies (CPACC) Body of Knowledge</cite>. Used here for models of disability, disability categories, assistive technologies, and the distinction between accommodation and design.</p>
+        <p><a class="ext" href="https://www.accessibilityassociation.org/sfsites/c/resource/CPACCBoK" rel="noopener">accessibilityassociation.org</a></p>
+      </div>
+
     </div>
 
-    <div class="decision-subsection">
-      <h3>Learner involvement: who participates in evaluation</h3>
-      <ul class="decision-list">
-        <li><strong>Expert review only</strong> — specialist assessment without direct user testing. Efficient and appropriate for many contexts, but misses the gap between expert prediction and actual learner experience.</li>
-        <li><strong>Expert plus user testing</strong> — structured participation from learners with disabilities alongside expert review. Surfaces issues that expert review alone does not capture. Requires careful ethical and logistical planning.</li>
-        <li><strong>Co-design</strong> — learners with disabilities involved in shaping remediation and redesign decisions. Produces the most learner-centered outcomes and builds genuine community trust.</li>
-      </ul>
+    <div class="srcgroup">
+      <h3>Accessibility and universal design</h3>
+
+      <div class="src">
+        <span class="kind">Research centre</span>
+        <p><strong>Inclusive Design Research Centre, OCAD University.</strong> Used here for the framing of disability as a mismatch between a person and a design, and for the principle that a design change acts on the wider system it sits in.</p>
+        <p><a class="ext" href="https://idrc.ocadu.ca/" rel="noopener">idrc.ocadu.ca</a></p>
+      </div>
+
     </div>
 
-    <div class="decision-subsection">
-      <h3>Timing: when the review happens</h3>
-      <ul class="decision-list">
-        <li><strong>Pre-development</strong> — informing design decisions before content is built. Least costly and most effective — accessibility built in from the start.</li>
-        <li><strong>Pre-launch</strong> — catching issues before content goes live. More costly than pre-development review but significantly less costly than post-launch remediation.</li>
-        <li><strong>Post-launch</strong> — addressing barriers in existing content. Most commonly needed but most costly to address. Often reveals the need for both content remediation and systemic change.</li>
-      </ul>
+    <div class="srcgroup">
+      <h3>Web and digital accessibility standards</h3>
+
+      <div class="src">
+        <span class="kind">Standard</span>
+        <p><strong>World Wide Web Consortium.</strong> <cite>Web Content Accessibility Guidelines (WCAG) 2.2</cite>. W3C Recommendation, 5 October 2023. The technical baseline referred to throughout this resource.</p>
+        <p><a class="ext" href="https://www.w3.org/TR/WCAG22/" rel="noopener">w3.org/TR/WCAG22</a></p>
+      </div>
+
+      <div class="src">
+        <span class="kind">Method</span>
+        <p><strong>World Wide Web Consortium.</strong> <cite>Website Accessibility Conformance Evaluation Methodology (WCAG-EM) 1.0</cite>. W3C Working Group Note. Used here for scoping, sampling and reporting in Stage one.</p>
+        <p><a class="ext" href="https://www.w3.org/WAI/test-evaluate/conformance/" rel="noopener">w3.org/WAI/test-evaluate</a></p>
+      </div>
+
+      <div class="src">
+        <span class="kind">Guidance</span>
+        <p><strong>W3C Web Accessibility Initiative.</strong> <cite>Selecting Web Accessibility Evaluation Tools</cite>. The source of the statement that evaluation tools cannot determine accessibility on their own and can only assist in doing so.</p>
+        <p><a class="ext" href="https://www.w3.org/WAI/test-evaluate/tools/selecting/" rel="noopener">w3.org/WAI/test-evaluate/tools/selecting</a></p>
+      </div>
+
+      <div class="src">
+        <span class="kind">Standard</span>
+        <p><strong>Accessibility Standards Canada.</strong> <cite>CAN/ASC-EN 301 549:2024, Accessibility requirements for ICT products and services</cite>. National Standard of Canada, adopted 2024 and available at no charge. Incorporates WCAG and extends to hardware, software and documents.</p>
+        <p><a class="ext" href="https://accessible.canada.ca/creating-accessibility-standards" rel="noopener">accessible.canada.ca</a></p>
+      </div>
+
+      <div class="src">
+        <span class="kind">Body of knowledge</span>
+        <p><strong>International Association of Accessibility Professionals.</strong> <cite>Web Accessibility Specialist (WAS) Body of Knowledge</cite>. Used here for technical audit method.</p>
+        <p><a class="ext" href="https://www.accessibilityassociation.org/sfsites/c/resource/WASBoK_ePUB" rel="noopener">accessibilityassociation.org</a></p>
+      </div>
+
+      <div class="src">
+        <span class="kind">Audit data</span>
+        <p><strong>WebAIM.</strong> <cite>The WebAIM Million: the 2026 report on the accessibility of the top 1,000,000 home pages</cite>. Published March 2026. Automated testing detected WCAG 2 failures on 95.9% of home pages, at an average of 56.1 errors per page; WebAIM notes these are only the errors automated testing can detect.</p>
+        <p><a class="ext" href="https://webaim.org/projects/million/" rel="noopener">webaim.org/projects/million</a></p>
+      </div>
+
     </div>
 
-    <div class="decision-subsection">
-      <h3>Focus area: what kind of review it primarily is</h3>
-      <ul class="decision-list">
-        <li><strong>Digital content</strong> — web pages, LMS content, documents, multimedia, and assessments. The most common starting point for accessibility review in educational settings.</li>
-        <li><strong>Learning design</strong> — UDL alignment, assessment equity, and the overall flexibility of the learning experience. Extends beyond technical compliance to equity in learning design.</li>
-        <li><strong>Systems and governance</strong> — institutional policy, procurement practices, and organisational workflows. Required for systemic and sustainable change.</li>
-      </ul>
+    <div class="srcgroup">
+      <h3>Learning design and Universal Design for Learning</h3>
+
+      <div class="src">
+        <span class="kind">Framework</span>
+        <p><strong>CAST.</strong> <cite>Universal Design for Learning Guidelines</cite>, version 3.0, released July 2024. The source of the three principles used in Stage five.</p>
+        <p><a class="ext" href="https://udlguidelines.cast.org/" rel="noopener">udlguidelines.cast.org</a></p>
+      </div>
+
+      <div class="src">
+        <span class="kind">Peer-reviewed</span>
+        <p><strong>Almeqdad, Q. I., Alodat, A. M., Alquraan, M. F., Mohaidat, M. A., &amp; Al-Makhzoomy, A. K.</strong> "The effectiveness of universal design for learning: a systematic review of the literature and meta-analysis." <cite>Cogent Education</cite>, 10(1), article 2218191, 2023. Reports positive effects across thirteen studies alongside considerable heterogeneity, which is why the outcome above is stated as directional.</p>
+        <p><a class="ext" href="https://doi.org/10.1080/2331186X.2023.2218191" rel="noopener">doi.org/10.1080/2331186X.2023.2218191</a></p>
+      </div>
+
     </div>
 
-    <div class="callout"><strong>Rapid vs. comprehensive approaches:</strong> Rapid assessments trade methodological completeness for speed. They are useful for initial prioritisation, particularly when resources are constrained, provided findings are understood as a starting point rather than a complete picture of the accessibility landscape.</div>
-  </div>
+    <div class="srcgroup">
+      <h3>Law, regulation and institutional governance</h3>
 
-  <!-- SECTION 4: LEARNER IMPACT -->
-  <div class="section-block" id="impact">
-    <span class="section-label">Section 4</span>
-    <h2>Learner Impact</h2>
-    <p>Accessibility review creates change at two different horizons. The shorter-term outcomes are tangible and measurable. The longer-term shift is cultural — and has a broader effect on how an organisation designs and delivers learning for everyone.</p>
+      <div class="src">
+        <span class="kind">Legislation</span>
+        <p><strong>Parliament of Canada.</strong> <cite>Accessible Canada Act</cite>, S.C. 2019, c. 10. Establishes the framework for a barrier-free Canada by 2040 across federally regulated sectors, with information and communication technologies among its priority areas.</p>
+        <p><a class="ext" href="https://laws-lois.justice.gc.ca/eng/acts/A-0.6/" rel="noopener">laws-lois.justice.gc.ca</a></p>
+      </div>
 
-    <h3 id="short-term">Shorter-term outcomes: what becomes visible and fixable</h3>
-    <p><em>Outcomes typically achievable within the review cycle and immediate remediation period</em></p>
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Outcome</th>
-          <th scope="col">What this looks like in practice</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Barriers are named and prioritised</strong><br>A clear picture of what is blocking learners, organised by severity and remediation effort.</td>
-          <td>Teams move from vague awareness of "accessibility issues" to a specific, actionable inventory they can work through systematically.</td>
-        </tr>
-        <tr>
-          <td><strong>Immediate issues are remediated</strong><br>Common barriers — missing captions, poor contrast, absent alternative text, inaccessible documents — addressed once identified.</td>
-          <td>Many high-impact, low-effort fixes are implemented quickly. Learners who were previously excluded gain access to content they were being denied.</td>
-        </tr>
-        <tr>
-          <td><strong>Compliance is documented</strong><br>A formal review and remediation roadmap provide evidence of due diligence for regulatory and governance purposes.</td>
-          <td>Organisations can demonstrate to regulatory bodies, leadership, and learners that they are taking accessibility obligations seriously and acting on them.</td>
-        </tr>
-        <tr>
-          <td><strong>Team knowledge grows</strong><br>Designers, developers, and faculty develop practical accessibility literacy through engagement with the review process.</td>
-          <td>The review itself becomes a capacity-building experience. Teams emerge better equipped to identify and address issues in future work.</td>
-        </tr>
-      </tbody>
-    </table>
+      <div class="src">
+        <span class="kind">Regulation</span>
+        <p><strong>Government of Canada.</strong> <cite>Regulations Amending the Accessible Canada Regulations</cite> (the Digital Technologies Accessibility Regulations), SOR/2025-255, registered 5 December 2025. Adopts CAN/ASC-EN 301 549 and adds obligations for conformity assessment, accessibility statements, procurement and training. They apply to federal public-sector entities from 5 December 2027 and to large federally regulated private-sector entities from 5 December 2028.</p>
+        <p><a class="ext" href="https://gazette.gc.ca/rp-pr/p2/2025/2025-12-17/html/sor-dors255-eng.html" rel="noopener">gazette.gc.ca</a></p>
+      </div>
 
-    <h3 id="long-term">Longer-term change: what becomes embedded in practice</h3>
-    <p><em>Outcomes that develop over repeated review cycles and sustained organisational commitment</em></p>
-    <table>
-      <thead>
-        <tr>
-          <th scope="col">Outcome</th>
-          <th scope="col">What this looks like in practice</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Accessibility becomes a design habit</strong><br>Rather than a retrofit, accessible design is incorporated from the beginning of content development.</td>
-          <td>Future remediation costs decrease significantly. Designers stop asking "is this accessible?" at the end of a project and start making accessibility-informed decisions throughout.</td>
-        </tr>
-        <tr>
-          <td><strong>All learners benefit</strong><br>Better structure, clearer language, flexible formats, and consistent navigation improve the experience for every learner.</td>
-          <td>Features designed for learners with disabilities improve usability, comprehension, and engagement for the whole cohort.</td>
-        </tr>
-        <tr>
-          <td><strong>Institutional culture shifts</strong><br>The focus moves from individual accommodation toward proactive inclusion — affecting procurement, faculty development, and organisational identity.</td>
-          <td>Accessibility stops being "someone else's job" and becomes a shared expectation embedded in how the organisation hires, trains, procures, and governs.</td>
-        </tr>
-        <tr>
-          <td><strong>Governance and procurement improve</strong><br>Organisations develop the literacy to require and evaluate accessibility in vendor contracts and new platform selection.</td>
-          <td>Accessibility requirements appear in RFPs. Platform evaluations include assistive technology testing. Vendors are held to explicit standards as a condition of partnership.</td>
-        </tr>
-      </tbody>
-    </table>
+      <div class="src">
+        <span class="kind">Legislation</span>
+        <p><strong>Legislative Assembly of British Columbia.</strong> <cite>Accessible British Columbia Act</cite>, S.B.C. 2021, c. 19. Received Royal Assent in June 2021. An independent review of the Act was initiated in March 2026 and is scheduled to report in 2027.</p>
+        <p><a class="ext" href="https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/21019" rel="noopener">bclaws.gov.bc.ca</a></p>
+      </div>
 
-    <div class="callout"><strong>On evidence and outcomes:</strong> Research consistently demonstrates that accessibility improvements support retention, participation, and equity beyond compliance. Inclusive design produces better learning environments for all learners — a case that complements, and often exceeds, the legal argument for accessibility investment.</div>
-  </div>
+      <div class="src">
+        <span class="kind">Regulation</span>
+        <p><strong>Province of British Columbia.</strong> <cite>Accessible British Columbia Regulation</cite>, B.C. Reg. 105/2022, in force 1 September 2022. More than 750 prescribed public sector organisations, including school districts, must maintain an accessibility committee, an accessibility plan and a mechanism for public feedback. The Regulation does not currently specify a technical web accessibility standard.</p>
+        <p><a class="ext" href="https://www2.gov.bc.ca/gov/content/governments/about-the-bc-government/initiatives/accessibility/legislation" rel="noopener">gov.bc.ca</a></p>
+      </div>
 
-  <!-- SECTION 5: LEGAL CONTEXT -->
-  <div class="section-block" id="legal">
-    <span class="section-label">Section 5</span>
-    <h2>Legal and Regulatory Context in Canada and BC</h2>
-    <p>Understanding the legal landscape helps organisations interpret their current obligations, assess gaps in enforcement, and make informed decisions about where the field is heading — even where specific technical requirements are still being developed. The following is an orientation to the landscape, not legal advice.</p>
-
-    <h3 id="aca">Accessible Canada Act (Federal, 2019)</h3>
-    <p>The Accessible Canada Act (ACA) establishes a framework for a barrier-free Canada by 2040 across federally regulated sectors, including broadcasting, telecommunications, banking, and federal government services. Organisations subject to the Act must publish accessibility plans, provide public feedback mechanisms, and report on progress annually.</p>
-    <p>The ACA has been recognised for its ambition and critiqued for relatively limited enforcement mechanisms and the absence of specific technical standards or binding timelines. Non-compliance can result in penalties reaching $250,000. Enforcement is managed through sector-specific regulatory bodies including the Canadian Radio-television and Telecommunications Commission (CRTC) and the Canadian Human Rights Commission.</p>
-    <p>The Canadian Accessibility Standards Development Organisation (CASDO) — whose board is required by legislation to include a majority of people with disabilities — is responsible for developing specific technical standards, including those related to digital information and communications technology. CASDO's work will produce more specific requirements over time.</p>
-
-    <h3 id="abca">Accessible British Columbia Act (Provincial, 2021)</h3>
-    <p>The Accessible British Columbia Act applies to the BC provincial government, public sector organisations, educational institutions, and school districts. Organisations in scope must form accessibility committees, develop accessibility plans, and create mechanisms for public feedback on those plans.</p>
-    <p>Current standards focus on employment accessibility and accessible service delivery. The Act does not yet specify technical web accessibility standards, but future regulations are expected to incorporate established guidelines such as WCAG. British Columbia post-secondary institutions are explicitly within scope of the Act.</p>
-    <p>Amendments to the Private Training Act and the establishment of Accessible Education and Training (AET) programmes at public post-secondary institutions reflect the Act's particular attention to educational settings.</p>
-
-    <h3 id="compliance-gap">The gap between legislation and practice</h3>
-    <p>Both the ACA and the Accessible BC Act have been critiqued for the absence of specific enforceable technical standards and clear implementation timelines. In practice, organisations currently have significant latitude in how they interpret their accessibility obligations — but the regulatory direction is clearly toward greater specificity over time.</p>
-    <p>Understanding this landscape helps organisations make informed decisions — not just about minimum compliance, but about where the field is heading and how to build genuinely inclusive learning environments. Organisations that engage proactively with accessibility tend to be better positioned as regulatory requirements tighten.</p>
-    <div class="callout"><strong>Compliance and genuine accessibility:</strong> Meeting current legal requirements does not guarantee accessible learning environments. The gap between minimum compliance and meaningful inclusion represents the central challenge of educational accessibility practice. Legal frameworks define a floor, not a ceiling.</div>
-  </div>
-
-  <!-- SECTION 6: REFLECTION -->
-  <div class="section-block" id="reflection">
-    <span class="section-label">Section 6</span>
-    <h2>Organisational Reflection</h2>
-    <p>The questions below are designed to help you think through your organisation's current relationship with accessibility. They are not a formal assessment — there are no scores or categories. They are intended to surface useful questions and help identify where the most productive focus may be for your context. Working through them with colleagues across different roles often yields more complete and honest responses.</p>
-
-    <h3>On your current knowledge of barriers</h3>
-    <div class="reflection-question">
-      <ul>
-        <li>What do you actually know about the accessibility barriers your learners currently face? How did you find out, and how confident are you in that picture?</li>
-        <li>Are there learner groups whose accessibility experience you know relatively little about? What would it take to understand it better?</li>
-        <li>Where in your organisation do accessibility barriers most likely go unreported — and why?</li>
-      </ul>
     </div>
 
-    <h3>On your design and development practice</h3>
-    <div class="reflection-question">
-      <ul>
-        <li>At what point in your content development process does accessibility currently get considered? What happens as a result of that consideration?</li>
-        <li>Where does accessibility get dropped — at the point of production, during review, or in the handoff between teams? What does that tell you about where the gap is?</li>
-        <li>Are the people responsible for accessibility in your organisation supported with the time, tools, and authority they need to do the work well?</li>
-      </ul>
+    <div class="callout">
+      <span class="label">On these sources</span>
+      <p>Every source above is publicly available at the address given. Legislation and standards are revised: the date this resource was last reviewed appears in the footer, and anyone acting on a regulatory question should confirm the current position with the issuing body.</p>
     </div>
+  </section>
+  <p><a class="backlink" href="#contents">Back to contents</a></p>
 
-    <h3>On institutional structures and governance</h3>
-    <div class="reflection-question">
-      <ul>
-        <li>Does your organisation have documented accessibility policies or an accessibility plan? If so, how connected are they to day-to-day practice?</li>
-        <li>Where does accessibility still get treated as someone else's responsibility — in procurement decisions, vendor evaluation, curriculum governance, or platform selection?</li>
-        <li>What would need to change — structurally, not just culturally — for accessibility to be consistently embedded in how your organisation operates?</li>
-      </ul>
-    </div>
-
-    <h3>On capacity and sustainability</h3>
-    <div class="reflection-question">
-      <ul>
-        <li>How are you building accessibility expertise across your organisation, so progress does not depend on one or two individuals?</li>
-        <li>How do you know whether your accessibility efforts are actually improving outcomes for learners with disabilities? What evidence do you have, and what is missing?</li>
-        <li>What would a realistic next step look like for your organisation — given your current resources, constraints, and the people who have the knowledge and authority to move things forward?</li>
-      </ul>
-    </div>
-
-    <p>Organisations that make meaningful progress on accessibility tend to be those that create space for honest conversations about where the gaps are, not where they would like them to be. The other sections of this resource are intended to provide useful context for those conversations.</p>
-  </div>
-  <!-- SECTION 7: CITATIONS -->
-  <div class="section-block" id="citations">
-    <span class="section-label">Section 7</span>
-    <h2>Academic Citations</h2>
-    <p>The following sources underpin the knowledge claims, frameworks, and evidence presented in this resource. Citations are grouped by the area of the resource they primarily support.</p>
-
-    <p class="citation-group-heading" id="cite-technical">Technical Standards</p>
-
-    <div class="citation-entry">
-      <p class="citation-label">Primary technical standard</p>
-      <p><strong>Web Content Accessibility Guidelines (WCAG) 2.2.</strong> World Wide Web Consortium (W3C), 11 December 2024.<br>
-      <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">https://www.w3.org/TR/WCAG22/</a></p>
-    </div>
-
-    <p class="citation-group-heading" id="cite-bok">Professional Bodies of Knowledge</p>
-
-    <div class="citation-entry">
-      <p class="citation-label">Foundational concepts</p>
-      <p><strong>IAAP CPACC Body of Knowledge.</strong> International Association of Accessibility Professionals (IAAP), October 2023.<br>
-      <a href="https://www.accessibilityassociation.org/sfsites/c/resource/CPACCBoK" target="_blank" rel="noopener">https://www.accessibilityassociation.org/sfsites/c/resource/CPACCBoK</a></p>
-    </div>
-
-    <div class="citation-entry">
-      <p class="citation-label">Technical review methodology</p>
-      <p><strong>IAAP Web Accessibility Specialist (WAS) Body of Knowledge.</strong> International Association of Accessibility Professionals (IAAP).<br>
-      <a href="https://www.accessibilityassociation.org/sfsites/c/resource/WASBoK_ePUB" target="_blank" rel="noopener">https://www.accessibilityassociation.org/sfsites/c/resource/WASBoK_ePUB</a></p>
-    </div>
-
-    <p class="citation-group-heading" id="cite-empirical">Empirical Evidence and Audit Data</p>
-
-    <div class="citation-entry">
-      <p class="citation-label">Large-scale audit</p>
-      <p><strong>Freeman, Jared.</strong> "The WebAIM Million — The 2026 report on the accessibility of the top 1,000,000 home pages." WebAIM, 29 March 2026.<br>
-      <a href="https://webaim.org/projects/million/" target="_blank" rel="noopener">https://webaim.org/projects/million/</a></p>
-    </div>
-
-    <div class="citation-entry">
-      <p class="citation-label">Evidence synthesis</p>
-      <p><strong>Sauer, C., et al.</strong> "Accessibility engineering in web evaluation process." <em>EAI Endorsed Transactions on Pervasive Health and Technology</em>, 2023.<br>
-      DOI: <a href="https://doi.org/10.4108/eai.26-10-2023.2337800" target="_blank" rel="noopener">10.4108/eai.26-10-2023.2337800</a></p>
-    </div>
-
-    <p class="citation-group-heading" id="cite-he-online">Higher Education — Online Learning</p>
-
-    <div class="citation-entry">
-      <p class="citation-label">Online learning review</p>
-      <p>"<strong>Accessible and Inclusive Online Learning in Higher Education.</strong>" ERIC (EJ1480115), 31 August 2025.<br>
-      <a href="https://eric.ed.gov/?id=EJ1480115" target="_blank" rel="noopener">https://eric.ed.gov/?id=EJ1480115</a></p>
-    </div>
-
-    <p class="citation-group-heading" id="cite-he-udl">Higher Education — Universal Design</p>
-
-    <div class="citation-entry">
-      <p class="citation-label">Universal design application</p>
-      <p><strong>Bracken, S., &amp; Novak, K.</strong> "Universal Design for Instruction &amp; Learning in Higher Education." ERIC.<br>
-      <a href="https://files.eric.ed.gov/fulltext/EJ1435143.pdf" target="_blank" rel="noopener">https://files.eric.ed.gov/fulltext/EJ1435143.pdf</a></p>
-    </div>
-
-  </div>
-
-  <a class="back-to-top" href="#toc">&#8593; Back to contents</a>
-
-  <footer class="page-footer">
-    Developed by <strong>Accessible Learning Labs</strong> to support organisations and learning designers working toward more inclusive learning environments.<br><br>
-    This resource draws on the <strong>IAAP CPACC Body of Knowledge</strong>, <strong>CAST's UDL framework</strong>, <strong>WCAG 2.1 and 2.2</strong>, and scholarship from the <strong>Inclusive Design Research Centre at OCAD University</strong>. It does not constitute legal advice.<br><br>
-    An <a href="https://accessiblelearninglabs.github.io/services/accessibility-review.html">interactive version of this resource</a> with tabs and expandable sections is also available.
-  </footer>
-
+</div>
 </main>
+
+<footer class="pagefoot">
+  <div class="shell">
+    <!-- EDIT — same scope note as the interactive file -->
+    <p>This resource is published by Accessible Learning Labs. It describes accessibility review as a practice, drawing on the standards, professional bodies of knowledge and peer-reviewed scholarship named in Sources. It is not legal advice, and it does not determine whether any particular obligation applies to any particular organisation.</p>
+    <p>An <a href="./">interactive version</a> of this
+      page is available, with the same content in tabbed sections.</p>
+
+    <p class="meta">
+      <span>Accessible Learning Labs</span>
+      <span>Accessibility</span>
+      <span>Version 1.0</span>
+      <span>Last reviewed <time datetime="2026-08-26">26 August 2026</time></span>
+    </p>
+  </div>
+</footer>
+
 </body>
 </html>
